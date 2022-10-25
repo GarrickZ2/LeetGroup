@@ -22,5 +22,9 @@ module LeetGroup
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.generators do |generator|
+      generator.assets false
+    end
   end
 end

@@ -11,8 +11,9 @@
 , change the username and password into your own username and password. Remember including
 your password within quotation mark. i.e. password: "your_password"
 4. Log into your mysql and create a schema called 'leetgroup_development'
-```shell
-mysql -u username -p
-[Input your password]
-CREATE SCHEMA leetgroup_development
-```
+   ```shell
+   mysql -u username -p
+   [Input your password]
+   CREATE SCHEMA leetgroup_development
+   ```
+
