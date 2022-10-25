@@ -7,13 +7,18 @@
     ```shell
     gem install mysql2
     ```
-3. Configure your config file of rails: Under directory config and open 'database.yml'
-, change the username and password into your own username and password. Remember including
-your password within quotation mark. i.e. password: "your_password"
+3. Configure the password of mysql: open `terminal` and type 
+    ```
+    export MY_SQL_PWD=[YOUR_SQL_PASSWORD]
+    ```
+    For example, 
+    ```
+    export MY_SQL_PWD=leetgroup123!
+    ````
+    This will create an environment variable locally which will be used in `config/database.yml` file.
 4. Log into your mysql and create a schema called 'leetgroup_development'
    ```shell
    mysql -u username -p
    [Input your password]
    CREATE SCHEMA leetgroup_development
    ```
-
