@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   get "user/login" => 'user#login'
 
+  get "main/dashboard" => "main#dashboard"
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
