@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'user/login'
+  get 'user/index'
 
   get 'main/dashboard'
 
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  get "user/login" => 'user#login'
+  get "user/index/:type" => 'user#index'
 
   get "main/dashboard" => "main#dashboard"
 

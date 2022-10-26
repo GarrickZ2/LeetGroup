@@ -4,7 +4,7 @@
   <title>LeetGroup User Login & Signup</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="../style.css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -24,10 +24,10 @@
 
     <div class="social-media">
       <ul>
-        <li><img src="images/facebook.png"></li>
-        <li><img src="images/twitter.png"></li>
-        <li><img src="images/linkedin.png"></li>
-        <li><img src="images/instagram.png"></li>
+        <li><img src="../images/facebook.png"></li>
+        <li><img src="../images/twitter.png"></li>
+        <li><img src="../images/linkedin.png"></li>
+        <li><img src="../images/instagram.png"></li>
       </ul>
     </div>
   </div>
@@ -70,8 +70,10 @@
   </div>
 </div>
 <script>
-    document.querySelector('.img-btn').addEventListener('click', function()
-        {
+    <%if @login_type == 'register' %>
+    document.querySelector('.cont').classList.toggle('s-signup')
+    <%end %>
+    document.querySelector('.img-btn').addEventListener('click', function () {
             document.querySelector('.cont').classList.toggle('s-signup')
         }
     );
