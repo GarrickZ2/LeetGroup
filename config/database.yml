@@ -14,7 +14,7 @@ default: &default
   encoding: utf8
   pool: 5
   username: root
-  password: <%= ENV['MY_SQL_PWD'] %> 
+  password: '<%= ENV['MY_SQL_PWD'] %>'
   socket: /tmp/mysql.sock
 
 development:
@@ -51,4 +51,4 @@ production:
   <<: *default
   database: LeetGroup_production
   username: LeetGroup
-  password: <%= ENV['LEETGROUP_DATABASE_PASSWORD'] %>
+  password: '<%= ENV['LEETGROUP_DATABASE_PASSWORD'] %>'
