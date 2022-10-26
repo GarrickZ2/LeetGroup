@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_26_185439) do
+ActiveRecord::Schema.define(version: 2022_10_26_190836) do
 
   create_table "cards", primary_key: "cid", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "uid"
@@ -40,6 +40,12 @@ ActiveRecord::Schema.define(version: 2022_10_26_185439) do
     t.string "city", limit: 50
     t.date "expiration_date"
     t.integer "status", default: 0
+  end
+
+  create_table "user_to_cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+    t.bigint "uid"
+    t.bigint "cid"
+    t.index ["uid"], name: "index_user_to_cards_on_uid"
   end
 
 end
