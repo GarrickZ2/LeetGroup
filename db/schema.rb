@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_26_180830) do
+ActiveRecord::Schema.define(version: 2022_10_26_185439) do
+
+  create_table "cards", primary_key: "cid", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
+    t.bigint "uid"
+    t.string "title", limit: 80
+    t.string "source", limit: 100
+    t.string "description", limit: 300
+    t.integer "status", default: 0
+    t.bigint "used_time"
+    t.integer "stars"
+    t.datetime "create_time"
+    t.datetime "update_time"
+    t.datetime "schedule_time"
+  end
 
   create_table "user_log_infos", primary_key: "username", id: :string, limit: 50, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "password", limit: 50
