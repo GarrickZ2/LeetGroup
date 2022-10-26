@@ -1,0 +1,12 @@
+<State>
+  <highlightingPatterns />
+  <hiddenSubstrings />
+  <parsingPatterns>
+    <LogParsingPattern enabled="true" name="LeetLogger" pattern="^\[\w+\]\s+(\d+-)+\d+\s+(\d+:)+\d+\s+-\d+\s+\[\w+\]-.*" timePattern="yyyy-MM-dd HH:mm:ss" linePattern="\[" timeId="-1" severityId="-1" categoryId="-1" fullmatch="true" uuid="edf679e5-bd1e-42cc-a559-c70441a34f79" />
+  </parsingPatterns>
+  <settingsVersion>6</settingsVersion>
+  <lastAddedDefaultFormat>-1</lastAddedDefaultFormat>
+  <errorStripeModel>heatmap</errorStripeModel>
+  <readonlySizeThreshold>16</readonlySizeThreshold>
+  <highlight_links>true</highlight_links>
+</State>
