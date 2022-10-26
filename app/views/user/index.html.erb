@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>LeetGroup User Login & Signup</title>
-  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="../style.css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800&display=swap" rel="stylesheet">
@@ -11,6 +10,7 @@
 <div class="cont">
   <div class="form sign-in">
     <h2>Sign In</h2>
+    <p class="alert-warning" id="l-notice"></p>
     <label>
       <span>Email Address</span>
       <input type="email" name="email">
@@ -49,24 +49,31 @@
     </div>
     <div class="form sign-up">
       <h2>Sign Up</h2>
+      <p class="alert-warning" id="r-notice" style="align-content: center"></p>
       <label>
-        <span>Name</span>
-        <input type="text">
+        <span>Username</span>
+        <input type="text" id="r-i-username">
       </label>
       <label>
         <span>Email</span>
-        <input type="email">
+        <input type="email" id="r-i-email">
       </label>
       <label>
         <span>Password</span>
-        <input type="password">
+        <input type="password" id="r-i-password">
       </label>
       <label>
         <span>Confirm Password</span>
-        <input type="password">
+        <input type="password" id="r-i-repass">
       </label>
-      <button type="button" class="submit">Sign Up Now</button>
+      <button type="button" class="submit" onclick="submit_register()">Sign Up Now</button>
     </div>
+    <!--register form-->
+    <form style="display: none" action="/user/create" method="post" id="register">
+      <input name="username" id="r-username" type="text">
+      <input name="email" id="r-email" type="text">
+      <input name="password" id="r-password" type="text">
+    </form>
   </div>
 </div>
 <script>
@@ -77,7 +84,45 @@
             document.querySelector('.cont').classList.toggle('s-signup')
         }
     );
+    <%if flash[:r_notice] != nil %>
+    console.log('<%= flash[:r_notice] %>')
+    $('#r-notice').text('<%=flash[:r_notice]%>')
+    <%end %>
+    <%if flash[:l_notice] != nil %>
+    $('#l-notice').text('<%=flash[:l_notice]%>')
+    <%end %>
+    function submit_register() {
+        const email_rge = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
+        const pass = $('#r-i-password').val()
+        const re_pass = $('#r-i-repass').val()
+        const notice = $('#r-notice')
+        if (pass === null || pass.length === 0) {
+            notice.text('Input password cannot be empty')
+            return
+        }
+        if (pass !== re_pass) {
+            notice.text('Input password is not consistent')
+            return
+        }
+        const email = $('#r-i-email').val()
+        if (email === null || email.length === 0) {
+            notice.text('Input email cannot be empty')
+            return;
+        }
+        if (!email_rge.test(email)) {
+            notice.text('Input email format is not correct')
+            return;
+        }
+        const username = $('#r-i-username').val()
+        if (username === null || username.length === 0) {
+            notice.text('Input username cannot be empty')
+            return;
+        }
+        $('#r-username').val(username)
+        $('#r-email').val(email)
+        $('#r-password').val(pass)
+        $('#register').submit()
+    }
 </script>
-<!--<script type="text/javascript" src="script.js"></script>-->
 </body>
 </html>
