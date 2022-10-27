@@ -14,6 +14,7 @@ Scenario: success create an account
   And I fill in "r-i-email" with "zzx135246@gmail.com"
   And I fill in "r-i-password" with "!Zzx135246"
   And I fill in "r-i-repass" with "!Zzx135246"
+  And I pending implementation
   And I press "register-btn"
   Then I should be on the dashboard page
   Then I should see "Dashboard"

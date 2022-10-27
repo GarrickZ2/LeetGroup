@@ -52,11 +52,7 @@ end
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
   # p "#{button} is clicked"
-  driver = Selenium::WebDriver.for :chrome
-  element = page.find(:id, button)
-  driver.action.move_to(element).click
-  # element.click
-  # click_button(button)
+  click_button(button)
 end
 
 
