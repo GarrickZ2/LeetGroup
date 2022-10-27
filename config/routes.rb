@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post "user/create" => 'user#create'
 
   # Main
-  get "main/dashboard" => "main#dashboard"
+  get "main/dashboard" => "main#dashboard", as: :dashboard
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
