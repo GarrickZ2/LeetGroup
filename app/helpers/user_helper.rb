@@ -1,25 +1,25 @@
 module UserHelper
-  def check_email_format(email)
+  def self.check_email_format(email)
     if email =~ URI::MailTo::EMAIL_REGEXP
-      return true
+      true
     else
-      return false
+      false
     end
   end
 
-  def check_password_strong(password)
+  def self.check_password_strong(password)
     if password =~ /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}/
-      return true
+      true
     else
-      return false
+      false
     end
   end
 
-  def check_username_format(username)
+  def self.check_username_format(username)
     if username =~ /^\w{6,50}$/
-      return true
+      true
     else
-      return false
+      false
     end
   end
 
