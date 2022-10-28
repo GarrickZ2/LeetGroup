@@ -23,4 +23,10 @@ module UserHelper
     end
   end
 
+  def self.create_account(username, email, password)
+    UserProfile.create(username: username)
+    uid = UserProfile.find_by(username: username).uid
+    UserLogInfo.create(username: username, email: email, password: password, uid: uid)
+  end
+
 end
