@@ -33,4 +33,17 @@ module UserHelper
     uid
   end
 
+  def self.login(username, password)
+    user = UserLogInfo.find(username)
+    if user.password == password
+      return user.uid
+    else
+      return -1
+    end
+  end
+
+  def self.get_profile(uid)
+    UserProfile.get_profile(uid)
+  end
+
 end
