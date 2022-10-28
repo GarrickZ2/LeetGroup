@@ -19,5 +19,11 @@
     border-radius: 50%;
 }
 
+.card-input {
+    color: whitesmoke;
+}
 
+.card-input:focus {
+    color:whitesmoke;
+}
 

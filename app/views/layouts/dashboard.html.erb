@@ -311,22 +311,59 @@
                   </button>
                 </div>
                 <div class="card-body">
-                  <form class="forms-sample" id="cardForm">
-                    <div class="form-group">
-                      <label for="cardInputTitle">Title</label>
-                      <input type="text" class="form-control" id="cardInputTitle" placeholder="Title">
+                  <form class="row g-3 needs-validation" novalidate id="cardForm">
+                    <div class="col-md-12">
+                      <label for="validationCustom01" class="form-label">Title</label>
+                      <input type="text" class="form-control card-input" id="cardInputTitle" placeholder="Title" required>
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                        Please enter a title.
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label for="cardInputSource">Source</label>
-                      <input type="text" class="form-control" id="cardInputSource" placeholder="Source">
+                    <div class="col-md-12">
+                      <label for="validationCustom02" class="form-label">Source</label>
+                      <input type="text" class="form-control card-input" id="cardInputSource" placeholder="Source">
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                        Please enter a source.
+                      </div>
                     </div>
-                    <div class="form-group">
-                      <label for="cardInputDescription">Description</label>
-                      <textarea class="form-control" aria-label="With textarea" placeholder="Description" rows="8" id="cardInputDescription"></textarea>
+                    <div class="col-md-12">
+                      <label for="validationCustomUsername" class="form-label">Description</label>
+                      <div class="input-group has-validation">
+<!--                        <text type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>-->
+                        <textarea class="form-control card-input" aria-label="With textarea" placeholder="Description" rows="8" id="cardInputDescription" aria-describedby="inputGroupPrepend"></textarea>
+                      </div>
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
                     </div>
-                    <input id="cardUID" type="hidden" value="<%= session[:uid] %>">
-                    <button type="submit" class="btn btn-primary me-2" id="createCardButton" onclick="createCard()">Create</button>
+                    <input id="cardUID" type="hidden" value="<%#= session[:uid] %>">
+                    <div class="col-12">
+                      <button class="btn btn-primary" type="submit" id="createCardButton" onclick="createCard()">Create</button>
+                    </div>
                   </form>
+
+                  <!--                  <form class="forms-sample" id="cardForm">-->
+<!--                    <div class="form-group">-->
+<!--                      <label for="cardInputTitle">Title</label>-->
+<!--                      <input type="text" class="form-control" id="cardInputTitle" placeholder="Title">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                      <label for="cardInputSource">Source</label>-->
+<!--                      <input type="text" class="form-control" id="cardInputSource" placeholder="Source">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                      <label for="cardInputDescription">Description</label>-->
+<!--                      <textarea class="form-control" aria-label="With textarea" placeholder="Description" rows="8" id="cardInputDescription"></textarea>-->
+<!--                    </div>-->
+<!--                    <input id="cardUID" type="hidden" value="<%#= session[:uid] %>">-->
+<!--                    <button type="submit" class="btn btn-primary me-2" id="createCardButton" onclick="createCard()">Create</button>-->
+<!--                  </form>-->
                 </div>
               </div>
             </div>

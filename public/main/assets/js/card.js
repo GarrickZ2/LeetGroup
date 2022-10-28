@@ -1,6 +1,28 @@
+
+// for disabling form submissions if there are invalid fields
 $("#cardForm").submit(function(e) {
     e.preventDefault();
 });
+
+(function () {
+    'use strict'
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+})()
+
 
 function createCard() {
     // get fields from the form and post request
@@ -18,12 +40,15 @@ function createCard() {
         type: "POST",
         url: "card/new",
         data: form_data,
-        success: function(msg){
-            console.log("ajax success");
-            alert(msg);
+        success: function(msg) {
+            if (msg['success']) {
+                alert("Successfully created the card");
+            }else {
+                alert(msg['msg']);
+            }
         },
         error: function(){
-            alert("Fail to create the card");
+            alert("Fail to create the card. Please try again.");
         }
     });
 }
