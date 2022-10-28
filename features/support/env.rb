@@ -60,4 +60,3 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Capybara.javascript_driver = :selenium
 Cucumber::Rails::Database.javascript_strategy = :transaction
-Selenium::WebDriver::Chrome.path = '/usr/local/bin/chromedriver'
