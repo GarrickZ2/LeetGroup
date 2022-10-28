@@ -1,4 +1,5 @@
 class UserController < ApplicationController
+  @logger = LeetLogger.get_logger UserController.name, "user.log"
   def index
     @login_type = params[:type]
   end
@@ -31,6 +32,7 @@ class UserController < ApplicationController
       return
     end
     session[:uid] = uid
+    logger.info "User registered successfully with uid #{uid}, params: #{params}"
     redirect_to main_dashboard_path
   end
 end
