@@ -40,3 +40,5 @@ Scenario: User don't need to login account again
 Scenario: User cannot directly goto dashboard page
   When I go to the dashboard page
   Then I should be on the user login page
+
+Scenario: User can logout from dashboard
