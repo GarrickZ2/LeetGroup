@@ -20,34 +20,22 @@
   <!-- endinject -->
   <!-- Layout styles -->
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/card.css">
   <!-- End layout styles -->
   <link rel="shortcut icon" href="assets/images/favicon.png" />
 </head>
 <body>
 <div class="container-scroller">
-<!--  <div class="row p-0 m-0 proBanner" id="proBanner">-->
-<!--    <div class="col-md-12 p-0 m-0">-->
-<!--      <div class="card-body card-body-padding d-flex align-items-center justify-content-between">-->
-<!--        <div class="ps-lg-1">-->
-<!--          <div class="d-flex align-items-center justify-content-between">-->
-<!--            <p class="mb-0 font-weight-medium me-3 buy-now-text">Free 24/7 customer support, updates, and more with this template!</p>-->
-<!--            <a href="https://www.bootstrapdash.com/product/corona-free/?utm_source=organic&utm_medium=banner&utm_campaign=buynow_demo" target="_blank" class="btn me-2 buy-now-btn border-0">Get Pro</a>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div class="d-flex align-items-center justify-content-between">-->
-<!--          <a href="https://www.bootstrapdash.com/product/corona-free/"><i class="mdi mdi-home me-3 text-white"></i></a>-->
-<!--          <button id="bannerClose" class="btn border-0 p-0">-->
-<!--            <i class="mdi mdi-close text-white me-0"></i>-->
-<!--          </button>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+  <div class="row p-0 m-0 proBanner" id="proBanner">
+    <div class="col-md-12 p-0 m-0">
+
+    </div>
 </div>
-  <!-- partial:partials/_sidebar.html -->
+  !-- partial:partials/_sidebar.html --><
   <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-      <a class="sidebar-brand brand-logo" href="index.html"><img src="assets/images/logo.svg" alt="logo" /></a>
-      <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+      <a class="sidebar-brand brand-logo" href="dashboard.html"><img src="assets/images/logo.svg" alt="logo" /></a>
+      <a class="sidebar-brand brand-logo-mini" href="dashboard.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
     </div>
     <ul class="nav">
       <li class="nav-item profile">
@@ -62,48 +50,47 @@
               <span>Gold Member</span>
             </div>
           </div>
-          <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
-          <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-            <a href="#" class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-dark rounded-circle">
-                  <i class="mdi mdi-settings text-primary"></i>
-                </div>
-              </div>
-              <div class="preview-item-content">
-                <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-dark rounded-circle">
-                  <i class="mdi mdi-onepassword  text-info"></i>
-                </div>
-              </div>
-              <div class="preview-item-content">
-                <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-dark rounded-circle">
-                  <i class="mdi mdi-calendar-today text-success"></i>
-                </div>
-              </div>
-              <div class="preview-item-content">
-                <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
-              </div>
-            </a>
-          </div>
+<!--          <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>-->
+<!--          <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">-->
+<!--            <a href="#" class="dropdown-item preview-item">-->
+<!--              <div class="preview-thumbnail">-->
+<!--                <div class="preview-icon bg-dark rounded-circle">-->
+<!--                  <i class="mdi mdi-settings text-primary"></i>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="preview-item-content">-->
+<!--                <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>-->
+<!--              </div>-->
+<!--            </a>-->
+<!--            <div class="dropdown-divider"></div>-->
+<!--            <a href="#" class="dropdown-item preview-item">-->
+<!--              <div class="preview-thumbnail">-->
+<!--                <div class="preview-icon bg-dark rounded-circle">-->
+<!--                  <i class="mdi mdi-onepassword  text-info"></i>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="preview-item-content">-->
+<!--                <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>-->
+<!--              </div>-->
+<!--            </a>-->
+<!--            <div class="dropdown-divider"></div>-->
+<!--            <a href="#" class="dropdown-item preview-item">-->
+<!--              <div class="preview-thumbnail">-->
+<!--                <div class="preview-icon bg-dark rounded-circle">-->
+<!--                  <i class="mdi mdi-calendar-today text-success"></i>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="preview-item-content">-->
+<!--                <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>-->
+<!--              </div>-->
+<!--            </a>-->
+<!--          </div>-->
         </div>
-      </li>
       <li class="nav-item nav-category">
         <span class="nav-link">Navigation</span>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="dashboard.html">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
@@ -113,76 +100,16 @@
       <li class="nav-item menu-items">
         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
               <span class="menu-icon">
-                <i class="mdi mdi-laptop"></i>
+                <i class="mdi mdi-note"></i>
               </span>
-          <span class="menu-title">Basic UI Elements</span>
+          <span class="menu-title">Card</span>
           <i class="menu-arrow"></i>
         </a>
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+            <li class="nav-item"> <a class="nav-link" href="../main/all_cards.html">All Cards</a></li>
           </ul>
         </div>
-      </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="pages/forms/basic_elements.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
-              </span>
-          <span class="menu-title">Form Elements</span>
-        </a>
-      </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="pages/tables/basic-table.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-table-large"></i>
-              </span>
-          <span class="menu-title">Tables</span>
-        </a>
-      </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="pages/charts/chartjs.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-chart-bar"></i>
-              </span>
-          <span class="menu-title">Charts</span>
-        </a>
-      </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="pages/icons/mdi.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-contacts"></i>
-              </span>
-          <span class="menu-title">Icons</span>
-        </a>
-      </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" data-bs-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
-              <span class="menu-icon">
-                <i class="mdi mdi-security"></i>
-              </span>
-          <span class="menu-title">User Pages</span>
-          <i class="menu-arrow"></i>
-        </a>
-        <div class="collapse" id="auth">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-          </ul>
-        </div>
-      </li>
-      <li class="nav-item menu-items">
-        <a class="nav-link" href="http://www.bootstrapdash.com/demo/corona-free/jquery/documentation/documentation.html">
-              <span class="menu-icon">
-                <i class="mdi mdi-file-document-box"></i>
-              </span>
-          <span class="menu-title">Documentation</span>
-        </a>
       </li>
     </ul>
   </nav>
@@ -191,7 +118,7 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar p-0 fixed-top d-flex flex-row">
       <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="dashboard.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
       </div>
       <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -208,16 +135,14 @@
           <li class="nav-item dropdown d-none d-lg-block">
             <a class="nav-link btn btn-success create-new-button" id="createbuttonDropdown" data-bs-toggle="dropdown" aria-expanded="false" href="#">+ Create </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="createbuttonDropdown">
-<!--              <h6 class="p-3 mb-0">Projects</h6>-->
-<!--              <div class="dropdown-divider"></div>-->
-              <a class="dropdown-item preview-item">
+              <a class="dropdown-item preview-item" data-toggle="modal" data-target="#cardModal">
                 <div class="preview-thumbnail">
                   <div class="preview-icon bg-dark rounded-circle">
                     <i class="mdi mdi-file-outline text-primary"></i>
                   </div>
                 </div>
-                <div class="preview-item-content" data-toggle="modal" data-target="#exampleModal">
-                  <p class="preview-subject ellipsis mb-1" onclick="createCard()" >New Card</p>
+                <div class="preview-item-content" data-toggle="modal" data-target="#cardModal">
+                  <p class="preview-subject ellipsis mb-1" >New Card</p>
                 </div>
               </a>
               <div class="dropdown-divider"></div>
@@ -232,18 +157,6 @@
                 </div>
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item preview-item">
-                <div class="preview-thumbnail">
-                  <div class="preview-icon bg-dark rounded-circle">
-                    <i class="mdi mdi-layers text-danger"></i>
-                  </div>
-                </div>
-                <div class="preview-item-content">
-                  <p class="preview-subject ellipsis mb-1">Software Testing</p>
-                </div>
-              </a>
-              <div class="dropdown-divider"></div>
-              <p class="p-3 mb-0 text-center">See all projects</p>
             </div>
           </li>
           <li class="nav-item nav-settings d-none d-lg-block">
@@ -383,43 +296,38 @@
     </nav>
     <!-- partial -->
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="cardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-<!--          <div class="modal-header">-->
-<!--            <h5 class="modal-title" id="exampleModalLabel">Create New Card</h5>-->
-<!--            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--              <span aria-hidden="true">&times;</span>-->
-<!--            </button>-->
-<!--          </div>-->
-          <div class="modal-body">
-            <div class="col-md-12 grid-margin stretch-card">
+          <div class="modal-body clear-padding">
+            <div class="col-md-12 stretch-card clear-padding" >
               <div class="card">
+                <div class="modal-header">
+                  <h4 class="modal-title">Creat New Card</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modal-close-btn">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
                 <div class="card-body">
-                  <form class="forms-sample">
+                  <form class="forms-sample" id="cardForm">
                     <div class="form-group">
-                      <label for="exampleInputUsername1">Title</label>
+                      <label for="cardInputTitle">Title</label>
                       <input type="text" class="form-control" id="cardInputTitle" placeholder="Title">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Source</label>
+                      <label for="cardInputSource">Source</label>
                       <input type="text" class="form-control" id="cardInputSource" placeholder="Source">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Description</label>
+                      <label for="cardInputDescription">Description</label>
                       <textarea class="form-control" aria-label="With textarea" placeholder="Description" rows="8" id="cardInputDescription"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary me-2">Submit</button>
-                    <button class="btn btn-dark">Cancel</button>
+                    <button type="submit" class="btn btn-primary me-2" id="createCardButton" onclick="createCard()">Create</button>
                   </form>
                 </div>
               </div>
             </div>
           </div>
-<!--          <div class="modal-footer">-->
-<!--            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--            <button type="button" class="btn btn-primary">Save changes</button>-->
-<!--          </div>-->
         </div>
       </div>
     </div>
