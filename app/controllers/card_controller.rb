@@ -21,7 +21,7 @@ class CardController < ApplicationController
       redirect_to
       return
     end
-    cid = Card.create_card params[:uid], params[:title], params[:source], params[:description]
-    redirect_to main_create_card_path
+    CardHelper.create_card params[:uid], params[:title], params[:source], params[:description]
+    redirect_to
   end
 end
