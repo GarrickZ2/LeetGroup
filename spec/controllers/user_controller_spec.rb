@@ -12,7 +12,13 @@ describe UserController do
       get :index, params: { type: 'login' }
       expect(response).to render_template('user/index')
     end
+    it 'user goto the main page if login already' do
+      session[:uid] = 2
+      get :index, params: { type: 'login' }
+      expect(response).to redirect_to('/main/dashboard')
+    end
   end
+
   describe 'user register account' do
     user = {}
     before(:each) do
@@ -62,5 +68,28 @@ describe UserController do
       expect(flash[:r_notice]).to include 'Email is in used'
     end
 
+  end
+
+  describe 'user login account' do
+    before(:each) do
+      # insert a registered user
+      UserHelper.create_account 'Garrick', '123@123.com', '!Zzx135246'
+    end
+    it 'user login successfully' do
+      post :login, params: { 'username': 'Garrick', 'password': '!Zzx135246' }
+      expect(!session[:uid].nil?)
+    end
+    it 'user login failed with wrong pass' do
+      post :login, params: { 'username': 'Garrick', 'password': '!Zzx13524' }
+      expect(session[:uid].nil?)
+    end
+  end
+  describe 'user logout account' do
+    it 'user successfully logout the account' do
+      session[:uid] = 2
+      expect(!session[:uid].nil?)
+      get :logout
+      expect(session[:uid].nil?)
+    end
   end
 end
