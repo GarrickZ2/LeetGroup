@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   get "main/all_cards" => "main#all_cards"
 
+  post "main/card/new" => "card#create"
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
