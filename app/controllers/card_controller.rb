@@ -1,27 +1,17 @@
 class CardController < ApplicationController
 
   def create
-    unless CardHelper.check_title_empty params[:title]
-      flash[:r_notice] = 'Title cannot be empty'
-      redirect_to
-      return
-    end
+    render json: { success: true, msg: 'Title cannot be empty' } unless CardHelper.check_title_empty params[:title]
     unless CardHelper.check_title_length params[:title]
-      flash[:r_notice] = 'The maximum length cannot exceed 50 characters'
-      redirect_to
-      return
+      render json: { success: true, msg: 'The maximum length cannot exceed 50 characters' }
     end
     unless CardHelper.check_source_length params[:source]
-      flash[:r_notice] = 'The maximum length cannot exceed 100 characters'
-      redirect_to
-      return
+      render json: { success: true, msg: 'The maximum length cannot exceed 100 characters' }
     end
     unless CardHelper.check_description_length params[:description]
-      flash[:r_notice] = 'The maximum length cannot exceed 300 characters'
-      redirect_to
-      return
+      render json: { success: true, msg: 'The maximum length cannot exceed 300 characters' }
     end
     CardHelper.create_card params[:uid], params[:title], params[:source], params[:description]
-    redirect_to
+    render json: { success: true, msg: NULL }
   end
 end
