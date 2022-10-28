@@ -1,9 +1,0 @@
-[INFO] 2022-10-26 17:26:29 -0400  [{:file_path=>"hello.log"}]- hello
-[WARN] 2022-10-26 17:26:29 -0400  [{:file_path=>"hello.log"}]- wtf
-[ERROR] 2022-10-26 17:26:29 -0400  [{:file_path=>"hello.log"}]- opps
-[INFO] 2022-10-26 17:26:39 -0400  [{:file_path=>"hello.log"}]- hello
-[WARN] 2022-10-26 17:26:39 -0400  [{:file_path=>"hello.log"}]- wtf
-[ERROR] 2022-10-26 17:26:39 -0400  [{:file_path=>"hello.log"}]- opps
-[INFO] 2022-10-26 17:27:30 -0400  [hello.log]- hello
-[WARN] 2022-10-26 17:27:30 -0400  [hello.log]- wtf
-[ERROR] 2022-10-26 17:27:30 -0400  [hello.log]- opps
