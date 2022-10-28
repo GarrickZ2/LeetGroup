@@ -9,17 +9,20 @@
 <body>
 <div class="cont">
   <div class="form sign-in">
-    <h2>Sign In</h2>
-    <p class="alert-warning" id="l-notice"></p>
-    <label>
-      <span>Email Address</span>
-      <input type="email" name="email">
-    </label>
-    <label>
-      <span>Password</span>
-      <input type="password" name="password">
-    </label>
-    <button class="submit" type="button">Sign In</button>
+    <form action="/user/login" method="post">
+      <h2>Sign In</h2>
+      <p class="alert-warning" id="l-notice"></p>
+      <label>
+        <span>Username</span>
+        <input type="text" name="username">
+      </label>
+      <label>
+        <span>Password</span>
+        <input type="password" name="password">
+      </label>
+      <button class="submit" type="submit">Sign In</button>
+    </form>
+    <p class="forgot-pass">Forgot Username?</p>
     <p class="forgot-pass">Forgot Password ?</p>
 
     <div class="social-media">
@@ -91,6 +94,7 @@
     <%if flash[:l_notice] != nil %>
     $('#l-notice').text('<%=flash[:l_notice]%>')
     <%end %>
+
     function submit_register() {
         const pass = $('#r-i-password').val()
         const re_pass = $('#r-i-repass').val()

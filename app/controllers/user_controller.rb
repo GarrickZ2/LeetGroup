@@ -1,6 +1,17 @@
+# frozen_string_literal: true
+
+# Description
+# This class is used to handle user's action including register, login, check profile and edit
 class UserController < ApplicationController
-  @logger = LeetLogger.get_logger UserController.name, 'user.log'
+  @@logger = LeetLogger.get_logger UserController.name, 'user.log'
+
   def index
+    # if the user has logged in before, directly go to the dashboard
+    if !session[:uid].nil? && session[:uid].positive?
+      @@logger.info "User #{session[:uid]} has logged in, redirect to main_dashboard"
+      redirect_to main_dashboard_path
+      return
+    end
     @login_type = params[:type]
   end
 
@@ -37,13 +48,24 @@ class UserController < ApplicationController
   end
 
   def login
+    @@logger.info "Receive login info : #{params}"
     uid = login_helper params[:username], params[:password]
-    flash[:l_notice] = 'Username or password is incorrect' if uid == -1
+    unless uid.positive?
+      flash[:l_notice] = 'Username or password is incorrect'
+      redirect_to user_index_path type: 'login'
+      return
+    end
     session[:uid] = uid
     redirect_to main_dashboard_path
   end
 
   def login_helper(username, password)
-    1
+    -1
+  end
+
+  def logout
+    session.delete :uid
+    flash[:l_notice] = 'You have been logged out.'
+    redirect_to user_index_path type: 'login'
   end
 end

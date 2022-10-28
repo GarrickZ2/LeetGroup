@@ -10,11 +10,13 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   # User
-  get "user/index/:type" => 'user#index', as: :user_index
-  post "user/create" => 'user#create'
+  get 'user/index/:type' => 'user#index', as: :user_index
+  post 'user/create' => 'user#create'
+  post 'user/login' => 'user#login'
+  get 'user/logout' => 'user#logout'
 
   # Main
-  get "main/dashboard" => "main#dashboard", as: :dashboard
+  get 'main/dashboard' => 'main#dashboard', as: :dashboard
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
