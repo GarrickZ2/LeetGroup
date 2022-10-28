@@ -1,3 +1,9 @@
+# Prerequisite
+1. Packages should be installed for cucumber test.
+```shell
+brew install geckodriver
+brew install firefox --cask
+```
 # Configuration Database in MySQL
 1. Install mysql driver on MacOS
     ```shell
