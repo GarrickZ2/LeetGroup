@@ -24,9 +24,13 @@ module UserHelper
   end
 
   def self.create_account(username, email, password)
+    return -1 if UserLogInfo.exists?(username: username)
+    return -2 if UserLogInfo.exists?(email: email)
+
     UserProfile.create(username: username)
     uid = UserProfile.find_by(username: username).uid
     UserLogInfo.create(username: username, email: email, password: password, uid: uid)
+    uid
   end
 
 end

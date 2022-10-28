@@ -20,7 +20,7 @@ class UserController < ApplicationController
       redirect_to user_index_path type: 'register'
       return
     end
-    uid = UserLogInfo.create_user params[:username], params[:email], params[:password]
+    uid = UserHelper.create_account params[:username], params[:email], params[:password]
     if uid == -1
       flash[:r_notice] = 'Username has been taken, please use another one'
       redirect_to user_index_path type: 'register'
