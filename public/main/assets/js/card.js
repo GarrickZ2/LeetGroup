@@ -1,20 +1,28 @@
-function createCard() {
-    alert("test create card function");
-    // get fields from the form and post request
-    // validate the form information
-    // var form_data = $('#cardForm').serialize();
+$("#cardForm").submit(function(e) {
+    e.preventDefault();
+});
 
-    // $.ajax({
-    //     type: "POST",
-    //     url: "",
-    //     data: form_data,
-    //     success: function(msg){
-    //         alert(msg);
-    //     },
-    //     error: function(){
-    //         alert("Failure");
-    //     }
-    // });
+function createCard() {
+    // get fields from the form and post request
+    let form_data = {
+        "uid": $("#cardUID").val(),
+        "title": $("#cardInputTitle").val(),
+        "source": $("#cardInputSource").val(),
+        "description": $("#cardInputDescription").val()
+    };
+    // console.log("form data for create card is: " + JSON.stringify(form_data));
+
+    $.ajax({
+        type: "POST",
+        url: "card/new",
+        data: form_data,
+        success: function(msg){
+            alert(msg);
+        },
+        error: function(){
+            alert("Fail to create the card");
+        }
+    });
 }
 
 function generateAllCards() {
