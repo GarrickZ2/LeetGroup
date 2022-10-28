@@ -1,10 +1,6 @@
 module CardHelper
   def self.check_title_empty(title)
-    if title.empty?
-      false
-    else
-      true
-    end
+    !title.empty?
   end
 
   def self.check_title_length(title)
@@ -21,6 +17,7 @@ module CardHelper
 
   def self.create_card(uid, title, source, description)
     cid = Card.create_card(uid, title, source, description)
-    UserToCard.create_user_to_card(uid, cid)
+    UserToCard.create(uid: uid, cid:cid)
+    return true
   end
 end
