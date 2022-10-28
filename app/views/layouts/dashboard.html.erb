@@ -144,7 +144,7 @@
                   </div>
                 </div>
                 <div class="preview-item-content" data-toggle="modal" data-target="#cardModal">
-                  <p class="preview-subject ellipsis mb-1" >New Card</p>
+                  <p class="preview-subject ellipsis mb-1" id="new-card-btn">New Card</p>
                 </div>
               </a>
               <div class="dropdown-divider"></div>
@@ -312,6 +312,9 @@
                 </div>
                 <div class="card-body">
                   <form class="row g-3 needs-validation" novalidate id="cardForm">
+                    <div class="col-md-12">
+                      <p class="alert-warning" id="create-card-notice"></p>
+                    </div>
                     <div class="col-md-12">
                       <label for="validationCustom01" class="form-label">Title</label>
                       <input type="text" class="form-control card-input" id="cardInputTitle" placeholder="Title" required>
