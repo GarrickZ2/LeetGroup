@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start 'rails'
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
@@ -50,8 +53,17 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  # Filter lines from Rails gems in backtraces.
-  config.filter_rails_from_backtrace!
-  # arbitrary gems may also be filtered via:
-  # config.filter_gems_from_backtrace("gem name")
+  # See https://github.com/rails/rails/issues/34790#issuecomment-450502805
+  if RUBY_VERSION>='2.6.0'
+    if Rails.version < '5'
+      class ActionController::TestResponse < ActionDispatch::TestResponse
+        def recycle!
+          # hack to avoid MonitorMixin double-initialize error:
+          @mon_mutex_owner_object_id = nil
+          @mon_mutex = nil
+          initialize
+        end
+      end
+    end
+  end
 end

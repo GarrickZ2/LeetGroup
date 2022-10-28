@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'user/login'
-
   get 'main/dashboard'
 
   # get 'welcome/index'
@@ -11,9 +9,12 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 
-  get "user/login" => 'user#login'
+  # User
+  get "user/index/:type" => 'user#index', as: :user_index
+  post "user/create" => 'user#create'
 
-  get "main/dashboard" => "main#dashboard"
+  # Main
+  get "main/dashboard" => "main#dashboard", as: :dashboard
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

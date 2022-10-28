@@ -20,7 +20,8 @@
    ```shell
    mysql -u username -p
    [Input your password]
-   CREATE SCHEMA leetgroup_development
+   CREATE SCHEMA leetgroup_development;
+   CREATE SCHEMA leetgroup_test;
    ```
 # Utils
 ## LeetLogger

@@ -15823,29 +15823,29 @@ input:focus {
   outline: none; }
 
 /* Fonts */
-@font-face {
-  font-family: 'Rubik';
-  font-weight: 300;
-  src: url("../fontsbik-Light.ttf");
-  /* IE9 Compat Modes */ }
+/*@font-face {*/
+/*  font-family: 'Rubik';*/
+/*  font-weight: 300;*/
+/*  src: url("../fontsbik-Light.ttf");*/
+/*  !* IE9 Compat Modes *! }*/
 
-@font-face {
-  font-family: 'Rubik';
-  font-weight: 400;
-  src: url("../fontsbik-Regular.ttf");
-  /* IE9 Compat Modes */ }
+/*@font-face {*/
+/*  font-family: 'Rubik';*/
+/*  font-weight: 400;*/
+/*  src: url("../fontsbik-Regular.ttf");*/
+/*  !* IE9 Compat Modes *! }*/
 
-@font-face {
-  font-family: 'Rubik';
-  font-weight: 500;
-  src: url("../fontsbik-Medium.ttf");
-  /* IE9 Compat Modes */ }
-
-@font-face {
-  font-family: 'Rubik';
-  font-weight: 700;
-  src: url("../fontsbik-Bold.ttf");
-  /* IE9 Compat Modes */ }
+/*@font-face {*/
+/*  font-family: 'Rubik';*/
+/*  font-weight: 500;*/
+/*  src: url("../fontsbik-Medium.ttf");*/
+/*  !* IE9 Compat Modes *! }*/
+/**/
+/*@font-face {*/
+/*  font-family: 'Rubik';*/
+/*  font-weight: 700;*/
+/*  src: url("../fontsbik-Bold.ttf");*/
+/*  !* IE9 Compat Modes *! }*/
 
 /* Backgrounds  */
 .bg-gradient-primary {
