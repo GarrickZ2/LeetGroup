@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_26_190836) do
+ActiveRecord::Schema.define(version: 2022_10_28_171327) do
 
-  create_table "cards", primary_key: "cid", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "cards", primary_key: "cid", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.bigint "uid"
     t.string "title", limit: 80
     t.string "source", limit: 100
@@ -25,13 +25,13 @@ ActiveRecord::Schema.define(version: 2022_10_26_190836) do
     t.datetime "schedule_time"
   end
 
-  create_table "user_log_infos", primary_key: "username", id: :string, limit: 50, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "user_log_infos", primary_key: "username", id: :string, limit: 50, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "password", limit: 50
     t.string "email", limit: 50
     t.bigint "uid"
   end
 
-  create_table "user_profiles", primary_key: "uid", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "user_profiles", primary_key: "uid", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "username", limit: 50
     t.string "school", limit: 50
     t.string "company", limit: 50
@@ -40,12 +40,6 @@ ActiveRecord::Schema.define(version: 2022_10_26_190836) do
     t.string "city", limit: 50
     t.date "expiration_date"
     t.integer "status", default: 0
-  end
-
-  create_table "user_to_cards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "uid"
-    t.bigint "cid"
-    t.index ["uid"], name: "index_user_to_cards_on_uid"
   end
 
 end
