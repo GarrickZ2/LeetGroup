@@ -40,5 +40,17 @@ describe UserHelper do
     end
   end
 
+  describe 'user login account' do
+    before(:all) do
+      UserHelper.create_account('abcd', 'abcd@bcd.com', 'Abc12345!')
+    end
+    it 'login with correct username and password' do
+      assert_equal UserLogInfo.find('abcd').uid, UserHelper.login('abcd', 'Abc12345!')
+    end
+
+    it 'login with wrong password' do
+      assert_equal -1, UserHelper.login('abcd', 'Abc123456!')
+    end
+  end
 
 end
