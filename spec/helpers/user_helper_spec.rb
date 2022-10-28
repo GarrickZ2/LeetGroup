@@ -6,12 +6,24 @@ describe UserHelper do
       expect UserHelper.check_email_format('abcde!!!') == false
     end
 
+    it 'input email with correct format' do
+      expect UserHelper.check_email_format('abcd@zzz.com') == false
+    end
+
     it 'input username with wrong format' do
       expect UserHelper.check_username_format('abc') == false
     end
 
+    it 'input username with correct format' do
+      expect UserHelper.check_username_format('abcdddass') == false
+    end
+
     it 'input weak password' do
       expect UserHelper.check_password_strong('abc') == false
+    end
+
+    it 'input strong(correct) password' do
+      expect UserHelper.check_password_strong('Aabc1234567!!') == true
     end
 
     before(:all) do
@@ -40,5 +52,28 @@ describe UserHelper do
     end
   end
 
+  describe 'user login account' do
+    before(:all) do
+      UserHelper.create_account('abcd', 'abcd@bcd.com', 'Abc12345!')
+    end
+    it 'login with correct username and password' do
+      assert_equal UserLogInfo.find('abcd').uid, UserHelper.login('abcd', 'Abc12345!')
+    end
+
+    it 'login with wrong password' do
+      assert_equal -1, UserHelper.login('abcd', 'Abc123456!')
+    end
+  end
+
+  describe 'user retrieve profile' do
+    before(:all) do
+      UserHelper.create_account('abcd', 'abcd@bcd.com', 'Abc12345!')
+    end
+    it 'successfully get the profile given uid' do
+      user = UserLogInfo.find('abcd')
+      result = UserHelper.get_profile(user.uid)
+      assert_equal user.username, result.username
+    end
+  end
 
 end
