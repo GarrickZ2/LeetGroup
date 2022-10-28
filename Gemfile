@@ -35,19 +35,21 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-  gem 'rspec-rails'
   gem 'database_cleaner', '1.4.1'
+  gem 'rspec-rails'
   gem 'rubocop'
+  # gem "capybara-webkit"
 
 end
 
 group :test do
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', require: false
   gem 'cucumber-rails-training-wheels'
-  gem 'simplecov', :require => false
+  gem 'guard-rspec' # automates re-running tests
+  gem 'puma', '~>5.6.4'
   gem 'rails-controller-testing'
-  gem 'guard-rspec'                 # automates re-running tests
-
+  gem 'selenium-webdriver'
+  gem 'simplecov', require: false
 end
 
 group :development do
