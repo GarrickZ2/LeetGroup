@@ -52,7 +52,9 @@ end
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
   # p "#{button} is clicked"
+  # page.execute_script("document.querySelector('##{button}').click()")
   click_button(button)
+  # click_button(button)
 end
 
 

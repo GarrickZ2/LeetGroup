@@ -15,6 +15,8 @@ module NavigationHelpers
 
     when /^the user (.*) page$/ then
       user_index_path($1)
+    when /^the welcome page$/ then
+      root_path
     when /^the dashboard page"$/ then
       main_dashboard_path
     when /^the details page for "(.*)"$/ then
@@ -23,13 +25,6 @@ module NavigationHelpers
     when /^the Similar Movies page for "(.*)"$/ then
       record = Movie.find_by title: $1
       find_similar_movies_path(record.id)
-
-      # Add more mappings here.
-      # Here is an example that pulls values out of the Regexp:
-      #
-      #   when /^(.*)'s profile page$/i
-      #     user_profile_path(User.find_by_login($1))
-
     else
       begin
         page_name =~ /^the (.*) page$/
