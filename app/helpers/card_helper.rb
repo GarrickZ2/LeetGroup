@@ -1,33 +1,26 @@
 module CardHelper
   def check_title_empty(title)
     if title.empty?
-      return false
+      false
     else
-      return true
+      true
     end
   end
 
   def check_title_length(title)
-    if title.size > 50
-      return false
-    else
-      return true
-    end
+    title.size <= 50
   end
 
   def check_source_length(source)
-    if source.size > 100
-      return false
-    else
-      return true
-    end
+    source.size <= 100
   end
 
   def check_description_length(description)
-    if description.size > 300
-      return false
-    else
-      return true
-    end
+    description.size <= 300
+  end
+
+  def create_card(uid, title, source, description)
+    cid = Card.create_card params[:uid], params[:title], params[:source], params[:description]
+    UserToCard.create_user_to_card params[:uid], params[cid]
   end
 end
