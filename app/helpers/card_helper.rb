@@ -20,7 +20,7 @@ module CardHelper
   end
 
   def create_card(uid, title, source, description)
-    cid = Card.create_card params[:uid], params[:title], params[:source], params[:description]
-    UserToCard.create_user_to_card params[:uid], params[cid]
+    cid = Card.create_card(uid, title, source, description)
+    UserToCard.create_user_to_card(uid, cid)
   end
 end

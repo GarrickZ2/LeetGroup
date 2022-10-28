@@ -4,6 +4,8 @@ $("#cardForm").submit(function(e) {
 
 function createCard() {
     // get fields from the form and post request
+    // alert("test create card");
+
     let form_data = {
         "uid": $("#cardUID").val(),
         "title": $("#cardInputTitle").val(),
@@ -17,6 +19,7 @@ function createCard() {
         url: "card/new",
         data: form_data,
         success: function(msg){
+            console.log("ajax success");
             alert(msg);
         },
         error: function(){
