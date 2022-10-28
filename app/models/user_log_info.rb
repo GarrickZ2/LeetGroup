@@ -1,17 +1,15 @@
 class UserLogInfo < ActiveRecord::Base
   @@uid = 1
-  def self.create_user(username, email, password)
-    if self.exists?(:username => username)
-      return -1
-    end
 
-    if self.exists?(:email => email)
-      return -2
-    end
-    self.create(username: username, email: email, password: password, uid: @@uid)
+  def self.create_user(username, email, password)
+    return -1 if exists?(username: username)
+
+    return -2 if exists?(email: email)
+
+    create(username: username, email: email, password: password, uid: @@uid)
     UserProfile.create(uid: @@uid, username: username)
     @@uid += 1
-    return @@uid
+    @@uid
 
   end
 end
