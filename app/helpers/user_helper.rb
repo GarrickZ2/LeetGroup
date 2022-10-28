@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Description
+# Used for user_controller to interaction the model and some util
 module UserHelper
   def self.check_email_format(email)
     if email =~ URI::MailTo::EMAIL_REGEXP
@@ -34,12 +38,10 @@ module UserHelper
   end
 
   def self.login(username, password)
-    user = UserLogInfo.find(username)
-    if user.password == password
-      return user.uid
-    else
-      return -1
-    end
+    user = UserLogInfo.find_by(username: username)
+    return user.uid if !user.nil? && user.password == password
+
+    -1
   end
 
   def self.get_profile(uid)

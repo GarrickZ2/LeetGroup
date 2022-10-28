@@ -49,7 +49,7 @@ class UserController < ApplicationController
 
   def login
     @@logger.info "Receive login info : #{params}"
-    uid = login_helper params[:username], params[:password]
+    uid = UserHelper.login params[:username], params[:password]
     unless uid.positive?
       flash[:l_notice] = 'Username or password is incorrect'
       redirect_to user_index_path type: 'login'
@@ -57,10 +57,6 @@ class UserController < ApplicationController
     end
     session[:uid] = uid
     redirect_to main_dashboard_path
-  end
-
-  def login_helper(username, password)
-    -1
   end
 
   def logout
