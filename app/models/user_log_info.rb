@@ -9,6 +9,7 @@ class UserLogInfo < ActiveRecord::Base
       return -2
     end
     self.create(username: username, email: email, password: password, uid: @@uid)
+    UserProfile.create(uid: @@uid, username: username)
     @@uid += 1
     return @@uid
 
