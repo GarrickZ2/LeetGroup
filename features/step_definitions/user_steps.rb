@@ -11,3 +11,11 @@ Then(/^I fill in register form with "([^"]*)", "([^"]*)", "([^"]*)" and "([^"]*)
   step "I fill in \"r-i-password\" with \"#{password}\""
   step "I fill in \"r-i-repass\" with \"#{repass}\""
 end
+
+Given(/^I log in with "([^"]*)" and "([^"]*)"$/) do |username, password|
+  step 'I am on the user login page'
+  step "I fill in \"username\" with \"#{username}\""
+  step "I fill in \"password\" with \"#{password}\""
+  step 'I press "Sign In"'
+end
+
