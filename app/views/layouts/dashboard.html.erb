@@ -7,7 +7,7 @@
   <title>LeetGroup!</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!-- endinject -->
@@ -36,8 +36,8 @@
   <!-- partial:partials/_sidebar.html -->
   <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-      <a class="sidebar-brand brand-logo" href="dashboard.html"><img src="assets/images/logo.svg" alt="logo" /></a>
-      <a class="sidebar-brand brand-logo-mini" href="dashboard.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+      <a class="sidebar-brand brand-logo" href="dashboard.html"><img src="assets/images/logo.png" alt="logo" /></a>
+      <a class="sidebar-brand brand-logo-mini" href="dashboard.html"><img src="assets/images/logo-mini.png" alt="logo" /></a>
     </div>
     <ul class="nav">
       <li class="nav-item profile">
@@ -48,8 +48,8 @@
               <span class="count bg-success"></span>
             </div>
             <div class="profile-name">
-              <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
-              <span>Gold Member</span>
+              <h5 class="mb-0 font-weight-normal"><%=@profile.username %></h5>
+              <span>Standard Member</span>
             </div>
           </div>
 <!--          <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>-->
@@ -258,7 +258,7 @@
             <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
               <div class="navbar-profile">
                 <img class="img-xs rounded-circle" src="assets/images/faces/face15.jpg" alt="">
-                <p class="mb-0 d-none d-sm-block navbar-profile-name">Henry Klein</p>
+                <p class="mb-0 d-none d-sm-block navbar-profile-name"><%=@profile.username %></p>
                 <i class="mdi mdi-menu-down d-none d-sm-block"></i>
               </div>
             </a>
