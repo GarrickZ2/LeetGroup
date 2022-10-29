@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   # Main
   get 'main/dashboard' => 'main#dashboard', as: :dashboard
+  get 'main/profile' => 'main#profile'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
