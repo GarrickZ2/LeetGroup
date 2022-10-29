@@ -118,7 +118,7 @@
         </div>
         <!-- Team Details-->
         <div class="single_advisor_details_info">
-          <h6><%=@profile.username %></h6>
+          <h6><%=session[:profile]['username']%></h6>
           <p class="designation">UI Designer</p>
         </div>
       </div>
@@ -320,7 +320,7 @@
                 </td>
                 <td>
                   <img src="assets/images/faces/face1.jpg" alt="image"/>
-                  <span class="ps-2"><%=@profile.username %></span>
+                  <span class="ps-2"><%=session[:profile]['username']%></span>
                 </td>
                 <td> 02312</td>
                 <td> $14,500</td>
