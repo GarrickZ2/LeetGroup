@@ -257,3 +257,16 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+When(/^I click the element with id "([^"]*)"$/) do |id|
+  element = page.find("##{id}", visible: :all)
+  element.click
+end
+
+Then /^(?:|I )should see the text "([^"]*)"$/ do |text|
+  # if page.respond_to? :should
+    page.should have_text(text)
+  # else
+  #   assert page.has_text?(text)
+  # end
+end
