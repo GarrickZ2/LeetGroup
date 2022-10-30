@@ -48,4 +48,18 @@ module UserHelper
     UserProfile.get_profile(uid)
   end
 
+  def self.update_profile(uid, username, school, company, bio, city)
+    user = UserProfile.find(uid)
+    username = user.username if username.nil?
+    school = user.school if school.nil?
+    company = user.school if company.nil?
+    bio = user.bio if bio.nil?
+    city = user.city if city.nil?
+    user.update(username: username, school: school, company: company, bio: bio, city: city)
+  end
+
+  def self.update_avatar(uid, avatar)
+    user = UserProfile.find(uid)
+    user.update(avatar: avatar)
+  end
 end
