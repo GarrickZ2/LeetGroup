@@ -76,7 +76,7 @@ describe UserHelper do
     end
   end
 
-  describe 'user update profile with all information' do
+  describe 'user update profile with some information' do
     before(:all) do
       @current_uid = UserHelper.create_account('test1', 'test@bcd.com', 'Abc12345!')
     end
@@ -89,6 +89,12 @@ describe UserHelper do
       user = UserProfile.find(@current_uid)
       assert_equal user.username, 'mmab'
       assert_equal user.city, 'New York'
+    end
+
+    it 'update the avatar' do
+      avatar_path = 'http://www.google.com/'
+      UserHelper.update_avatar(@current_uid, avatar_path)
+      assert_equal UserProfile.find(@current_uid).avatar, avatar_path
     end
   end
 end
