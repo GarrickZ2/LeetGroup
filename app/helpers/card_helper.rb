@@ -23,7 +23,7 @@ module CardHelper
 
   def self.update_card(card)
     prev_card = Card.find_by(uid: card.uid, cid: card.cid)
-    return -1 if prev_card.nil?
+    return false if prev_card.nil?
 
     Card.columns.each do |c|
       type = c.name
@@ -31,6 +31,14 @@ module CardHelper
       prev_card.method("#{type}=").call val unless val.nil?
     end
     prev_card.save
-    1
+    true
+  end
+
+  def self.delete_card(uid, cid)
+    prev_card = Card.find_by(uid: uid, cid: cid)
+    return false if prev_card.nil?
+
+    prev_card.delete
+    true
   end
 end
