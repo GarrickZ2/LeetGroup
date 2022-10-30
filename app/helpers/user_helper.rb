@@ -50,7 +50,7 @@ module UserHelper
 
   def self.update_profile(new_profile)
     profile = UserProfile.find_by(uid: new_profile.uid)
-    return if user.nil?
+    return if profile.nil?
 
     UserProfile.columns.each do |c|
       type = c.name

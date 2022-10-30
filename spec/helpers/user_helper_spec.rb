@@ -28,7 +28,6 @@ describe UserHelper do
 
     before(:all) do
       ans = UserHelper.create_account('abcd', 'abcd@bcd.com', 'Abc12345!')
-      puts ans
     end
 
     describe 'create an account with valid info' do
@@ -82,7 +81,11 @@ describe UserHelper do
       @current_uid = UserHelper.create_account('test1', 'test@bcd.com', 'Abc12345!')
     end
     it 'successfully update the profile' do
-      UserHelper.update_profile(@current_uid, 'mmab', nil, nil, nil, 'New York')
+      new_profile = UserProfile.new
+      new_profile.uid = @current_uid
+      new_profile.username = 'mmab'
+      new_profile.city = 'New York'
+      UserHelper.update_profile(new_profile)
       user = UserProfile.find(@current_uid)
       assert_equal user.username, 'mmab'
       assert_equal user.city, 'New York'
