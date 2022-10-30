@@ -48,18 +48,20 @@ module UserHelper
     UserProfile.get_profile(uid)
   end
 
-  def self.update_profile(uid, username, school, company, bio, city)
-    user = UserProfile.find(uid)
-    username = user.username if username.nil?
-    school = user.school if school.nil?
-    company = user.school if company.nil?
-    bio = user.bio if bio.nil?
-    city = user.city if city.nil?
-    user.update(username: username, school: school, company: company, bio: bio, city: city)
+  def self.update_profile(new_profile)
+    profile = UserProfile.find_by(uid: new_profile.uid)
+    return if user.nil?
+
+    UserProfile.columns.each do |c|
+      type = c.name
+      val = new_profile.method(type).call
+      profile.method("#{type}=").call val unless val.nil?
+    end
+    profile.save
   end
 
   def self.update_avatar(uid, avatar)
-    user = UserProfile.find(uid)
-    user.update(avatar: avatar)
+    user = UserProfile.find_by(uid: uid)
+    user&.update(avatar: avatar)
   end
 end
