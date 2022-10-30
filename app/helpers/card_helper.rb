@@ -18,6 +18,19 @@ module CardHelper
   def self.create_card(uid, title, source, description)
     cid = Card.create_card(uid, title, source, description)
     UserToCard.create(uid: uid, cid:cid)
-    return true
+    true
+  end
+
+  def self.update_card(card)
+    prev_card = Card.find_by(uid: card.uid, cid: card.cid)
+    return -1 if prev_card.nil?
+
+    Card.columns.each do |c|
+      type = c.name
+      val = card.method(type).call
+      prev_card.method("#{type}=").call val unless val.nil?
+    end
+    prev_card.save
+    1
   end
 end
