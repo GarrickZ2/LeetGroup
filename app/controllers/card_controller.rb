@@ -19,4 +19,9 @@ class CardController < ApplicationController
     CardHelper.create_card params[:uid], params[:title], params[:source], params[:description]
     render json: { success: true, msg: nil }
   end
+
+  def view_card_detail
+    card_detail = Card.view_card_detail params[:cid], params[:uid]
+    render json: { card: card_detail }
+  end
 end
