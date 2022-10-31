@@ -24,7 +24,9 @@ class Card < ActiveRecord::Base
     if total_size % page_size != 0
       total_page += 1
     end
-    current_size = if offset == total_page - 1
+    current_size = if total_size.zero?
+                     0
+                   elsif offset == total_page - 1
                      total_size - (total_page - 1) * page_size
                    else
                      page_size

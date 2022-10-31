@@ -82,6 +82,19 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
     Card.create(uid: '1', title: 'Median of Two Sorted Arrays', source: 'LeetCode', description: 'hard', schedule_time: nil, status: 0,
                 stars: 2, used_time: 0, create_time: time3, update_time: time3)
 
+    card1_expect = {
+      cid: 1,
+      uid: 1,
+      title: 'Two Sum',
+      source: 'LeetCode',
+      description: 'easy',
+      status: 1,
+      used_time: 0,
+      stars: 1,
+      create_time: time1,
+      update_time: time1,
+      schedule_time: nil
+    }
 
     it 'user does not have any card' do
       post :view, params: {
@@ -110,20 +123,6 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         sort_type: nil
       }
 
-      card1_expect = {
-        cid: 1,
-        uid: 1,
-        title: 'Two Sum',
-        source: 'LeetCode',
-        description: 'easy',
-        status: 1,
-        used_time: 0,
-        stars: 1,
-        create_time: time1,
-        update_time: time1,
-        schedule_time: nil
-      }
-
       page_info_expect = {
         total_page: 2,
         total_size: 3,
@@ -147,20 +146,6 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         offset: 0,
         sort_by: nil,
         sort_type: nil
-      }
-
-      card1_expect = {
-        cid: 1,
-        uid: 1,
-        title: 'Two Sum',
-        source: 'LeetCode',
-        description: 'easy',
-        status: 1,
-        used_time: 0,
-        stars: 1,
-        create_time: time1,
-        update_time: time1,
-        schedule_time: nil
       }
 
       page_info_expect = {
@@ -188,20 +173,6 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         sort_type: 'desc'
       }
 
-      card1_expect = {
-        cid: 1,
-        uid: 1,
-        title: 'Two Sum',
-        source: 'LeetCode',
-        description: 'easy',
-        status: 1,
-        used_time: 0,
-        stars: 1,
-        create_time: time1,
-        update_time: time1,
-        schedule_time: nil
-      }
-
       page_info_expect = {
         total_page: 3,
         total_size: 3,
@@ -227,20 +198,6 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         sort_type: 'desc'
       }
 
-      card1_expect = {
-        cid: 1,
-        uid: 1,
-        title: 'Two Sum',
-        source: 'LeetCode',
-        description: 'easy',
-        status: 1,
-        used_time: 0,
-        stars: 1,
-        create_time: time1,
-        update_time: time1,
-        schedule_time: nil
-      }
-
       page_info_expect = {
         total_page: 3,
         total_size: 3,
@@ -264,20 +221,6 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         offset: 1,
         sort_by: 'stars',
         sort_type: 'asc'
-      }
-
-      card1_expect = {
-        cid: 1,
-        uid: 1,
-        title: 'Two Sum',
-        source: 'LeetCode',
-        description: 'easy',
-        status: 1,
-        used_time: 0,
-        stars: 1,
-        create_time: time1,
-        update_time: time1,
-        schedule_time: nil
       }
 
       page_info_expect = {
