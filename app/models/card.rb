@@ -21,8 +21,11 @@ class Card < ActiveRecord::Base
     @cards = @cards.limit(page_size).offset(offset * page_size)
 
     total_page = total_size / page_size
-    current_size = if offset == total_page
-                     total_size - total_page * page_size
+    if total_size % page_size != 0
+      total_page += 1
+    end
+    current_size = if offset == total_page - 1
+                     total_size - (total_page - 1) * page_size
                    else
                      page_size
                    end

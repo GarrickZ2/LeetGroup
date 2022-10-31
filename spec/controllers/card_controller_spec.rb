@@ -71,14 +71,33 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
   end
 
   describe 'user views cards' do
-    before(:each) do
-      # insert a registered user
-      Card.create(uid: '1', title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
-        stars: 1, used_time: 0, create_time: Time.now, update_time: Time.now)
-      Card.create(uid: '1', title: 'Reverse Integer', source: 'LeetCode', description: 'medium', schedule_time: nil, status: 2,
-                  stars: 0, used_time: 0, create_time: Time.now, update_time: Time.now)
-      Card.create(uid: '1', title: 'Median of Two Sorted Arrays', source: 'LeetCode', description: 'hard', schedule_time: nil, status: 0,
-                  stars: 2, used_time: 0, create_time: Time.now, update_time: Time.now)
+    time1 = '2022-10-31T04:26:02.000Z'
+    time2 = '2022-10-31T05:26:02.000Z'
+    time3 = '2022-10-31T06:26:02.000Z'
+
+    Card.create(uid: '1', title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
+                stars: 1, used_time: 0, create_time: time1, update_time: time1)
+    Card.create(uid: '1', title: 'Reverse Integer', source: 'LeetCode', description: 'medium', schedule_time: nil, status: 2,
+                stars: 0, used_time: 0, create_time: time2, update_time: time2)
+    Card.create(uid: '1', title: 'Median of Two Sorted Arrays', source: 'LeetCode', description: 'hard', schedule_time: nil, status: 0,
+                stars: 2, used_time: 0, create_time: time3, update_time: time3)
+
+
+    it 'user does not have any card' do
+      post :view, params: {
+        uid: '2',
+        status: 3,
+        page_size: 2,
+        offset: 0,
+        sort_by: nil,
+        sort_type: nil
+      }
+
+      card_info = JSON.parse(response.body)['card_info']
+      page_info = JSON.parse(response.body)['page_info']
+      total_size = JSON.parse(page_info)['total_size']
+      expect(card_info.count).to eq 0
+      expect(total_size).to eq 0
     end
 
     it 'view all status without sort' do
@@ -91,11 +110,189 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         sort_type: nil
       }
 
+      card1_expect = {
+        cid: 1,
+        uid: 1,
+        title: 'Two Sum',
+        source: 'LeetCode',
+        description: 'easy',
+        status: 1,
+        used_time: 0,
+        stars: 1,
+        create_time: time1,
+        update_time: time1,
+        schedule_time: nil
+      }
+
+      page_info_expect = {
+        total_page: 2,
+        total_size: 3,
+        current_page: 0,
+        current_size: 2
+      }
+
       card_info = JSON.parse(response.body)['card_info']
       page_info = JSON.parse(response.body)['page_info']
-      total_size = JSON.parse(page_info)['total_size']
+      card1 = JSON.parse(card_info[0])
       expect(card_info.count).to eq 2
-      expect(total_size).to eq 3
+      expect(card1.to_json).to eq card1_expect.to_json
+      expect(page_info).to eq page_info_expect.to_json
+    end
+
+    it 'only view active(1) status without sort' do
+      post :view, params: {
+        uid: '1',
+        status: 1,
+        page_size: 2,
+        offset: 0,
+        sort_by: nil,
+        sort_type: nil
+      }
+
+      card1_expect = {
+        cid: 1,
+        uid: 1,
+        title: 'Two Sum',
+        source: 'LeetCode',
+        description: 'easy',
+        status: 1,
+        used_time: 0,
+        stars: 1,
+        create_time: time1,
+        update_time: time1,
+        schedule_time: nil
+      }
+
+      page_info_expect = {
+        total_page: 1,
+        total_size: 1,
+        current_page: 0,
+        current_size: 1
+      }
+
+      card_info = JSON.parse(response.body)['card_info']
+      page_info = JSON.parse(response.body)['page_info']
+      card1 = JSON.parse(card_info[0])
+      expect(card_info.count).to eq 1
+      expect(card1.to_json).to eq card1_expect.to_json
+      expect(page_info).to eq page_info_expect.to_json
+    end
+
+    it 'view all status and sort by update_time desc' do
+      post :view, params: {
+        uid: '1',
+        status: 3,
+        page_size: 1,
+        offset: 2,
+        sort_by: 'update_time',
+        sort_type: 'desc'
+      }
+
+      card1_expect = {
+        cid: 1,
+        uid: 1,
+        title: 'Two Sum',
+        source: 'LeetCode',
+        description: 'easy',
+        status: 1,
+        used_time: 0,
+        stars: 1,
+        create_time: time1,
+        update_time: time1,
+        schedule_time: nil
+      }
+
+      page_info_expect = {
+        total_page: 3,
+        total_size: 3,
+        current_page: 2,
+        current_size: 1
+      }
+
+      card_info = JSON.parse(response.body)['card_info']
+      page_info = JSON.parse(response.body)['page_info']
+      card1 = JSON.parse(card_info[0])
+      expect(card_info.count).to eq 1
+      expect(card1.to_json).to eq card1_expect.to_json
+      expect(page_info).to eq page_info_expect.to_json
+    end
+
+    it 'view all status and sort by create_time desc' do
+      post :view, params: {
+        uid: '1',
+        status: 3,
+        page_size: 1,
+        offset: 2,
+        sort_by: 'create_time',
+        sort_type: 'desc'
+      }
+
+      card1_expect = {
+        cid: 1,
+        uid: 1,
+        title: 'Two Sum',
+        source: 'LeetCode',
+        description: 'easy',
+        status: 1,
+        used_time: 0,
+        stars: 1,
+        create_time: time1,
+        update_time: time1,
+        schedule_time: nil
+      }
+
+      page_info_expect = {
+        total_page: 3,
+        total_size: 3,
+        current_page: 2,
+        current_size: 1
+      }
+
+      card_info = JSON.parse(response.body)['card_info']
+      page_info = JSON.parse(response.body)['page_info']
+      card1 = JSON.parse(card_info[0])
+      expect(card_info.count).to eq 1
+      expect(card1.to_json).to eq card1_expect.to_json
+      expect(page_info).to eq page_info_expect.to_json
+    end
+
+    it 'view all status and sort by stars asc' do
+      post :view, params: {
+        uid: '1',
+        status: 3,
+        page_size: 1,
+        offset: 1,
+        sort_by: 'stars',
+        sort_type: 'asc'
+      }
+
+      card1_expect = {
+        cid: 1,
+        uid: 1,
+        title: 'Two Sum',
+        source: 'LeetCode',
+        description: 'easy',
+        status: 1,
+        used_time: 0,
+        stars: 1,
+        create_time: time1,
+        update_time: time1,
+        schedule_time: nil
+      }
+
+      page_info_expect = {
+        total_page: 3,
+        total_size: 3,
+        current_page: 1,
+        current_size: 1
+      }
+
+      card_info = JSON.parse(response.body)['card_info']
+      page_info = JSON.parse(response.body)['page_info']
+      card1 = JSON.parse(card_info[0])
+      expect(card_info.count).to eq 1
+      expect(card1.to_json).to eq card1_expect.to_json
+      expect(page_info).to eq page_info_expect.to_json
     end
   end
 end
