@@ -80,6 +80,7 @@ class UserController < ApplicationController
       FileUtils.mv(session[:temp_avatar], new_path)
       res = UserHelper.update_avatar(uid, saved_path)
       flash[:main_notice] = (res ? 'Save successfully' : 'Save Avatar Failed')
+      session[:profile] = UserHelper.get_profile(uid)
     end
     redirect_to '/main/profile'
   end
