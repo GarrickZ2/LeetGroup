@@ -32,4 +32,9 @@ class CardController < ApplicationController
     }
     render json: { card_info: cards, page_info: page_info}
   end
+
+  def view_card_detail
+    card_detail = Card.view_card_detail params[:cid], params[:uid]
+    render json: { card: card_detail }
+  end
 end

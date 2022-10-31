@@ -36,4 +36,12 @@ class Card < ActiveRecord::Base
     CardView.new(page_info, @cards)
   end
 
+
+  def self.view_card_detail(cid, uid)
+    if Card.find_by_uid(uid).nil?
+      nil
+    else
+      Card.find_by(uid: uid, cid: cid)
+    end
+  end
 end

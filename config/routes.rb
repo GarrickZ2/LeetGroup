@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
   post "main/card/view" => "card#view"
 
+  post "main/card/detail" => "card#view_card_detail"
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
