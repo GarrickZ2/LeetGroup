@@ -70,7 +70,7 @@ $('#cardViewModal').on('show.bs.modal', function (event) {
     var source = button.data('source')
     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
     var modal = $(this)
-    modal.find('.modal-title').text('Card' + button.data('cid'))
+    modal.find('.modal-title').text('Card: ' + button.data('title'))
     modal.find('#card-view-source').val(source)
 })
 
@@ -91,46 +91,53 @@ $('.page-item > a').addClass('page-link');
 
 
 function generateCardsBasedOnPage(offset) {
-    // get the card results container
-    let card_container = $("#card-results")
-    // empty the container
-    card_container.empty()
-
-    let card_uid = $("#card-uid").val();
+    let uid = $("#uid").val();
     let pagination_data = {
-        "uid": card_uid,
+        "uid": uid,
         "status": 3 ,
-        "page_size": 9,
-        "offset": offset,
+        "page_size": 6,
+        "offset": offset - 1,
         "sort_by": "create_time",
-        "sort_type": 0
+        "sort_type": "asc"
     };
     console.log("Pagination data is : " + JSON.stringify(pagination_data));
-    // //get data
-    // $.ajax ({
-    //     url:"/card/view",
-    //     type:"POST",
-    //     success: function(data) {
-    //         let cardData = data["card_info"];
-    //     },
-    //     error: function(){
-    //         alert("Fail to get card data");
-    //     }
-    // });
-    var data = [];
-    if(offset === 1) {
-        data = card_data["card_info"];
-    }else {
-        data = card_data2["card_info"];
-    }
-    $.each(data, function(i, datum) {
+    // get data
+    var cardData = [];
+    $.ajax ({
+        url:"card/view",
+        type:"POST",
+        data: pagination_data,
+        success: function(data) {
+            cardData = data["card_info"];
+            console.log("from backend is" + cardData);
+            generateAllCards(cardData);
+        },
+        error: function(){
+            alert("Fail to get card data");
+        }
+    });
+    // var data = [];
+    // if(offset === 1) {
+    //     data = card_data["card_info"];
+    // }else {
+    //     data = card_data2["card_info"];
+    // }
+
+}
+
+function generateAllCards(cardData) {
+    // get the card results container
+    let card_container = $("#card-results");
+    // empty the container
+    card_container.empty();
+    $.each(cardData, function(i, data) {
+        let datum = JSON.parse(data);
         let card_div = $("<div class=\"card\">")
         card_container.append(card_div)
         let card_body = $("<div class=\"card-body\">")
         let card_title = $(" <h5 class=\"card-title\"></h5>")
         let card_text = $("<p class=\"card-text\">")
         let card_link = $("<a class=\"btn btn-inverse-secondary card-details-btn\" data-toggle=\"modal\" data-target=\"#cardViewModal\">See detail</a>")
-        let card_uid = $("<input id=\"card-uid\" type=\"hidden\" value=\"<%#= session[:uid] %>\">")
         card_link.attr("data-cid", datum["cid"]);
         card_link.attr("data-title", datum["title"]);
         card_link.attr("data-source", datum["source"]);
@@ -139,14 +146,14 @@ function generateCardsBasedOnPage(offset) {
 
         // card body
         card_title.text(datum["title"])
-        card_text.text("test")
+        card_text.text(datum["source"])
         card_body.append(card_title)
         card_body.append(card_text)
         card_body.append(card_link)
         card_div.append(card_body)
-        card_div.append(card_uid)
     });
 }
+
 
 // star change
 function changeStarIcon() {

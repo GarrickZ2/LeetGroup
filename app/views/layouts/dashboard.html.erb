@@ -299,6 +299,7 @@
     </nav>
     <!-- partial -->
     <!-- Modal -->
+    <input id="cardUID" type="hidden" value="<%= session[:uid] %>">
     <div class="modal fade" id="cardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -346,7 +347,6 @@
                         Looks good!
                       </div>
                     </div>
-                    <input id="cardUID" type="hidden" value="<%#= session[:uid] %>">
                     <div class="col-12">
                       <button class="btn btn-primary" type="submit" id="createCardButton" onclick="createCard()">Create</button>
                     </div>

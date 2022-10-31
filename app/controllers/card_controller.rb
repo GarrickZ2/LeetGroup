@@ -23,6 +23,7 @@ class CardController < ApplicationController
   def view
     card_view = Card.view_card params[:uid], params[:status].to_i, params[:page_size].to_i, params[:offset].to_i, params[:sort_by],
                                params[:sort_type]
+
     page_info = card_view.page_info.to_json
     card_info = card_view.card_info
     cards = []

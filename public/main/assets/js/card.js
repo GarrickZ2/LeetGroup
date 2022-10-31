@@ -34,7 +34,7 @@ function createCard() {
         "source": $("#cardInputSource").val(),
         "description": $("#cardInputDescription").val()
     };
-    // console.log("form data for create card is: " + JSON.stringify(form_data));
+    console.log("form data for create card is: " + JSON.stringify(form_data));
 
     $.ajax({
         type: "POST",
