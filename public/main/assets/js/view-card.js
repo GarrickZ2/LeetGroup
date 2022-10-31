@@ -1,69 +1,4 @@
-// create fake json to test cards rendering
-let card_data = {
-    "card_info": [
-        {
-            "cid": 1,
-            "title": "card1",
-            "source": "source1"
-        },
-        {
-            "cid": 2,
-            "title": "card2",
-            "source": "source2"
-        },
-        {
-            "cid": 3,
-            "title": "card3",
-            "source": "source3"
-        },
-        {
-            "cid": 4,
-            "title": "card4",
-            "source": "source4"
-        }
-    ],
-    "page_info": {
-        "total_page": 10,
-        "total_size": 20,
-        "current_page": 1,
-        "current_size": 1,
-    }
-}
-
-let card_data2 = {
-    "card_info": [
-        {
-            "cid": 1,
-            "title": "card11",
-            "source": "source11"
-        },
-        {
-            "cid": 2,
-            "title": "card21",
-            "source": "source21"
-        },
-        {
-            "cid": 3,
-            "title": "card31",
-            "source": "source31"
-        },
-        {
-            "cid": 4,
-            "title": "card41",
-            "source": "source31"
-        }
-    ],
-    "page_info": {
-        "total_page": 10,
-        "total_size": 20,
-        "current_page": 1,
-        "current_size": 1,
-    }
-}
-
-
-// all cards js
-// modal function
+// initialize modal
 $('#cardViewModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var title = button.data('title') // Extract info from data-* attributes
@@ -74,22 +9,14 @@ $('#cardViewModal').on('show.bs.modal', function (event) {
     modal.find('#card-view-source').val(source)
 })
 
-// init bootpag and generate cards from data
+// initialize bootpag and generate cards from data
 generateCardsBasedOnPage(1);
 $('.pagination-here').bootpag({
-    total: 10,
-    page: 1,
-    maxVisible: 5,
-    leaps: true,
 }).on("page", function(event, num) {
     generateCardsBasedOnPage(num);
 });
 
-// add class style for pagination
-$('[data-lp]').addClass('page-item');
-$('.page-item > a').addClass('page-link');
-
-
+// function to generate all cards
 function generateCardsBasedOnPage(offset) {
     let uid = $("#uid").val();
     let pagination_data = {
@@ -100,30 +27,38 @@ function generateCardsBasedOnPage(offset) {
         "sort_by": "create_time",
         "sort_type": "asc"
     };
-    console.log("Pagination data is : " + JSON.stringify(pagination_data));
-    // get data
+    // get card info and page info data
     var cardData = [];
+    var pageData = [];
     $.ajax ({
         url:"card/view",
         type:"POST",
         data: pagination_data,
         success: function(data) {
             cardData = data["card_info"];
-            console.log("from backend is" + cardData);
+            pageData = data["page_info"];
             generateAllCards(cardData);
+            generatePagination(JSON.parse(pageData), offset);
         },
         error: function(){
             alert("Fail to get card data");
         }
     });
-    // var data = [];
-    // if(offset === 1) {
-    //     data = card_data["card_info"];
-    // }else {
-    //     data = card_data2["card_info"];
-    // }
-
 }
+
+// generate pagination based on the page info
+function generatePagination(pageData, offset) {
+    $('.pagination-here').bootpag({
+        total: pageData["total_page"],
+        page: offset,
+        maxVisible: 5,
+        leaps: true,
+    });
+    // add class style for pagination
+    $('[data-lp]').addClass('page-item');
+    $('.page-item > a').addClass('page-link');
+}
+
 
 function generateAllCards(cardData) {
     // get the card results container
@@ -153,7 +88,6 @@ function generateAllCards(cardData) {
         card_div.append(card_body)
     });
 }
-
 
 // star change
 function changeStarIcon() {
