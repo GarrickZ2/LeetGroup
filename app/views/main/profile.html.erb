@@ -191,7 +191,7 @@
                               <h6 class="preview-subject">UserName </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" id="profile-user-firstname" value="Admin">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['username'] %>">
                             </div>
                           </div>
                         </div>
@@ -202,7 +202,7 @@
                               <h6 class="preview-subject">Email </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" id="profile-user-lastname" value="Admin">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:email] %>">
                             </div>
                           </div>
                         </div>
@@ -213,7 +213,7 @@
                               <h6 class="preview-subject">City </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" id="profile-user-email" value="email@example.com">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['city'] %>">
                             </div>
                           </div>
                         </div>
@@ -224,7 +224,8 @@
                               <h6 class="preview-subject">Membership </h6>
                             </div>
                             <div class="me-auto text-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" id="profile-user-location" value="New York">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= if session[:profile]['status'] == 0
+                                                                                                                    'Standard Member' else 'Gold Member' %>">
                             </div>
                           </div>
                         </div>
@@ -239,7 +240,7 @@
                               <h6 class="preview-subject">Role </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" id="profile-user-firstname" value="Admin">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['role'] %>">
                             </div>
                           </div>
                         </div>
@@ -250,7 +251,7 @@
                               <h6 class="preview-subject">Company </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" id="profile-user-lastname" value="Admin">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['company'] %>">
                             </div>
                           </div>
                         </div>
@@ -261,7 +262,7 @@
                               <h6 class="preview-subject">School </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" id="profile-user-email" value="email@example.com">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['school'] %>">
                             </div>
                           </div>
                         </div>
@@ -272,7 +273,7 @@
                               <h6 class="preview-subject">Expiration Date</h6>
                             </div>
                             <div class="me-auto text-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" id="profile-user-location" value="New York">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['expiration_date'] %>">
                             </div>
                           </div>
                         </div>
@@ -287,8 +288,7 @@
                         </div>
                         <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width" style="height: 100%">
                         <textarea readonly class="form-control-plaintext profile-input full-width" id="profile-user-firstname" style="height: 100%">
-skdjfaks ksjdfl asalkdfj asldkfj aslk klwfak ksdjfka jsdkfj wkejf
-skdjfaks ksjdfl asalkdfj asldkfj aslk klwfak ksdjfka jsdkfj wkejf skdjf kdjf lakj dskfj alkdj kdjf kajs kdjflaksj dsakdj lskdjf laksjdflk ajsdflkjawoeif jasl jaowdijfao jfla jf aowejf lkdjf lksjdflk jaslf kslkdj laskjfl kajlkfja kljkdj kjel kjlfk jalekfj kjdfkjasdfkja lkjdkfj sdjf skdjf dkf jskdfjlasjdflkasjf kdjalksdjflkasj kdfjsdjfl sdfsdf dfksdfj dkfj skdjfa skdjfksdj faskdjf askdj ksjdfk jsdfj skdfs kjksjd
+                          <%=session[:profile]['bio'] %>
                         </textarea>
                         </div>
                       </div>
@@ -314,7 +314,7 @@ skdjfaks ksjdfl asalkdfj asldkfj aslk klwfak ksdjfka jsdkfj wkejf skdjf kdjf lak
                               <h6 class="preview-subject">UserName </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" class="form-control-plaintext profile-input" name="username" value="Admin">
+                              <input readonly type="text" class="form-control-plaintext profile-input" name="username" value="Admin">
                             </div>
                           </div>
                         </div>
@@ -325,7 +325,7 @@ skdjfaks ksjdfl asalkdfj asldkfj aslk klwfak ksdjfka jsdkfj wkejf skdjf kdjf lak
                               <h6 class="preview-subject">Email </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" class="form-control-plaintext profile-input" name="email" value="Admin">
+                              <input readonly type="text" class="form-control-plaintext profile-input" name="email" value="Admin">
                             </div>
                           </div>
                         </div>
