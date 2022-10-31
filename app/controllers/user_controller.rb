@@ -64,4 +64,40 @@ class UserController < ApplicationController
     flash[:l_notice] = 'You have been logged out.'
     redirect_to user_index_path type: 'login'
   end
+
+  def save_avatar
+    uid = params[:uid]
+    if uid != session[:uid] || session[:temp_avatar].nil?
+      # uid is invalid
+      flash[:main_notice] = "Save Avatar Failed"
+    else
+      flash[:main_notice] = 'Save successfully'
+    end
+    redirect_to 'main/profile'
+  end
+
+  def upload_avatar
+    avatar = params[:file]
+    file_path = ''
+    File.open(Rails.root.join('public', 'avatar', 'temp', avatar.original_filename), 'wb') do |file|
+      file.write(avatar.read)
+      file_path = file.path
+    end
+    session[:temp_avatar] = file_path
+    render json: { success: true, msg: nil }
+  end
+
+  def update_profile
+    user = UserProfile.new
+    user.uid = params[:uid]
+    user.username = params[:username]
+    user.email = params[:email]
+    user.company = params[:company]
+    user.school = params[:school]
+    user.city = params[:city]
+    user.bio = params[:bio]
+    # update
+    session[:main_notice] = 'Save Profile Successfully'
+    redirect_to 'main/profile'
+  end
 end
