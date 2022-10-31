@@ -50,7 +50,7 @@ module UserHelper
 
   def self.update_profile(new_profile)
     profile = UserProfile.find_by(uid: new_profile.uid)
-    return if profile.nil?
+    return false if profile.nil?
 
     UserProfile.columns.each do |c|
       type = c.name
@@ -58,6 +58,7 @@ module UserHelper
       profile.method("#{type}=").call val unless val.nil?
     end
     profile.save
+    true
   end
 
   def self.update_avatar(uid, avatar)

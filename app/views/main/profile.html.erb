@@ -122,17 +122,18 @@
   </style>
 </head>
 <div class="content-wrapper">
+  <p><%=session[:profile] %></p>
   <div class="row" style="margin-top: 5%">
     <div class="col-md-2 stretch-card" style="margin-left: 7%">
       <div class="card" style="text-align: center">
         <div class="text-center profile-img-div">
-          <img src="https://img.syt5.com/2021/0727/20210727082128528.jpg.420.420.jpg" class="rounded-circle" style="width: 150px;"
+          <img src="<%=session[:profile]['avatar'] %>" class="rounded-circle" style="width: 150px;"
                alt="Avatar" class="rounded"/>
         </div>
         <!--profile summary card for profile-->
         <div class="card-body">
-          <h5 class="card-title profile-user-fullname">Admin</h5>
-          <p class="card-text profile-user-email">admin@leetgroup.com</p>
+          <h5 class="card-title profile-user-fullname"><%=session[:profile]['username'] %></h5>
+          <p class="card-text profile-user-email"><%=session[:profile]['email'] %></p>
         </div>
         <hr/>
         <ul class="list-group list-group-flush profile-list">
@@ -155,7 +156,7 @@
           <div class="card profile-header-bar">
             <div class="card-body py-0 px-0 px-sm-3 profile-header-container">
               <div class="row align-items-center bio-graph-heading">
-                <b id="save-btn">Your Profile</b>
+                <b id="save-btn" onclick="submit()">Your Profile</b>
               </div>
             </div>
           </div>
@@ -166,7 +167,7 @@
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <div class="card-body" style="text-align: center">
-<!--                  <form action="/user/upload_avatar"-->
+                  <form action="/user/save_avatar/<%=session[:uid] %>" id="save_avatar" method="get"></form>
                   <form action="/user/upload_avatar" class="dropzone" id="my-awesome-dropzone">
                     <input type="file" name="file"/>
                   </form>
@@ -468,7 +469,7 @@ skdjfaks ksjdfl asalkdfj asldkfj aslk klwfak ksdjfka jsdkfj wkejf skdjf kdjf lak
         if (save_type === 'Save Your Profile') {
           $('#profile-edit').submit()
         } else if (save_type === 'Save Your Avatar') {
-          $.get()
+          $('#save_avatar').submit()
         }
     }
 </script>

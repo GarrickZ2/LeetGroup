@@ -56,24 +56,32 @@ class UserController < ApplicationController
       return
     end
     session[:uid] = uid
+    session[:profile] = UserProfile.get_profile uid
     redirect_to main_dashboard_path
   end
 
   def logout
     session.delete :uid
+    session.delete :profile
     flash[:l_notice] = 'You have been logged out.'
     redirect_to user_index_path type: 'login'
   end
 
   def save_avatar
     uid = params[:uid]
-    if uid != session[:uid] || session[:temp_avatar].nil?
+    if uid.nil? || uid.to_i != session[:uid] || session[:temp_avatar].nil?
       # uid is invalid
-      flash[:main_notice] = "Save Avatar Failed"
+      flash[:main_notice] = 'Save Avatar Failed'
     else
-      flash[:main_notice] = 'Save successfully'
+      extension = session[:temp_avatar].split('.')[1]
+      flash[:main_notice] = 'Save Avatar success'
+      new_path = Rails.root.join('public', 'avatar', "#{uid}.#{extension}")
+      saved_path = "/avatar/#{uid}.#{extension}"
+      FileUtils.mv(session[:temp_avatar], new_path)
+      res = UserHelper.update_avatar(uid, saved_path)
+      flash[:main_notice] = (res ? 'Save successfully' : 'Save Avatar Failed')
     end
-    redirect_to 'main/profile'
+    redirect_to '/main/profile'
   end
 
   def upload_avatar
@@ -97,7 +105,12 @@ class UserController < ApplicationController
     user.city = params[:city]
     user.bio = params[:bio]
     # update
-    session[:main_notice] = 'Save Profile Successfully'
+    res = UserHelper.update_profile(user)
+    session[:main_notice] = if res
+                              'Save Profile Successfully'
+                            else
+                              'Save Profile Failed'
+                            end
     redirect_to 'main/profile'
   end
 end

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'user/logout' => 'user#logout'
   post 'user/update' => 'user#update_profile'
   post 'user/upload_avatar' => 'user#upload_avatar'
+  get 'user/save_avatar/:uid' => 'user#save_avatar'
 
   # Main
   get 'main/dashboard' => 'main#dashboard', as: :dashboard
