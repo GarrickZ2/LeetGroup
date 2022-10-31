@@ -48,7 +48,9 @@ module UserHelper
     return false if UserLogInfo.exists?(email: new_log_info.email)
 
     user = UserLogInfo.find_by(uid: new_log_info.uid)
-    UserProfile.columns.each do |c|
+    return false if user.nil?
+
+    UserLogInfo.columns.each do |c|
       type = c.name
       next if type == 'uid'
 

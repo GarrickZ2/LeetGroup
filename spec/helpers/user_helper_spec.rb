@@ -80,14 +80,14 @@ describe UserHelper do
     before(:all) do
       @current_uid = UserHelper.create_account('test1', 'test@bcd.com', 'Abc12345!')
     end
-    it 'successfully update the profile' do
+    it 'successfully update the profile but NOT username' do
       new_profile = UserProfile.new
       new_profile.uid = @current_uid
       new_profile.username = 'mmab'
       new_profile.city = 'New York'
       UserHelper.update_profile(new_profile)
       user = UserProfile.find(@current_uid)
-      assert_equal user.username, 'mmab'
+      assert_equal user.username, 'test1'
       assert_equal user.city, 'New York'
     end
 
@@ -97,4 +97,45 @@ describe UserHelper do
       assert_equal UserProfile.find(@current_uid).avatar, avatar_path
     end
   end
+
+  describe 'user get UserLogInfo' do
+    before(:all) do
+      @uid = UserHelper.create_account('abcdggt', 'abcdxxa@bcd.com', 'Abc12345!')
+    end
+    it 'get the corresponding password and email' do
+      pwd, em = UserHelper.get_user_log_info(@uid)
+      assert_equal 'Abc12345!', pwd
+      assert_equal 'abcdxxa@bcd.com', em
+    end
+  end
+
+  describe 'user update UserLogInfo' do
+    before(:all) do
+      @uid = UserHelper.create_account('abcdppq', 'abcdmmp@bcd.com', 'Abc12345!')
+      UserHelper.create_account('abcde', 'abcde@bcde.com', 'Abc12345!')
+    end
+    it 'update the information with duplicate' do
+      new_log_info = UserLogInfo.new
+      new_log_info.uid = @uid
+      new_log_info.username = 'abcde'
+      new_log_info.password = 'ccccccAmgt!'
+      result = UserHelper.update_user_log_info(new_log_info)
+      assert_equal false, result
+    end
+
+    it 'update the information without duplicate' do
+      new_log_info = UserLogInfo.new
+      new_log_info.uid = @uid
+      new_log_info.username = 'thisisit'
+      new_log_info.password = 'ccccccAmgt!'
+      new_log_info.email = 'myname@email.com'
+      result = UserHelper.update_user_log_info(new_log_info)
+      userloginfo = UserLogInfo.find_by(username: 'thisisit')
+      assert_equal 'thisisit', userloginfo.username
+      assert_equal 'ccccccAmgt!', userloginfo.password
+      assert_equal 'myname@email.com', userloginfo.email
+      assert_equal @uid, userloginfo.uid
+    end
+  end
+
 end
