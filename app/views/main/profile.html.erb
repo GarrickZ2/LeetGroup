@@ -224,8 +224,7 @@
                               <h6 class="preview-subject">Membership </h6>
                             </div>
                             <div class="me-auto text-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= if session[:profile]['status'] == 0
-                                                                                                                    'Standard Member' else 'Gold Member' %>">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= if session[:profile]['status'] == 0 then 'Standard Member' else 'Gold Member' end %>">
                             </div>
                           </div>
                         </div>
