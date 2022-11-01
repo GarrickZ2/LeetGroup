@@ -11,10 +11,11 @@ class MainController < ApplicationController
       redirect_to user_index_path type: 'login'
       return
     end
-    session[:profile] = UserHelper.get_profile session[:uid] if session[:profile].nil?
     if session[:profile].nil?
-      flash[:l_notice] = 'User Information Invalid, Please Login Again'
-      redirect_to user_index_path type: 'login'
+      session[:profile] = UserHelper.get_profile session[:uid]
+    end
+    if session[:email].nil?
+      session[:email] = UserHelper.get_user_log_info(session[:uid])[1]
     end
   end
 

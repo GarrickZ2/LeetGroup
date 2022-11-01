@@ -122,11 +122,10 @@
   </style>
 </head>
 <div class="content-wrapper">
-  <p><%=session[:profile] %></p>
   <div class="row" style="margin-top: 5%">
     <div class="col-md-2 stretch-card" style="margin-left: 7%">
       <div class="card" style="text-align: center">
-        <div class="text-center profile-img-div">
+        <div class="text-center profile-img-div" style="margin-top: 10%">
           <%if session[:profile]['avatar'].nil? || session[:profile]['avatar'] == ''%>
           <img src="/avatar/default.jpg" class="rounded-circle" style="width: 150px;" alt="Avatar" class="rounded"/>
           <%else %>
@@ -136,7 +135,7 @@
         <!--profile summary card for profile-->
         <div class="card-body">
           <h5 class="card-title profile-user-fullname"><%=session[:profile]['username'] %></h5>
-          <p class="card-text profile-user-email"><%=session[:profile]['email'] %></p>
+          <p class="card-text profile-user-email"><%=session[:email]%></p>
         </div>
         <hr/>
         <ul class="list-group list-group-flush profile-list">
@@ -286,9 +285,7 @@
                           <h6 class="preview-subject">Bio</h6>
                         </div>
                         <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width" style="height: 100%">
-                        <textarea readonly class="form-control-plaintext profile-input full-width" id="profile-user-firstname" style="height: 100%">
-                          <%=session[:profile]['bio'] %>
-                        </textarea>
+                        <textarea readonly class="form-control-plaintext profile-input full-width" id="profile-user-firstname" style="height: 100%"><%=session[:profile]['bio'] %></textarea>
                         </div>
                       </div>
                     </div>
@@ -313,7 +310,7 @@
                               <h6 class="preview-subject">UserName </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input readonly type="text" class="form-control-plaintext profile-input" name="username" value="Admin">
+                              <input readonly type="text" class="form-control-plaintext profile-input" name="username" value="<%=session[:profile]['username'] %>">
                             </div>
                           </div>
                         </div>
@@ -324,7 +321,7 @@
                               <h6 class="preview-subject">Email </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input readonly type="text" class="form-control-plaintext profile-input" name="email" value="Admin">
+                              <input readonly type="text" class="form-control-plaintext profile-input" name="email" value="<%=session[:email] %>">
                             </div>
                           </div>
                         </div>
@@ -335,7 +332,7 @@
                               <h6 class="preview-subject">City </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" class="form-control-plaintext profile-input" name="city" value="email@example.com">
+                              <input type="text" class="form-control-plaintext profile-input" name="city" value="<%=session[:profile]['city'] %>">
                             </div>
                           </div>
                         </div>
@@ -346,7 +343,7 @@
                               <h6 class="preview-subject">Membership </h6>
                             </div>
                             <div class="me-auto text-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="New York">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= if session[:profile]['status'] == 0 then 'Standard Member' else 'Gold Member' end %>">
                             </div>
                           </div>
                         </div>
@@ -361,7 +358,7 @@
                               <h6 class="preview-subject">Role </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" class="form-control-plaintext profile-input" name="role" value="Admin">
+                              <input type="text" class="form-control-plaintext profile-input" name="role" value="<%=session[:profile]['role'] %>">
                             </div>
                           </div>
                         </div>
@@ -372,7 +369,7 @@
                               <h6 class="preview-subject">Company </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" class="form-control-plaintext profile-input" name="company" value="Admin">
+                              <input type="text" class="form-control-plaintext profile-input" name="company" value="<%=session[:profile]['company'] %>">
                             </div>
                           </div>
                         </div>
@@ -383,7 +380,7 @@
                               <h6 class="preview-subject">School </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" class="form-control-plaintext profile-input" name="school" value="email@example.com">
+                              <input type="text" class="form-control-plaintext profile-input" name="school" value="<%=session[:profile]['school'] %>">
                             </div>
                           </div>
                         </div>
@@ -394,7 +391,7 @@
                               <h6 class="preview-subject">Expiration Date</h6>
                             </div>
                             <div class="me-auto text-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="New York">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['expiration_date'] %>">
                             </div>
                           </div>
                         </div>
@@ -408,15 +405,11 @@
                           <h6 class="preview-subject">Bio</h6>
                         </div>
                         <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width" style="height: 100%">
-                        <textarea class="form-control-plaintext profile-input full-width" name="bio" style="height: 100%">
-skdjfaks ksjdfl asalkdfj asldkfj aslk klwfak ksdjfka jsdkfj wkejf
-skdjfaks ksjdfl asalkdfj asldkfj aslk klwfak ksdjfka jsdkfj wkejf skdjf kdjf lakj dskfj alkdj kdjf kajs kdjflaksj dsakdj lskdjf laksjdflk ajsdflkjawoeif jasl jaowdijfao jfla jf aowejf lkdjf lksjdflk jaslf kslkdj laskjfl kajlkfja kljkdj kjel kjlfk jalekfj kjdfkjasdfkja lkjdkfj sdjf skdjf dkf jskdfjlasjdflkasjf kdjalksdjflkasj kdfjsdjfl sdfsdf dfksdfj dkfj skdjfa skdjfksdj faskdjf askdj ksjdfk jsdfj skdfs kjksjd
-                        </textarea>
+                        <textarea class="form-control-plaintext profile-input full-width" name="bio" style="height: 100%"><%=session[:profile]['bio'] %></textarea>
                         </div>
                       </div>
                     </div>
                   </div>
-
                 </div>
                 </form>
               </div>

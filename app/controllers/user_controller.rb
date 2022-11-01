@@ -57,12 +57,14 @@ class UserController < ApplicationController
     end
     session[:uid] = uid
     session[:profile] = UserProfile.get_profile uid
+    session[:email] = UserHelper.get_user_log_info(uid)[1]
     redirect_to main_dashboard_path
   end
 
   def logout
     session.delete :uid
     session.delete :profile
+    session.delete :email
     flash[:l_notice] = 'You have been logged out.'
     redirect_to user_index_path type: 'login'
   end
@@ -98,20 +100,24 @@ class UserController < ApplicationController
 
   def update_profile
     user = UserProfile.new
+    p params
     user.uid = params[:uid]
-    user.username = params[:username]
-    user.email = params[:email]
+    # user.username = params[:username]
     user.company = params[:company]
+    user.role = params[:role]
     user.school = params[:school]
     user.city = params[:city]
     user.bio = params[:bio]
+    p user
     # update
     res = UserHelper.update_profile(user)
-    session[:main_notice] = if res
-                              'Save Profile Successfully'
-                            else
-                              'Save Profile Failed'
-                            end
-    redirect_to 'main/profile'
+    if res
+      session[:main_notice] = 'Save Profile Successfully'
+      session[:profile] = UserHelper.get_profile user.uid
+      session[:email] = UserHelper.get_user_log_info(user.uid)[1]
+    else
+      session[:main_notice] = 'Save Profile Failed'
+    end
+    redirect_to '/main/profile'
   end
 end
