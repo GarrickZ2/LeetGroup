@@ -40,7 +40,11 @@ module UserHelper
   def self.get_user_log_info(uid)
     # Given uid, return password and email
     user = UserLogInfo.find_by(uid: uid)
-    [user.password, user.email]
+    if user.nil?
+      [nil, nil]
+    else
+      [user.password, user.email]
+    end
   end
 
   def self.update_user_log_info(new_log_info)

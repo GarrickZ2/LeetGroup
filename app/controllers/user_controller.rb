@@ -75,7 +75,7 @@ class UserController < ApplicationController
       # uid is invalid
       flash[:main_notice] = 'Save Avatar Failed'
     else
-      extension = session[:temp_avatar].split('.')[1]
+      extension = File.extname session[:temp_avatar]
       flash[:main_notice] = 'Save Avatar success'
       new_path = Rails.root.join('public', 'avatar', "#{uid}.#{extension}")
       saved_path = "/avatar/#{uid}.#{extension}"
@@ -90,7 +90,7 @@ class UserController < ApplicationController
   def upload_avatar
     avatar = params[:file]
     file_path = ''
-    File.open(Rails.root.join('public', 'avatar', 'temp', avatar.original_filename), 'wb') do |file|
+    File.open(Rails.root.join('public', 'avatar', 'temp', File.basename(avatar.path)), 'wb') do |file|
       file.write(avatar.read)
       file_path = file.path
     end
