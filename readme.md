@@ -1,14 +1,19 @@
 # Prerequisite
-1. Packages should be installed for cucumber test.
+## Packages for cucumber test
+For MacOS, Linux:
 ```shell
 brew install geckodriver
 brew install firefox --cask
 ```
-# Configuration Database in MySQL
-1. Install mysql driver on MacOS
+For Windows, follow the instruction [here](http://www.learningaboutelectronics.com/Articles/How-to-install-geckodriver-Python-windows.php) for `geckodriver` installation,
+and [here](https://support.mozilla.org/en-US/kb/how-install-firefox-windows) for Firefox.
+## Configuration Database in MySQL
+1. Install mysql driver on MacOS/Linux
     ```shell
    brew install mysql
    ```
+   For Windows users, refer to this [instruction](https://dev.mysql.com/doc/refman/5.7/en/installing-mysql-shell-windows-quick.html).
+
 2. Install 'mysql2' driver for Rails by gem
     ```shell
     gem install mysql2
@@ -29,6 +34,60 @@ brew install firefox --cask
    CREATE SCHEMA leetgroup_development;
    CREATE SCHEMA leetgroup_test;
    ```
+
+# Development instruction
+This part includes steps to run the application locally. Before running the following commands,
+you need to clone the repo locally.
+1. Checkout to the correct branch.
+```shell
+git checkout prod/iter1
+```
+2. Install gems
+```shell
+bundle install
+```
+3. Setup database
+```shell
+rake db:seed
+rake db:migrate
+```
+4. Run the Ruby application
+```shell
+rails s
+```
+
+# Production
+In order to visit certain versions, please use `git` to checkout to the
+corresponding branch. For example, for iteration 1, you should checkout at
+```shell
+git checkout prod/iter1
+```
+
+## Step 1: Push and deploy
+To deploy our application to Heroku, you first need to create an account on the [website](https://www.heroku.com/).
+After that, please refer to [this page](https://devcenter.heroku.com/articles/git)
+for creating, and deploying the application.
+
+One thing to notice is that we are **NOT** pushing `master` branch to heroku, so please use
+```shell
+git push heroku <branch_name>:master
+```
+
+## Step 2: Database creation
+After deployment, use `heroku addons` to check if `heroku-postgresql` appears in the add-ons.
+If not, run this command:
+```shell
+heroku addons:create heroku-postgresql:hobby-dev
+```
+
+This will help you add Postgres to the app. Then you should run the following commands to build the databases remotely.
+```shell
+heroku run rake db:seed
+heroku run rake db:migrate
+```
+
+You should be able to run the app on heroku now.
+
 # Utils
 ## LeetLogger
 ### Usage
@@ -43,12 +102,12 @@ class Movies
     end
 end
 ```
-1. All the log info will be record under the file log/index.log 
-2. If you want to declare multi level log name, you can use level1/level2/index.log, etc. 
-3. If you don't give the file name, all the log information will be recorded in the 'other.log' 
-4. If you don't give the class_name, we will use 'Default' as instead. 
+1. All the log info will be record under the file log/index.log
+2. If you want to declare multi level log name, you can use level1/level2/index.log, etc.
+3. If you don't give the file name, all the log information will be recorded in the 'other.log'
+4. If you don't give the class_name, we will use 'Default' as instead.
 5. You must give the class_name before the file_path
 
 ### Extension in RubyMine
 To highlight the log file, you can download the extension 'Ideolog',
-and import the log highlighting setting under config/leetlogger.xml 
+and import the log highlighting setting under config/leetlogger.xml
