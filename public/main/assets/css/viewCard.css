@@ -43,6 +43,11 @@
 
 .col-form-label {
     font-weight: bold;
+
+}
+
+.form-control:focus {
+    color: whitesmoke;
 }
 
 
