@@ -1,7 +1,7 @@
 module MainHelper
   def self.create_session(session, uid)
     session[:uid] = uid
-    session[:profile] = UserProfile.get_profile uid
+    session[:profile] = UserHelper.get_profile uid
     session[:email] = UserHelper.get_user_log_info(uid)[1]
   end
 

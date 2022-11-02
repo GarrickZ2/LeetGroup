@@ -92,32 +92,24 @@ describe UserController do
       expect(session[:uid].nil?)
     end
   end
-  # describe 'User can upload an avatar file' do
-  #   before(:each) do
-  #     @uid = UserHelper.create_account('GarrickZ2', '123@123.com', '123')
-  #     @file = fixture_file_upload('public/avatar/default.jpg')
-  #   end
-  #   it 'user can upload an avatar' do
-  #     post :upload_avatar, params: { file: @file }
-  #     expect !session[:temp_avatar].nil?
-  #     expect File.exists? session[:temp_avatar]
-  #   end
-  #
-  #   it 'user can not save an avatar if not login ' do
-  #     post :upload_avatar, params: { file: @file }
-  #     get :save_avatar, params: { uid: @uid }
-  #     profile = UserHelper.get_profile @uid
-  #     expect !profile.avatar.nil?
-  #   end
-  #
-  #   it 'user can save an avatar after save' do
-  #     session[:uid] = @uid
-  #     post :upload_avatar, params: { file: @file }
-  #     get :save_avatar, params: { uid: @uid }
-  #     profile = UserHelper.get_profile @uid
-  #     expect !profile.avatar.nil?
-  #   end
-  # end
+  describe 'User can change an avatar' do
+    before(:each) do
+      @uid = UserHelper.create_account('GarrickZ2', '123@123.com', '123')
+      UserHelper.update_avatar(@uid, '')
+    end
+    it 'user can change an avatar' do
+      session[:uid] = @uid
+      post :save_avatar, params: { uid: @uid, index: '4' }
+      profile = UserHelper.get_profile @uid
+      expect File.basename(profile.avatar) == 'face4.jpg'
+    end
+
+    it 'user can not save an avatar if not login ' do
+      post :save_avatar, params: { uid: @uid, index: '4' }
+      profile = UserHelper.get_profile @uid
+      expect File.basename(profile.avatar) != 'face4.jpg'
+    end
+  end
 
   describe 'user can update the profile' do
     before(:each) do

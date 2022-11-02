@@ -1,0 +1,188 @@
+.select-avatar img {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 1px;
+    box-shadow: 0 0 0 4px #fff;
+    cursor: pointer;
+    animation: unselected 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+    -o-animation: unselected 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+    -ms-animation: unselected 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+    -moz-animation: unselected 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+    -webkit-animation: unselected 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+}
+
+.select-avatar li {
+    list-style-type: none;
+    position: relative;
+    margin: 10px;
+    width: 80px;
+    height: 80px;
+    float: left;
+}
+
+.select-avatar li:before {
+    content: "\2714";
+    display: block;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    background: #00c09e;
+    border-radius: 50px;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    z-index: 10;
+    opacity: 0;
+    transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    -ms-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -webkit-transition: 0.3s linear;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+}
+
+.select-avatar li.selected:before {
+    opacity: 1;
+}
+
+/* img selection */
+.select-avatar li.selected img {
+    box-shadow: 0 0 0 4px #00c09e;
+    animation: selected 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+    -o-animation: selected 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+    -ms-animation: selected 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+    -moz-animation: selected 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+    -webkit-animation: selected 0.3s cubic-bezier(0.250, 0.100, 0.250, 1.000);
+}
+
+.full-width {
+    width: 100%;
+}
+
+.bio-graph-heading {
+    color: black;
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    font-size: 16px;
+    font-weight: 300;
+    transition: 2s;
+}
+
+.profile-header-bar {
+    /*background-image:linear-gradient(to bottom right, #f93822, #fb887a);*/
+    background: whitesmoke;
+
+}
+
+.profile-header-bar:hover {
+    background: #fdc3bd;
+    /*background-image:linear-gradient(to bottom right, #fb887a, #f93822);*/
+}
+
+.profile-header-bar:active {
+    transform: scale(0.98);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+
+.tab-pane {
+    padding: 0;
+}
+
+.profile-input {
+    color: whitesmoke;
+    border: #f93822;
+}
+
+input {
+    outline: none !important;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+input:hover {
+    outline: none !important;
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.3);
+}
+
+input:focus {
+    outline: none !important;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+input:read-only {
+    border: unset;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+textarea {
+    outline: none !important;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+textarea:hover {
+    outline: none !important;
+    box-shadow: 0 0 10px rgba(0, 0, 255, 0.3);
+}
+
+textarea:focus {
+    outline: none !important;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+}
+
+textarea:read-only {
+    border: unset;
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+}
+
+textarea::-webkit-scrollbar {
+    width: 1em;
+}
+
+textarea::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 3px rgba(255, 0, 0, 0.3);
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.dropzone {
+    background: none;
+    border-color: white;
+    border-style: dashed;
+    height: 350px;
+}
+
+.dropzone .dz-preview.dz-image-preview {
+    background: none;
+}
+
+.dropzone .dz-preview {
+    margin-top: 10%;
+}
+
+.dropzone.dz-clickable .dz-message, .dropzone.dz-clickable .dz-message * {
+    margin-top: 6%;
+}

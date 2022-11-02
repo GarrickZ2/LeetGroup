@@ -44,7 +44,7 @@ class UserController < ApplicationController
       redirect_to user_index_path type: 'register'
       return
     end
-    session[:uid] = uid
+    MainHelper.create_session session, uid
     logger.info "User registered successfully with uid #{uid}, params: #{params}"
     redirect_to main_dashboard_path
   end
@@ -63,43 +63,31 @@ class UserController < ApplicationController
 
   def logout
     MainHelper.clean_session session
-    flash[:l_notice] = 'You have been logged out.'
+    if flash[:l_notice].nil?
+      flash[:l_notice] = 'You have been logged out.'
+    else 
+      flash[:l_notice] = flash[:l_notice]
+    end
     redirect_to user_index_path type: 'login'
   end
 
-  # def save_avatar
-  #   uid = params[:uid]
-  #   if uid.nil? || uid.to_i != session[:uid] || session[:temp_avatar].nil?
-  #     # uid is invalid
-  #     flash[:main_notice] = 'Save Avatar Failed'
-  #   else
-  #     extension = File.extname session[:temp_avatar]
-  #     flash[:main_notice] = 'Save Avatar success'
-  #     new_path = Rails.root.join('public', 'avatar', "#{uid}.#{extension}")
-  #     saved_path = "/avatar/#{uid}.#{extension}"
-  #     FileUtils.mv(session[:temp_avatar], new_path)
-  #     res = UserHelper.update_avatar(uid, saved_path)
-  #     flash[:main_notice] = (res ? 'Save successfully' : 'Save Avatar Failed')
-  #     session[:profile] = UserHelper.get_profile(uid)
-  #     session.delete :temp_avatar
-  #   end
-  #   redirect_to '/main/profile'
-  # end
-
-  # def upload_avatar
-  #   avatar = params[:file]
-  #   file_path = ''
-  #   File.open(Rails.root.join('public', 'avatar', 'temp', File.basename(avatar.path)), 'wb') do |file|
-  #     file.write(avatar.read)
-  #     file_path = file.path
-  #   end
-  #   session[:temp_avatar] = file_path
-  #   render json: { success: true, msg: nil }
-  # end
+  def save_avatar
+    uid = params[:uid]
+    index = params[:index]
+    if uid.nil? || uid.to_i != session[:uid] || index.nil? || index == '' || index.to_i < 1 || index.to_i > 27
+      flash[:main_notice] = 'Save Avatar Failed'
+    else
+      avatar_path = "/main/assets/images/faces/face#{index}.jpg"
+      res = UserHelper.update_avatar(uid, avatar_path)
+      flash[:main_notice] = (res ? 'Save successfully' : 'Save Avatar Failed')
+      MainHelper.create_session session, uid.to_i
+    end
+    redirect_to '/main/profile'
+  end
 
   def update_profile
     user = UserProfile.new
-    user.uid = params[:uid]
+    user.uid = params[:uid].to_i
     # user.username = params[:username]
     user.company = params[:company]
     user.role = params[:role]
@@ -142,7 +130,7 @@ class UserController < ApplicationController
     user = UserLogInfo.new
     user.uid = params[:uid]
     user.password = params[:pass]
-
+    flash[:l_notice] = 'Update Password Successfully, please login again'
     UserHelper.update_user_log_info user
     redirect_to '/user/logout'
   end
