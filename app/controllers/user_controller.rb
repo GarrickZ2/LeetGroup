@@ -69,41 +69,38 @@ class UserController < ApplicationController
     redirect_to user_index_path type: 'login'
   end
 
-  def save_avatar
-    uid = params[:uid]
-    if uid.nil? || uid.to_i != session[:uid] || session[:temp_avatar].nil?
-      p session[:uid]
-      p session[:temp_avatar]
-      # uid is invalid
-      flash[:main_notice] = 'Save Avatar Failed'
-    else
-      extension = File.extname session[:temp_avatar]
-      flash[:main_notice] = 'Save Avatar success'
-      new_path = Rails.root.join('public', 'avatar', "#{uid}.#{extension}")
-      saved_path = "/avatar/#{uid}.#{extension}"
-      FileUtils.mv(session[:temp_avatar], new_path)
-      res = UserHelper.update_avatar(uid, saved_path)
-      flash[:main_notice] = (res ? 'Save successfully' : 'Save Avatar Failed')
-      session[:profile] = UserHelper.get_profile(uid)
-      session.delete :temp_avatar
-    end
-    redirect_to '/main/profile'
-  end
+  # def save_avatar
+  #   uid = params[:uid]
+  #   if uid.nil? || uid.to_i != session[:uid] || session[:temp_avatar].nil?
+  #     # uid is invalid
+  #     flash[:main_notice] = 'Save Avatar Failed'
+  #   else
+  #     extension = File.extname session[:temp_avatar]
+  #     flash[:main_notice] = 'Save Avatar success'
+  #     new_path = Rails.root.join('public', 'avatar', "#{uid}.#{extension}")
+  #     saved_path = "/avatar/#{uid}.#{extension}"
+  #     FileUtils.mv(session[:temp_avatar], new_path)
+  #     res = UserHelper.update_avatar(uid, saved_path)
+  #     flash[:main_notice] = (res ? 'Save successfully' : 'Save Avatar Failed')
+  #     session[:profile] = UserHelper.get_profile(uid)
+  #     session.delete :temp_avatar
+  #   end
+  #   redirect_to '/main/profile'
+  # end
 
-  def upload_avatar
-    avatar = params[:file]
-    file_path = ''
-    File.open(Rails.root.join('public', 'avatar', 'temp', File.basename(avatar.path)), 'wb') do |file|
-      file.write(avatar.read)
-      file_path = file.path
-    end
-    session[:temp_avatar] = file_path
-    render json: { success: true, msg: nil }
-  end
+  # def upload_avatar
+  #   avatar = params[:file]
+  #   file_path = ''
+  #   File.open(Rails.root.join('public', 'avatar', 'temp', File.basename(avatar.path)), 'wb') do |file|
+  #     file.write(avatar.read)
+  #     file_path = file.path
+  #   end
+  #   session[:temp_avatar] = file_path
+  #   render json: { success: true, msg: nil }
+  # end
 
   def update_profile
     user = UserProfile.new
-    p params
     user.uid = params[:uid]
     # user.username = params[:username]
     user.company = params[:company]
@@ -111,16 +108,45 @@ class UserController < ApplicationController
     user.school = params[:school]
     user.city = params[:city]
     user.bio = params[:bio]
-    p user
     # update
     res = UserHelper.update_profile(user)
     if res
-      session[:main_notice] = 'Save Profile Successfully'
+      flash[:main_notice] = 'Save Profile Successfully'
       session[:profile] = UserHelper.get_profile user.uid
       session[:email] = UserHelper.get_user_log_info(user.uid)[1]
     else
       session[:main_notice] = 'Save Profile Failed'
     end
     redirect_to '/main/profile'
+  end
+
+  def update_password
+    user = UserHelper.get_user_log_info params[:uid]
+    if user[0].nil?
+      flash[:main_notice] = 'User doesn\'t exist'
+      redirect_to '/main/password'
+      return
+    end
+    if user[0] != params[:o_pass]
+      flash[:main_notice] = 'User password match failed'
+      redirect_to '/main/password'
+      return
+    end
+    if params[:pass] != params[:c_pass]
+      flash[:main_notice] = 'Two times input password is not consistent'
+      redirect_to '/main/password'
+      return
+    end
+    unless UserHelper.check_password_strong params[:pass]
+      flash[:main_notice] = 'The password is not strong enough, please include one upper and lower case letter, one digit and one special character'
+      redirect_to '/main/password'
+      return
+    end
+    user = UserLogInfo.new
+    user.uid = params[:uid]
+    user.password = params[:pass]
+
+    UserHelper.update_user_log_info user
+    redirect_to '/user/logout'
   end
 end

@@ -21,4 +21,5 @@ class MainController < ApplicationController
 
   def dashboard; end
   def profile; end
+  def password; end
 end

@@ -15,8 +15,9 @@ Rails.application.routes.draw do
   post 'user/login' => 'user#login'
   get 'user/logout' => 'user#logout'
   post 'user/update' => 'user#update_profile'
-  post 'user/upload_avatar' => 'user#upload_avatar'
-  get 'user/save_avatar/:uid' => 'user#save_avatar'
+  # post 'user/upload_avatar' => 'user#upload_avatar'
+  # get 'user/save_avatar/:uid' => 'user#save_avatar'
+  post "user/change_password" => "user#update_password"
 
   # Main
   get 'main/dashboard' => 'main#dashboard', as: :dashboard
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
   post "main/card/new" => "card#create"
   get "main/all_cards" => "main#all_cards"
   post "main/card/new" => "card#create"
+  get "main/password" => "main#password", as: :update_password
 
 
   # Example of regular route:
