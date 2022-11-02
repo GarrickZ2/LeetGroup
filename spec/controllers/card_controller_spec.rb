@@ -275,7 +275,7 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         current_size: 1
       }
 
-      card1_expect = {
+      card_expect = {
         cid: 1,
         uid: 1,
         title: 'Two Sum',
@@ -300,8 +300,12 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
 
   describe 'user views card detail' do
     time1 = '2022-10-31T04:26:02.000Z'
-    Card.create(uid: '1', title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
-                stars: 1, used_time: 0, create_time: time1, update_time: time1)
+
+    before(:all) do
+      Card.create(uid: '1', title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
+                  stars: 1, used_time: 0, create_time: time1, update_time: time1)
+    end
+
     card1_expect = {
       cid: 1,
       uid: 1,
@@ -317,7 +321,7 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
     }
 
     it 'should get valid card info' do
-      post :view_card_detail, params: {
+      get :view_card_detail, params: {
         uid: 1,
         cid: 1
       }
