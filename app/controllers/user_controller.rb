@@ -126,26 +126,38 @@ class UserController < ApplicationController
 
   def update_password
     user = UserHelper.get_user_log_info params[:uid]
-    if user.nil?
+    if user[0].nil?
       flash[:main_notice] = 'User doesn\'t exist'
       redirect_to '/main/password'
       return
     end
-    if user.password != params[:o_pass]
+    if user[0] != params[:o_pass]
+      p user[0]
+      p params[:o_pass]
       flash[:main_notice] = 'User password match failed'
+      redirect_to '/main/password'
+      return
+    end
+    if params[:pass] != params[:c_pass]
+      flash[:main_notice] = 'Two times input password is not consistent'
+      redirect_to '/main/password'
+      return
+    end
+    unless UserHelper.check_password_strong params[:pass]
+      flash[:main_notice] = 'The password is not strong enough, please include one upper and lower case letter, one digit and one special character'
       redirect_to '/main/password'
       return
     end
     user = UserLogInfo.new
     user.uid = params[:uid]
     user.password = params[:pass]
+
     res = UserHelper.update_user_log_info user
     unless res
       flash[:main_notice] = 'User password update failed'
       redirect_to '/main/password'
       return
     end
-    flash[:l_notice] = 'Change Password Successfully, please login again'
-    redirect_to '/user/index/login'
+    redirect_to '/user/logout'
   end
 end
