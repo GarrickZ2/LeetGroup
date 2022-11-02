@@ -92,4 +92,49 @@ describe UserController do
       expect(session[:uid].nil?)
     end
   end
+  describe 'User can upload an avatar file' do
+    before(:each) do
+      @uid = UserHelper.create_account('GarrickZ2', '123@123.com', '123')
+      @file = fixture_file_upload('public/avatar/default.jpg')
+    end
+    it 'user can upload an avatar' do
+      post :upload_avatar, params: { file: @file }
+      expect !session[:temp_avatar].nil?
+      expect File.exists? session[:temp_avatar]
+    end
+
+    it 'user can not save an avatar if not login ' do
+      post :upload_avatar, params: { file: @file }
+      get :save_avatar, params: { uid: @uid }
+      profile = UserHelper.get_profile @uid
+      expect !profile.avatar.nil?
+    end
+
+    it 'user can save an avatar after save' do
+      session[:uid] = @uid
+      post :upload_avatar, params: { file: @file }
+      get :save_avatar, params: { uid: @uid }
+      profile = UserHelper.get_profile @uid
+      expect !profile.avatar.nil?
+    end
+
+    describe 'user can update the profile' do
+      it 'user can update the city of their profile``' do
+        post :update_profile, params: {
+          'uid': @uid,
+          'city': 'New York'
+        }
+        profile = UserHelper.get_profile @uid
+        expect profile.city == 'New York'
+      end
+      it 'user cannot update the profile if not exist' do
+        post :update_profile, params: {
+          'uid': 0,
+          'city': 'New York'
+        }
+        profile = UserHelper.get_profile 0
+        expect profile.nil?
+      end
+    end
+  end
 end
