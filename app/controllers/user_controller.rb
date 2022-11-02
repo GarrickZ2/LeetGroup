@@ -115,12 +115,37 @@ class UserController < ApplicationController
     # update
     res = UserHelper.update_profile(user)
     if res
-      session[:main_notice] = 'Save Profile Successfully'
+      flash[:main_notice] = 'Save Profile Successfully'
       session[:profile] = UserHelper.get_profile user.uid
       session[:email] = UserHelper.get_user_log_info(user.uid)[1]
     else
       session[:main_notice] = 'Save Profile Failed'
     end
     redirect_to '/main/profile'
+  end
+
+  def update_password
+    user = UserHelper.get_user_log_info params[:uid]
+    if user.nil?
+      flash[:main_notice] = 'User doesn\'t exist'
+      redirect_to '/main/password'
+      return
+    end
+    if user.password != params[:o_pass]
+      flash[:main_notice] = 'User password match failed'
+      redirect_to '/main/password'
+      return
+    end
+    user = UserLogInfo.new
+    user.uid = params[:uid]
+    user.password = params[:pass]
+    res = UserHelper.update_user_log_info user
+    unless res
+      flash[:main_notice] = 'User password update failed'
+      redirect_to '/main/password'
+      return
+    end
+    flash[:l_notice] = 'Change Password Successfully, please login again'
+    redirect_to '/user/index/login'
   end
 end
