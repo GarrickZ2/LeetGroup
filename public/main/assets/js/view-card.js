@@ -121,7 +121,7 @@ function generateAllCards(cardData) {
             let card_text = $("<p class=\"card-text\">")
             let card_link = $("<a class=\"btn btn-inverse-secondary card-details-btn\" data-toggle=\"modal\" data-target=\"#cardViewModal\" >See detail</a>")
             card_link.attr("data-cid", datum["cid"]);
-            card_link.attr("id", datum["cid"]);
+            card_link.attr("id", "card-detail-btn-"+datum["cid"]);
 
             // card body
             card_title.text(datum["title"])
