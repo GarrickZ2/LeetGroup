@@ -71,6 +71,7 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
   end
 
   describe 'user views cards' do
+
     time1 = '2022-10-31T04:26:02.000Z'
     time2 = '2022-10-31T05:26:02.000Z'
     time3 = '2022-10-31T06:26:02.000Z'
