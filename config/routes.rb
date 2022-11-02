@@ -14,16 +14,16 @@ Rails.application.routes.draw do
   post 'user/create' => 'user#create'
   post 'user/login' => 'user#login'
   get 'user/logout' => 'user#logout'
+  post 'user/update' => 'user#update_profile'
+  post 'user/upload_avatar' => 'user#upload_avatar'
+  get 'user/save_avatar/:uid' => 'user#save_avatar'
 
   # Main
   get 'main/dashboard' => 'main#dashboard', as: :dashboard
-
+  get 'main/profile' => 'main#profile'
   get "main/all_cards" => "main#all_cards"
-
   post "main/card/new" => "card#create"
-
   post "main/card/view" => "card#view"
-
   get "main/card/detail" => "card#view_card_detail"
 
 
