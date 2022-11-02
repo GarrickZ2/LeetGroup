@@ -1,14 +1,19 @@
 # Prerequisite
 ## Packages for cucumber test
+For MacOS, Linux:
 ```shell
 brew install geckodriver
 brew install firefox --cask
 ```
+For Windows, follow the instruction [here](http://www.learningaboutelectronics.com/Articles/How-to-install-geckodriver-Python-windows.php) for `geckodriver` installation,
+and [here](https://support.mozilla.org/en-US/kb/how-install-firefox-windows) for Firefox.
 ## Configuration Database in MySQL
-1. Install mysql driver on MacOS
+1. Install mysql driver on MacOS/Linux
     ```shell
    brew install mysql
    ```
+   For Windows users, refer to this [instruction](https://dev.mysql.com/doc/refman/5.7/en/installing-mysql-shell-windows-quick.html).
+
 2. Install 'mysql2' driver for Rails by gem
     ```shell
     gem install mysql2
@@ -29,6 +34,27 @@ brew install firefox --cask
    CREATE SCHEMA leetgroup_development;
    CREATE SCHEMA leetgroup_test;
    ```
+
+# Development instruction
+This part includes steps to run the application locally. Before running the following commands,
+you need to clone the repo locally.
+1. Checkout to the correct branch.
+```shell
+git checkout prod/iter1
+```
+2. Install gems
+```shell
+bundle install
+```
+3. Setup database
+```shell
+rake db:seed
+rake db:migrate
+```
+4. Run the Ruby application
+```shell
+rails s
+```
 
 # Production
 In order to visit certain versions, please use `git` to checkout to the
