@@ -75,26 +75,14 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
     time2 = '2022-10-31T05:26:02.000Z'
     time3 = '2022-10-31T06:26:02.000Z'
 
-    Card.create(uid: '1', title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
-                stars: 1, used_time: 0, create_time: time1, update_time: time1)
-    Card.create(uid: '1', title: 'Reverse Integer', source: 'LeetCode', description: 'medium', schedule_time: nil, status: 2,
-                stars: 0, used_time: 0, create_time: time2, update_time: time2)
-    Card.create(uid: '1', title: 'Median of Two Sorted Arrays', source: 'LeetCode', description: 'hard', schedule_time: nil, status: 0,
-                stars: 2, used_time: 0, create_time: time3, update_time: time3)
-
-    card1_expect = {
-      cid: 1,
-      uid: 1,
-      title: 'Two Sum',
-      source: 'LeetCode',
-      description: 'easy',
-      status: 1,
-      used_time: 0,
-      stars: 1,
-      create_time: time1,
-      update_time: time1,
-      schedule_time: nil
-    }
+    before(:all) do
+      Card.create(uid: '1', title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
+                  stars: 1, used_time: 0, create_time: time1, update_time: time1)
+      Card.create(uid: '1', title: 'Reverse Integer', source: 'LeetCode', description: 'medium', schedule_time: nil, status: 2,
+                  stars: 0, used_time: 0, create_time: time2, update_time: time2)
+      Card.create(uid: '1', title: 'Median of Two Sorted Arrays', source: 'LeetCode', description: 'hard', schedule_time: nil, status: 0,
+                  stars: 2, used_time: 0, create_time: time3, update_time: time3)
+    end
 
     it 'user does not have any card' do
       post :view, params: {
@@ -130,11 +118,25 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         current_size: 2
       }
 
+      card_expect = {
+        cid: 1,
+        uid: 1,
+        title: 'Two Sum',
+        source: 'LeetCode',
+        description: 'easy',
+        status: 1,
+        used_time: 0,
+        stars: 1,
+        create_time: time1,
+        update_time: time1,
+        schedule_time: nil
+      }
+
       card_info = JSON.parse(response.body)['card_info']
       page_info = JSON.parse(response.body)['page_info']
       card1 = JSON.parse(card_info[0])
       expect(card_info.count).to eq 2
-      expect(card1.to_json).to eq card1_expect.to_json
+      expect(card1.to_json).to eq card_expect.to_json
       expect(page_info).to eq page_info_expect.to_json
     end
 
@@ -155,11 +157,25 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         current_size: 1
       }
 
+      card_expect = {
+        cid: 1,
+        uid: 1,
+        title: 'Two Sum',
+        source: 'LeetCode',
+        description: 'easy',
+        status: 1,
+        used_time: 0,
+        stars: 1,
+        create_time: time1,
+        update_time: time1,
+        schedule_time: nil
+      }
+
       card_info = JSON.parse(response.body)['card_info']
       page_info = JSON.parse(response.body)['page_info']
       card1 = JSON.parse(card_info[0])
       expect(card_info.count).to eq 1
-      expect(card1.to_json).to eq card1_expect.to_json
+      expect(card1.to_json).to eq card_expect.to_json
       expect(page_info).to eq page_info_expect.to_json
     end
 
@@ -180,11 +196,25 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         current_size: 1
       }
 
+      card_expect = {
+        cid: 1,
+        uid: 1,
+        title: 'Two Sum',
+        source: 'LeetCode',
+        description: 'easy',
+        status: 1,
+        used_time: 0,
+        stars: 1,
+        create_time: time1,
+        update_time: time1,
+        schedule_time: nil
+      }
+
       card_info = JSON.parse(response.body)['card_info']
       page_info = JSON.parse(response.body)['page_info']
       card1 = JSON.parse(card_info[0])
       expect(card_info.count).to eq 1
-      expect(card1.to_json).to eq card1_expect.to_json
+      expect(card1.to_json).to eq card_expect.to_json
       expect(page_info).to eq page_info_expect.to_json
     end
 
@@ -205,11 +235,25 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         current_size: 1
       }
 
+      card_expect = {
+        cid: 1,
+        uid: 1,
+        title: 'Two Sum',
+        source: 'LeetCode',
+        description: 'easy',
+        status: 1,
+        used_time: 0,
+        stars: 1,
+        create_time: time1,
+        update_time: time1,
+        schedule_time: nil
+      }
+
       card_info = JSON.parse(response.body)['card_info']
       page_info = JSON.parse(response.body)['page_info']
       card1 = JSON.parse(card_info[0])
       expect(card_info.count).to eq 1
-      expect(card1.to_json).to eq card1_expect.to_json
+      expect(card1.to_json).to eq card_expect.to_json
       expect(page_info).to eq page_info_expect.to_json
     end
 
@@ -230,11 +274,25 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
         current_size: 1
       }
 
+      card1_expect = {
+        cid: 1,
+        uid: 1,
+        title: 'Two Sum',
+        source: 'LeetCode',
+        description: 'easy',
+        status: 1,
+        used_time: 0,
+        stars: 1,
+        create_time: time1,
+        update_time: time1,
+        schedule_time: nil
+      }
+
       card_info = JSON.parse(response.body)['card_info']
       page_info = JSON.parse(response.body)['page_info']
       card1 = JSON.parse(card_info[0])
       expect(card_info.count).to eq 1
-      expect(card1.to_json).to eq card1_expect.to_json
+      expect(card1.to_json).to eq card_expect.to_json
       expect(page_info).to eq page_info_expect.to_json
     end
   end
