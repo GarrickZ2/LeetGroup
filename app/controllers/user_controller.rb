@@ -72,6 +72,8 @@ class UserController < ApplicationController
   def save_avatar
     uid = params[:uid]
     if uid.nil? || uid.to_i != session[:uid] || session[:temp_avatar].nil?
+      p session[:uid]
+      p session[:temp_avatar]
       # uid is invalid
       flash[:main_notice] = 'Save Avatar Failed'
     else
@@ -83,6 +85,7 @@ class UserController < ApplicationController
       res = UserHelper.update_avatar(uid, saved_path)
       flash[:main_notice] = (res ? 'Save successfully' : 'Save Avatar Failed')
       session[:profile] = UserHelper.get_profile(uid)
+      session.delete :temp_avatar
     end
     redirect_to '/main/profile'
   end
