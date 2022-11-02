@@ -1,7 +1,7 @@
-Feature: user login into account
+Feature: user update the profile
   As a user
-  I want to login to my account
-  So that I can use the website function
+  I want to update my profile information
+  So that I can change my information
 
   Background: users in database
     Given the following users exist:

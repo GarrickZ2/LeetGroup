@@ -21,6 +21,8 @@ module NavigationHelpers
       main_dashboard_path
     when /^the profile edit page$/ then
       main_profile_path
+    when /^the password change page$/ then
+      update_password_path
     else
       begin
         page_name =~ /^the (.*) page$/
