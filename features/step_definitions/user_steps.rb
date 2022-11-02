@@ -1,6 +1,7 @@
 Given /the following users exist/ do |users_table|
   users_table.hashes.each do |user|
-    UserHelper.create_account user['username'], user['email'], user['password']
+    UserLogInfo.create user
+    UserProfile.create(username: user['username'], uid: user['uid'])
     # UserLogInfo.create user
   end
 end
