@@ -126,11 +126,7 @@
     <div class="col-md-2 stretch-card" style="margin-left: 7%">
       <div class="card" style="text-align: center">
         <div class="text-center profile-img-div" style="margin-top: 10%">
-          <%if session[:profile]['avatar'].nil? || session[:profile]['avatar'] == ''%>
-          <img src="/avatar/default.jpg" class="rounded-circle" style="width: 150px;" alt="Avatar" class="rounded"/>
-          <%else %>
           <img src="<%=session[:profile]['avatar'] %>" class="rounded-circle" style="width: 150px;" alt="Avatar" class="rounded"/>
-          <%end %>
         </div>
         <!--profile summary card for profile-->
         <div class="card-body">

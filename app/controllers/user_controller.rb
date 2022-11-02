@@ -7,12 +7,14 @@ class UserController < ApplicationController
 
   def index
     # if the user has logged in before, directly go to the dashboard
-    if !session[:uid].nil? && session[:uid].positive?
+    @login_type = params[:type]
+    if @login_type != 'register' && (!session[:uid].nil? && session[:uid].positive?)
       @@logger.info "User #{session[:uid]} has logged in, redirect to main_dashboard"
       redirect_to main_dashboard_path
       return
+    else
+      MainHelper.clean_session session
     end
-    @login_type = params[:type]
   end
 
   def create
@@ -55,16 +57,12 @@ class UserController < ApplicationController
       redirect_to user_index_path type: 'login'
       return
     end
-    session[:uid] = uid
-    session[:profile] = UserProfile.get_profile uid
-    session[:email] = UserHelper.get_user_log_info(uid)[1]
+    MainHelper.create_session session, uid
     redirect_to main_dashboard_path
   end
 
   def logout
-    session.delete :uid
-    session.delete :profile
-    session.delete :email
+    MainHelper.clean_session session
     flash[:l_notice] = 'You have been logged out.'
     redirect_to user_index_path type: 'login'
   end
@@ -112,8 +110,7 @@ class UserController < ApplicationController
     res = UserHelper.update_profile(user)
     if res
       flash[:main_notice] = 'Save Profile Successfully'
-      session[:profile] = UserHelper.get_profile user.uid
-      session[:email] = UserHelper.get_user_log_info(user.uid)[1]
+      MainHelper.create_session session, user.uid
     else
       session[:main_notice] = 'Save Profile Failed'
     end
