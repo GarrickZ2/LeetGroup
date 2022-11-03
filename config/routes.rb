@@ -23,8 +23,8 @@ Rails.application.routes.draw do
   get 'main/profile' => 'main#profile'
   get "main/all_cards" => "main#all_cards"
   post "main/card/new" => "card#create"
-  get "main/all_cards" => "main#all_cards"
-  post "main/card/new" => "card#create"
+  post "main/card/view" => "card#view"
+  get "main/card/detail" => "card#view_card_detail"
   get "main/password" => "main#password", as: :update_password
 
 

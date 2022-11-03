@@ -19,4 +19,22 @@ class CardController < ApplicationController
     CardHelper.create_card params[:uid], params[:title], params[:source], params[:description]
     render json: { success: true, msg: nil }
   end
+
+  def view
+    card_view = Card.view_card params[:uid], params[:status].to_i, params[:page_size].to_i, params[:offset].to_i, params[:sort_by],
+                               params[:sort_type]
+
+    page_info = card_view.page_info.to_json
+    card_info = card_view.card_info
+    cards = []
+    card_info.each { |card|
+      cards.append(card.to_json)
+    }
+    render json: { card_info: cards, page_info: page_info}
+  end
+
+  def view_card_detail
+    card_detail = Card.view_card_detail params[:cid], params[:uid]
+    render json: { card: card_detail }
+  end
 end

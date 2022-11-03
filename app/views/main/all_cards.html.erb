@@ -1,31 +1,114 @@
+<head>
+  <link rel="stylesheet" href="assets/css/card.css">
+  <link rel="stylesheet" href="assets/css/viewCard.css">
+</head>
+<input id="uid" name="uid" type="hidden" value="<%= session[:uid] %>">
 <div class="content-wrapper">
-  <div class="card-deck" id="all-cards-container">
-    <div class="card col-md-4">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
-      </div>
-    </div>
-    <div class="card col-md-4">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-      </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
+  <!--  <div class="container">-->
+  <div class="container">
+    <!-- Card Lists -->
+    <div class="row cards-container">
+      <div class="col-md-12 ">
+        <div class="card-columns" id="card-results">
+
+        </div>
       </div>
     </div>
-    <div class="card col-md-4">
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+
+    <div class="row fixed-row pagination-container">
+      <div class="col pagination-here align-self-center">
       </div>
-      <div class="card-footer">
-        <small class="text-muted">Last updated 3 mins ago</small>
+    </div>
+  </div>
+
+  <!-- Card Modal -->
+  <div class="modal fade" id="cardViewModal" tabindex="-1" role="dialog" aria-labelledby="cardViewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cardViewModalLabel"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true" class="close-button">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-8">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Source</label>
+                  <input type="text" class="form-control" id="card-view-source">
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Description</label>
+                  <textarea class="form-control" id="card-view-description"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Comment</label>
+                  <div class="row">
+                    <div class="col-md-2 col-sm-2 card-comment-avatar-container">
+                      <img class="img-xs rounded-circle " src="assets/images/faces/face15.jpg" alt="">
+                      <!--                      <span class="count bg-success"></span>-->
+                    </div>
+                    <div class="col-md-10 col-sm-10 card-comment-container">
+                      <input id="card-view-comment">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-12 use-time-container">
+                  <p class="item-title">Used time</p>
+                  <span id="card-view-used-time"></span>
+                  <br>
+                  <br>
+                </div>
+                <div class="col-md-12 action-container">
+                  <p class="item-title">Actions</p>
+                  <ul class="list-group action-list-group">
+                    <li class="list-group-item action-item">
+                      <i class="mdi mdi-border-color action-icon"></i>
+                      Edit
+                    </li>
+                    <li class="list-group-item action-item">
+                      <i class="mdi mdi-archive action-icon"></i>
+                      Archive
+                    </li>
+                    <li class="list-group-item action-item">
+                      <i class="mdi mdi-content-copy action-icon"></i>
+                      Copy
+                    </li>
+                    <li class="list-group-item action-item">
+                      <i class="mdi mdi-delete action-icon"></i>
+                      Delete
+                    </li>
+                    <li class="list-group-item action-item">
+                      <i class="mdi mdi-share-variant action-icon"></i>
+                      Share
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <div class="mr-auto create-time-text">
+            Created time
+            <span id="card-view-create-time">11:59 10/31/2022</span>
+          </div>
+          <i class="mdi mdi-star-outline star-icon" onclick="changeStarIcon()">
+          </i>
+          <span class="star-text" id="card-view-star">Stars 15</span>
+        </div>
+
       </div>
     </div>
   </div>
 </div>
+
+
+
