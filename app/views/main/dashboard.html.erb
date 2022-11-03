@@ -2,7 +2,7 @@
   <link rel="stylesheet" href="profile.css">
 </head>
 <div class="content-wrapper">
-  <div class="row">
+  <div class="row" hidden>
     <div class="col-12 grid-margin stretch-card">
       <div class="card corona-gradient-card">
         <div class="card-body py-0 px-0 px-sm-3">
@@ -31,7 +31,7 @@
           <div class="row">
             <div class="col-9">
               <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0">$12.34</h3>
+                <h3 class="mb-0">12</h3>
                 <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
               </div>
             </div>
@@ -41,7 +41,7 @@
               </div>
             </div>
           </div>
-          <h6 class="text-muted font-weight-normal">Potential growth</h6>
+          <h6 class="text-muted font-weight-normal">Daily Cards</h6>
         </div>
       </div>
     </div>
@@ -51,7 +51,7 @@
           <div class="row">
             <div class="col-9">
               <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0">$17.34</h3>
+                <h3 class="mb-0">27</h3>
                 <p class="text-success ms-2 mb-0 font-weight-medium">+11%</p>
               </div>
             </div>
@@ -61,7 +61,7 @@
               </div>
             </div>
           </div>
-          <h6 class="text-muted font-weight-normal">Revenue current</h6>
+          <h6 class="text-muted font-weight-normal">Weekly Cards</h6>
         </div>
       </div>
     </div>
@@ -71,7 +71,7 @@
           <div class="row">
             <div class="col-9">
               <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0">$12.34</h3>
+                <h3 class="mb-0">32.34</h3>
                 <p class="text-danger ms-2 mb-0 font-weight-medium">-2.4%</p>
               </div>
             </div>
@@ -81,7 +81,7 @@
               </div>
             </div>
           </div>
-          <h6 class="text-muted font-weight-normal">Daily Income</h6>
+          <h6 class="text-muted font-weight-normal">Monthly Cards</h6>
         </div>
       </div>
     </div>
@@ -91,7 +91,7 @@
           <div class="row">
             <div class="col-9">
               <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0">$31.53</h3>
+                <h3 class="mb-0">3</h3>
                 <p class="text-success ms-2 mb-0 font-weight-medium">+3.5%</p>
               </div>
             </div>
@@ -101,7 +101,7 @@
               </div>
             </div>
           </div>
-          <h6 class="text-muted font-weight-normal">Expense current</h6>
+          <h6 class="text-muted font-weight-normal">Monthly Projects</h6>
         </div>
       </div>
     </div>
@@ -225,7 +225,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" hidden>
     <div class="col-sm-4 grid-margin">
       <div class="card">
         <div class="card-body">
@@ -288,7 +288,7 @@
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Order Status</h4>
+          <h4 class="card-title">Project Status</h4>
           <div class="table-responsive">
             <table class="table">
               <thead>
@@ -300,13 +300,13 @@
                     </label>
                   </div>
                 </th>
-                <th> Client Name</th>
-                <th> Order No</th>
-                <th> Product Cost</th>
-                <th> Project</th>
-                <th> Payment Mode</th>
+                <th> Manager Name</th>
+                <th> Proj No</th>
+                <th> Product Numbers</th>
+                <th> Project Name</th>
+                <th> Project Mode</th>
                 <th> Start Date</th>
-                <th> Payment Status</th>
+                <th> Project Status</th>
               </tr>
               </thead>
               <tbody>
@@ -323,12 +323,12 @@
                   <span class="ps-2"><%=session[:profile]['username']%></span>
                 </td>
                 <td> 02312</td>
-                <td> $14,500</td>
+                <td> 500</td>
                 <td> Dashboard</td>
-                <td> Credit card</td>
+                <td> Personal </td>
                 <td> 04 Dec 2019</td>
                 <td>
-                  <div class="badge badge-outline-success">Approved</div>
+                  <div class="badge badge-outline-success">Finished</div>
                 </td>
               </tr>
               <tr>
@@ -344,12 +344,12 @@
                   <span class="ps-2">Estella Bryan</span>
                 </td>
                 <td> 02312</td>
-                <td> $14,500</td>
+                <td> 300</td>
                 <td> Website</td>
-                <td> Cash on delivered</td>
+                <td> Personal </td>
                 <td> 04 Dec 2019</td>
                 <td>
-                  <div class="badge badge-outline-warning">Pending</div>
+                  <div class="badge badge-outline-warning">Ongoing</div>
                 </td>
               </tr>
               <tr>
@@ -365,12 +365,12 @@
                   <span class="ps-2">Lucy Abbott</span>
                 </td>
                 <td> 02312</td>
-                <td> $14,500</td>
+                <td> 20</td>
                 <td> App design</td>
-                <td> Credit card</td>
+                <td> Groupwork </td>
                 <td> 04 Dec 2019</td>
                 <td>
-                  <div class="badge badge-outline-danger">Rejected</div>
+                  <div class="badge badge-outline-danger">Forfeited</div>
                 </td>
               </tr>
               <tr>
@@ -386,12 +386,12 @@
                   <span class="ps-2">Peter Gill</span>
                 </td>
                 <td> 02312</td>
-                <td> $14,500</td>
+                <td> 100</td>
                 <td> Development</td>
-                <td> Online Payment</td>
+                <td> Groupwork </td>
                 <td> 04 Dec 2019</td>
                 <td>
-                  <div class="badge badge-outline-success">Approved</div>
+                  <div class="badge badge-outline-success">Finished</div>
                 </td>
               </tr>
               <tr>
@@ -407,12 +407,12 @@
                   <span class="ps-2">Sallie Reyes</span>
                 </td>
                 <td> 02312</td>
-                <td> $14,500</td>
+                <td> 60</td>
                 <td> Website</td>
-                <td> Credit card</td>
+                <td> Personal </td>
                 <td> 04 Dec 2019</td>
                 <td>
-                  <div class="badge badge-outline-success">Approved</div>
+                  <div class="badge badge-outline-success">Finished</div>
                 </td>
               </tr>
               </tbody>
@@ -422,7 +422,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row" hidden>
     <div class="col-md-6 col-xl-4 grid-margin stretch-card">
       <div class="card">
         <div class="card-body">

@@ -10,6 +10,7 @@ class UserController < ApplicationController
     @login_type = params[:type]
     if @login_type != 'register' && (!session[:uid].nil? && session[:uid].positive?)
       @@logger.info "User #{session[:uid]} has logged in, redirect to main_dashboard"
+      flash[:main_notice] = 'Login Already, Login successfully'
       redirect_to main_dashboard_path
       return
     else
