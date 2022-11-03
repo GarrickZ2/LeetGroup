@@ -15,7 +15,7 @@ Scenario: I can goto the profile detail page
   Then I should see "View Your Profile"
 
 @javascript
-Scenario: I can upload the avatar and save it
+Scenario: I can update my profile information
   Given I log in with "Alien" and "!G1535"
   When I am on the profile edit page
   And I click the element with id "edit-tab"
@@ -24,3 +24,12 @@ Scenario: I can upload the avatar and save it
   And I click the element with id "save-btn"
   Then I should be on the profile edit page
 
+@javascript
+Scenario: I can change my avatar
+  Given I log in with "Alien" and "!G1535"
+  When I am on the profile edit page
+  And I click the element with id "avatar-tab"
+  Then I should see "Save Your Avatar"
+  When I click the element with id "i1"
+  And I click the element with id "save-btn"
+  Then I should be on the profile edit page

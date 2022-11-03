@@ -1,147 +1,25 @@
 <head>
-  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>
-
-  <style>
-      .full-width {
-          width: 100%;
-      }
-
-      .bio-graph-heading {
-          color: black;
-          text-align: center;
-          padding-top: 1%;
-          padding-bottom: 1%;
-          border-radius: 4px 4px 0 0;
-          -webkit-border-radius: 4px 4px 0 0;
-          font-size: 16px;
-          font-weight: 300;
-          transition: 2s;
-      }
-
-      .profile-header-bar {
-          /*background-image:linear-gradient(to bottom right, #f93822, #fb887a);*/
-          background: whitesmoke;
-
-      }
-
-      .profile-header-bar:hover {
-          background: #fdc3bd;
-          /*background-image:linear-gradient(to bottom right, #fb887a, #f93822);*/
-      }
-
-      .profile-header-bar:active {
-          transform: scale(0.98);
-          box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-      }
-
-      .tab-pane {
-          padding: 0;
-      }
-
-      .profile-input {
-          color: whitesmoke;
-          border: #f93822;
-      }
-
-      input {
-          outline: none !important;
-          box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-      }
-
-      input:hover {
-          outline: none !important;
-          box-shadow: 0 0 10px rgba(0, 0, 255, 0.3);
-      }
-
-      input:focus {
-          outline: none !important;
-          box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-      }
-
-      input:read-only {
-          border: unset;
-          box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-      }
-
-      textarea {
-          outline: none !important;
-          box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-      }
-
-      textarea:hover {
-          outline: none !important;
-          box-shadow: 0 0 10px rgba(0, 0, 255, 0.3);
-      }
-
-      textarea:focus {
-          outline: none !important;
-          box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-      }
-
-      textarea:read-only {
-          border: unset;
-          box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-      }
-
-      textarea::-webkit-scrollbar {
-          width: 1em;
-      }
-
-      textarea::-webkit-scrollbar-track {
-          -webkit-box-shadow: inset 0 0 3px rgba(255, 0, 0, 0.3);
-      }
-
-      textarea::-webkit-scrollbar-thumb {
-          background-color: darkgrey;
-          outline: 1px solid slategrey;
-      }
-
-      input[type="file"] {
-          display: none;
-      }
-
-      .dropzone {
-          background: none;
-          border-color: white;
-          border-style: dashed;
-          height: 350px;
-      }
-
-      .dropzone .dz-preview.dz-image-preview {
-          background: none;
-      }
-
-      .dropzone .dz-preview {
-          margin-top: 10%;
-      }
-
-      .dropzone.dz-clickable .dz-message, .dropzone.dz-clickable .dz-message * {
-          margin-top: 6%;
-      }
-  </style>
+<!--  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>-->
+<!--  <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>-->
+  <link rel="stylesheet" href="/user/profile.css" type="text/css"/>
 </head>
 <div class="content-wrapper">
   <div class="row" style="margin-top: 5%">
     <div class="col-md-2 stretch-card" style="margin-left: 7%">
       <div class="card" style="text-align: center">
         <div class="text-center profile-img-div" style="margin-top: 10%">
-          <%if session[:profile]['avatar'].nil? || session[:profile]['avatar'] == ''%>
-          <img src="/avatar/default.jpg" class="rounded-circle" style="width: 150px;" alt="Avatar" class="rounded"/>
-          <%else %>
-          <img src="<%=session[:profile]['avatar'] %>" class="rounded-circle" style="width: 150px;" alt="Avatar" class="rounded"/>
-          <%end %>
+          <img src="<%= session[:profile]['avatar'] %>" class="rounded-circle" style="width: 150px;" alt="Avatar" class="rounded"/>
         </div>
         <!--profile summary card for profile-->
         <div class="card-body">
-          <h5 class="card-title profile-user-fullname"><%=session[:profile]['username'] %></h5>
-          <p class="card-text profile-user-email"><%=session[:email]%></p>
+          <h5 class="card-title profile-user-fullname"><%= session[:profile]['username'] %></h5>
+          <p class="card-text profile-user-email"><%= session[:email] %></p>
         </div>
         <hr/>
         <ul class="list-group list-group-flush profile-list">
-<!--          <li class="list-group-item profile-list-item profile-header-bar" id="avatar-tab" onclick="change_tab('avatar')">-->
-<!--            <i class="mdi mdi-folder-image">&nbsp;&nbsp;&nbsp;</i>Edit Avatar-->
-<!--          </li>-->
+          <li class="list-group-item profile-list-item profile-header-bar" id="avatar-tab" onclick="change_tab('avatar')">
+            <i class="mdi mdi-folder-image">&nbsp;&nbsp;&nbsp;</i>Edit Avatar
+          </li>
           <li class="list-group-item profile-list-item profile-header-bar active" id="view-tab" onclick="change_tab('view')">
             <i class="mdi mdi-account-box">&nbsp;&nbsp;&nbsp;</i>View Profile
           </li>
@@ -165,14 +43,55 @@
         </div>
         <!--content for profile-->
         <div class="tab-content" style="padding: 0; border: unset">
+          <div class="container tab-pane fade">
+            <div class="col-md-12 stretch-card">
+              <div class="card">
+                <div class="card-body" style="text-align: center">
+                  <form action="/user/save_avatar/<%= session[:uid] %>" method="get"></form>
+                  <form action="/user/upload_avatar" class="dropzone" id="my-awesome-dropzone" method="post">
+                    <input type="file" name="file" id="avatar_file"/>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
           <div id="avatar" class="container tab-pane fade">
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <div class="card-body" style="text-align: center">
-                  <form action="/user/save_avatar/<%=session[:uid] %>" id="save_avatar" method="get"></form>
-                  <form action="/user/upload_avatar" class="dropzone" id="my-awesome-dropzone" method="post">
-                    <input type="file" name="file" id="avatar_file"/>
+                  <form action="/user/avatar" method="post" id="save_avatar">
+                    <input hidden name="uid" value="<%=session[:uid] %>">
+                    <input hidden name="index" id="avatar-index">
                   </form>
+                  <ul class="select-avatar" id="avatar-list">
+                    <li id="i1" value="1"><img src="/main/assets/images/faces/face1.jpg"/></li>
+                    <li id="i2" value="2"><img src="/main/assets/images/faces/face2.jpg"/></li>
+                    <li id="i3" value="3" ><img src="/main/assets/images/faces/face3.jpg"/></li>
+                    <li id="i4" value="4"><img src="/main/assets/images/faces/face4.jpg"/></li>
+                    <li id="i5" value="5"><img src="/main/assets/images/faces/face5.jpg"/></li>
+                    <li id="i6" value="6"><img src="/main/assets/images/faces/face6.jpg"/></li>
+                    <li id="i7" value="7"><img src="/main/assets/images/faces/face7.jpg"/></li>
+                    <li id="i8" value="8"><img src="/main/assets/images/faces/face8.jpg"/></li>
+                    <li id="i9" value="8"><img src="/main/assets/images/faces/face9.jpg"/></li>
+                    <li id="i10" value="10"><img src="/main/assets/images/faces/face10.jpg"/></li>
+                    <li id="i11" value="11"><img src="/main/assets/images/faces/face11.jpg"/></li>
+                    <li id="i12" value="12"><img src="/main/assets/images/faces/face12.jpg"/></li>
+                    <li id="i13" value="13"><img src="/main/assets/images/faces/face13.jpg"/></li>
+                    <li id="i14" value="14"><img src="/main/assets/images/faces/face14.jpg"/></li>
+                    <li id="i15" value="15"><img src="/main/assets/images/faces/face15.jpg"/></li>
+                    <li id="i16" value="16"><img src="/main/assets/images/faces/face16.jpg"/></li>
+                    <li id="i17" value="17"><img src="/main/assets/images/faces/face17.jpg"/></li>
+                    <li id="i18" value="18"><img src="/main/assets/images/faces/face18.jpg"/></li>
+                    <li id="i19" value="19"><img src="/main/assets/images/faces/face19.jpg"/></li>
+                    <li id="i20" value="20"><img src="/main/assets/images/faces/face20.jpg"/></li>
+                    <li id="i21" value="21"><img src="/main/assets/images/faces/face21.jpg"/></li>
+                    <li id="i22" value="22"><img src="/main/assets/images/faces/face22.jpg"/></li>
+                    <li id="i23" value="23"><img src="/main/assets/images/faces/face23.jpg"/></li>
+                    <li id="i24" value="24"><img src="/main/assets/images/faces/face24.jpg"/></li>
+                    <li id="i25" value="25"><img src="/main/assets/images/faces/face25.jpg"/></li>
+                    <li id="i26" value="26"><img src="/main/assets/images/faces/face26.jpg"/></li>
+                    <li id="i27" value="27"><img src="/main/assets/images/faces/face27.jpg"/></li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -190,7 +109,7 @@
                               <h6 class="preview-subject">UserName </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['username'] %>">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= session[:profile]['username'] %>">
                             </div>
                           </div>
                         </div>
@@ -201,7 +120,7 @@
                               <h6 class="preview-subject">Email </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:email] %>">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= session[:email] %>">
                             </div>
                           </div>
                         </div>
@@ -212,7 +131,7 @@
                               <h6 class="preview-subject">City </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['city'] %>">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= session[:profile]['city'] %>">
                             </div>
                           </div>
                         </div>
@@ -223,7 +142,11 @@
                               <h6 class="preview-subject">Membership </h6>
                             </div>
                             <div class="me-auto text-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= if session[:profile]['status'] == 0 then 'Standard Member' else 'Gold Member' end %>">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= if session[:profile]['status'] == 0 then
+                                                                                                                    'Standard Member'
+                                                                                                                  else
+                                                                                                                    'Gold Member'
+                                                                                                                  end %>">
                             </div>
                           </div>
                         </div>
@@ -238,7 +161,7 @@
                               <h6 class="preview-subject">Role </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['role'] %>">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= session[:profile]['role'] %>">
                             </div>
                           </div>
                         </div>
@@ -249,7 +172,7 @@
                               <h6 class="preview-subject">Company </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['company'] %>">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= session[:profile]['company'] %>">
                             </div>
                           </div>
                         </div>
@@ -260,7 +183,7 @@
                               <h6 class="preview-subject">School </h6>
                             </div>
                             <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['school'] %>">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= session[:profile]['school'] %>">
                             </div>
                           </div>
                         </div>
@@ -271,7 +194,7 @@
                               <h6 class="preview-subject">Expiration Date</h6>
                             </div>
                             <div class="me-auto text-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['expiration_date'] %>">
+                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= session[:profile]['expiration_date'] %>">
                             </div>
                           </div>
                         </div>
@@ -285,7 +208,7 @@
                           <h6 class="preview-subject">Bio</h6>
                         </div>
                         <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width" style="height: 100%">
-                        <textarea readonly class="form-control-plaintext profile-input full-width" id="profile-user-firstname" style="height: 100%"><%=session[:profile]['bio'] %></textarea>
+                          <textarea readonly class="form-control-plaintext profile-input full-width" id="profile-user-firstname" style="height: 100%"><%= session[:profile]['bio'] %></textarea>
                         </div>
                       </div>
                     </div>
@@ -299,118 +222,122 @@
             <div class="col-md-12 stretch-card">
               <div class="card">
                 <form action="/user/update" method="post" id="profile-edit">
-                <div class="card-body">
-                  <input hidden type="text" value="<%=session[:uid]%>" name="uid">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="preview-list">
-                        <div class="preview-item border-bottom">
-                          <div class="preview-item-content d-sm-flex flex-grow">
-                            <div class="me-auto text-sm-left pt-2 full-width">
-                              <h6 class="preview-subject">UserName </h6>
+                  <div class="card-body">
+                    <input hidden type="text" value="<%= session[:uid] %>" name="uid">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="preview-list">
+                          <div class="preview-item border-bottom">
+                            <div class="preview-item-content d-sm-flex flex-grow">
+                              <div class="me-auto text-sm-left pt-2 full-width">
+                                <h6 class="preview-subject">UserName </h6>
+                              </div>
+                              <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
+                                <input readonly type="text" class="form-control-plaintext profile-input" name="username" value="<%= session[:profile]['username'] %>">
+                              </div>
                             </div>
-                            <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input readonly type="text" class="form-control-plaintext profile-input" name="username" value="<%=session[:profile]['username'] %>">
+                          </div>
+
+                          <div class="preview-item border-bottom">
+                            <div class="preview-item-content d-sm-flex flex-grow">
+                              <div class="me-auto text-sm-left pt-2 full-width">
+                                <h6 class="preview-subject">Email </h6>
+                              </div>
+                              <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
+                                <input readonly type="text" class="form-control-plaintext profile-input" name="email" value="<%= session[:email] %>">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="preview-item border-bottom">
+                            <div class="preview-item-content d-sm-flex flex-grow">
+                              <div class="me-auto text-sm-left pt-2 full-width">
+                                <h6 class="preview-subject">City </h6>
+                              </div>
+                              <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
+                                <input type="text" class="form-control-plaintext profile-input" name="city" value="<%= session[:profile]['city'] %>">
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="preview-item border-bottom">
+                            <div class="preview-item-content d-sm-flex flex-grow">
+                              <div class="me-auto text-sm-left pt-2 full-width">
+                                <h6 class="preview-subject">Membership </h6>
+                              </div>
+                              <div class="me-auto text-right pt-2 pt-sm-0 full-width">
+                                <input type="text" readonly class="form-control-plaintext profile-input" value="<%= if session[:profile]['status'] == 0 then
+                                                                                                                      'Standard Member'
+                                                                                                                    else
+                                                                                                                      'Gold Member'
+                                                                                                                    end %>">
+                              </div>
                             </div>
                           </div>
                         </div>
+                      </div>
 
-                        <div class="preview-item border-bottom">
-                          <div class="preview-item-content d-sm-flex flex-grow">
-                            <div class="me-auto text-sm-left pt-2 full-width">
-                              <h6 class="preview-subject">Email </h6>
-                            </div>
-                            <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input readonly type="text" class="form-control-plaintext profile-input" name="email" value="<%=session[:email] %>">
+                      <div class="col-md-6">
+                        <div class="preview-list">
+                          <div class="preview-item border-bottom">
+                            <div class="preview-item-content d-sm-flex flex-grow">
+                              <div class="me-auto text-sm-left pt-2 full-width">
+                                <h6 class="preview-subject">Role </h6>
+                              </div>
+                              <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
+                                <input type="text" class="form-control-plaintext profile-input" name="role" value="<%= session[:profile]['role'] %>">
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div class="preview-item border-bottom">
-                          <div class="preview-item-content d-sm-flex flex-grow">
-                            <div class="me-auto text-sm-left pt-2 full-width">
-                              <h6 class="preview-subject">City </h6>
-                            </div>
-                            <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" class="form-control-plaintext profile-input" name="city" value="<%=session[:profile]['city'] %>">
+                          <div class="preview-item border-bottom">
+                            <div class="preview-item-content d-sm-flex flex-grow">
+                              <div class="me-auto text-sm-left pt-2 full-width">
+                                <h6 class="preview-subject">Company </h6>
+                              </div>
+                              <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
+                                <input type="text" class="form-control-plaintext profile-input" name="company" value="<%= session[:profile]['company'] %>">
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        <div class="preview-item border-bottom">
-                          <div class="preview-item-content d-sm-flex flex-grow">
-                            <div class="me-auto text-sm-left pt-2 full-width">
-                              <h6 class="preview-subject">Membership </h6>
+                          <div class="preview-item border-bottom">
+                            <div class="preview-item-content d-sm-flex flex-grow">
+                              <div class="me-auto text-sm-left pt-2 full-width">
+                                <h6 class="preview-subject">School </h6>
+                              </div>
+                              <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
+                                <input type="text" class="form-control-plaintext profile-input" name="school" value="<%= session[:profile]['school'] %>">
+                              </div>
                             </div>
-                            <div class="me-auto text-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%= if session[:profile]['status'] == 0 then 'Standard Member' else 'Gold Member' end %>">
+                          </div>
+
+                          <div class="preview-item border-bottom">
+                            <div class="preview-item-content d-sm-flex flex-grow">
+                              <div class="me-auto text-sm-left pt-2 full-width">
+                                <h6 class="preview-subject">Expiration Date</h6>
+                              </div>
+                              <div class="me-auto text-right pt-2 pt-sm-0 full-width">
+                                <input type="text" readonly class="form-control-plaintext profile-input" value="<%= session[:profile]['expiration_date'] %>">
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-
-                    <div class="col-md-6">
-                      <div class="preview-list">
-                        <div class="preview-item border-bottom">
-                          <div class="preview-item-content d-sm-flex flex-grow">
-                            <div class="me-auto text-sm-left pt-2 full-width">
-                              <h6 class="preview-subject">Role </h6>
-                            </div>
-                            <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" class="form-control-plaintext profile-input" name="role" value="<%=session[:profile]['role'] %>">
-                            </div>
+                    <div class="row" style="height: 100px">
+                      <div class="preview-item border-bottom" style="padding-top: 2%; padding-bottom: 2%">
+                        <div class="preview-item-content d-sm-flex flex-grow" style="height: 100%">
+                          <div class="me-auto text-sm-left pt-2" style="width: 32%">
+                            <h6 class="preview-subject">Bio</h6>
                           </div>
-                        </div>
-
-                        <div class="preview-item border-bottom">
-                          <div class="preview-item-content d-sm-flex flex-grow">
-                            <div class="me-auto text-sm-left pt-2 full-width">
-                              <h6 class="preview-subject">Company </h6>
-                            </div>
-                            <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" class="form-control-plaintext profile-input" name="company" value="<%=session[:profile]['company'] %>">
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="preview-item border-bottom">
-                          <div class="preview-item-content d-sm-flex flex-grow">
-                            <div class="me-auto text-sm-left pt-2 full-width">
-                              <h6 class="preview-subject">School </h6>
-                            </div>
-                            <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width">
-                              <input type="text" class="form-control-plaintext profile-input" name="school" value="<%=session[:profile]['school'] %>">
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="preview-item border-bottom">
-                          <div class="preview-item-content d-sm-flex flex-grow">
-                            <div class="me-auto text-sm-left pt-2 full-width">
-                              <h6 class="preview-subject">Expiration Date</h6>
-                            </div>
-                            <div class="me-auto text-right pt-2 pt-sm-0 full-width">
-                              <input type="text" readonly class="form-control-plaintext profile-input" value="<%=session[:profile]['expiration_date'] %>">
-                            </div>
+                          <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width" style="height: 100%">
+                            <textarea class="form-control-plaintext profile-input full-width" name="bio" style="height: 100%"><%= session[:profile]['bio'] %></textarea>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="row" style="height: 100px">
-                    <div class="preview-item border-bottom" style="padding-top: 2%; padding-bottom: 2%">
-                      <div class="preview-item-content d-sm-flex flex-grow" style="height: 100%">
-                        <div class="me-auto text-sm-left pt-2" style="width: 32%">
-                          <h6 class="preview-subject">Bio</h6>
-                        </div>
-                        <div class="me-auto text-sm-right pt-2 pt-sm-0 full-width" style="height: 100%">
-                        <textarea class="form-control-plaintext profile-input full-width" name="bio" style="height: 100%"><%=session[:profile]['bio'] %></textarea>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
                 </form>
               </div>
             </div>
@@ -420,51 +347,4 @@
     </div>
   </div>
 </div>
-<script>
-    function change_tab(name) {
-        $('#avatar-tab').removeClass('active')
-        $('#view-tab').removeClass('active')
-        $('#edit-tab').removeClass('active')
-
-        let avatar = $('#avatar')
-        let view = $('#view')
-        let edit = $('#edit')
-
-        avatar.removeClass('active')
-        view.removeClass('active')
-        edit.removeClass('active')
-
-        avatar.removeClass('fade')
-        view.removeClass('fade')
-        edit.removeClass('fade')
-
-        if (name === 'avatar') {
-            $('#avatar-tab').addClass('active')
-            avatar.addClass('active')
-            view.addClass('fade')
-            edit.addClass('fade')
-            $('#save-btn').text('Save Your Avatar')
-        } else if (name === 'view') {
-            $('#view-tab').addClass('active')
-            view.addClass('active')
-            avatar.addClass('fade')
-            edit.addClass('fade')
-            $('#save-btn').text('View Your Profile')
-        } else if (name === 'edit') {
-            $('#edit-tab').addClass('active')
-            edit.addClass('active')
-            view.addClass('fade')
-            avatar.addClass('fade')
-            $('#save-btn').text('Save Your Profile')
-        }
-    }
-
-    function submit() {
-        const save_type = $('#save-btn').text()
-        if (save_type === 'Save Your Profile') {
-          $('#profile-edit').submit()
-        } else if (save_type === 'Save Your Avatar') {
-          $('#save_avatar').submit()
-        }
-    }
-</script>
+<script src="/user/profile.js"></script>

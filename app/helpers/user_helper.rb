@@ -31,7 +31,10 @@ module UserHelper
     return -1 if UserLogInfo.exists?(username: username)
     return -2 if UserLogInfo.exists?(email: email)
 
-    UserProfile.create(username: username)
+    # select a random avatar
+    index = rand(1..27)
+    avatar_path = "/main/assets/images/faces/face#{index}.jpg"
+    UserProfile.create(username: username, avatar: avatar_path, role: 'N/A Role')
     uid = UserProfile.find_by(username: username).uid
     UserLogInfo.create(username: username, email: email, password: password, uid: uid)
     uid
