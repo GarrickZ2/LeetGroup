@@ -103,7 +103,7 @@ This part will inform you how to deploy the code to heroku.
 In order to visit certain versions, please use `git` to checkout to the
 corresponding branch. For example, for iteration 1, you should checkout at
 ```shell
-git checkout prod/iter1
+git checkout proj-iter1
 ```
 
 ## Step 1: Push and deploy
