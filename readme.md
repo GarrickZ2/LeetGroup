@@ -66,7 +66,7 @@ and [here](https://support.mozilla.org/en-US/kb/how-install-firefox-windows) for
    CREATE SCHEMA leetgroup_test;
    ```
 
-# Development instruction
+# Development instruction (Run and Test)
 This part includes steps to run the application locally. Before running the following commands,
 you need to clone the repo locally. 
 1. Checkout to the correct branch.
