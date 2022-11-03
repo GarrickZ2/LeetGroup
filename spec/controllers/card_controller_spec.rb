@@ -4,7 +4,7 @@ describe CardController do
   describe 'user creates a card with valid info' do
     it 'user enter correct info' do
       post :create, params: {
-        uid: '1',
+        uid: 1,
         title: 'three-sum',
         source: 'leetcode',
         description: ''
@@ -19,7 +19,7 @@ describe CardController do
   describe 'user creates a card with invalid info' do
     it 'user leaves title blank' do
       post :create, params: {
-        uid: '1',
+        uid: 1,
         title: '',
         source: 'leetcode',
         description: ''
@@ -31,7 +31,7 @@ describe CardController do
     end
     it 'title exceeds maximum length' do
       post :create, params: {
-        uid: '1',
+        uid: 1,
         title: 'abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij',
         source: 'leetcode',
         description: ''
@@ -43,7 +43,7 @@ describe CardController do
     end
     it 'source exceeds maximum length' do
       post :create, params: {
-        uid: '1',
+        uid: 1,
         title: '123',
         source: 'abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabc
 defghijabcdefghijabcdefghijabcdefghijabcdefghij',
@@ -56,7 +56,7 @@ defghijabcdefghijabcdefghijabcdefghijabcdefghij',
     end
     it 'description exceeds maximum length' do
       post :create, params: {
-        uid: '1',
+        uid: 1,
         title: '123',
         source: 'leetcode',
         description: 'abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefg
@@ -77,17 +77,17 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
     time3 = '2022-10-31T06:26:02.000Z'
 
     before(:all) do
-      Card.create(uid: '1', title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
+      Card.create(cid: 1, uid: 1, title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
                   stars: 1, used_time: 0, create_time: time1, update_time: time1)
-      Card.create(uid: '1', title: 'Reverse Integer', source: 'LeetCode', description: 'medium', schedule_time: nil, status: 2,
+      Card.create(cid: 2, uid: 1, title: 'Reverse Integer', source: 'LeetCode', description: 'medium', schedule_time: nil, status: 2,
                   stars: 0, used_time: 0, create_time: time2, update_time: time2)
-      Card.create(uid: '1', title: 'Median of Two Sorted Arrays', source: 'LeetCode', description: 'hard', schedule_time: nil, status: 0,
+      Card.create(cid: 3, uid: 1, title: 'Median of Two Sorted Arrays', source: 'LeetCode', description: 'hard', schedule_time: nil, status: 0,
                   stars: 2, used_time: 0, create_time: time3, update_time: time3)
     end
 
     it 'user does not have any card' do
       post :view, params: {
-        uid: '2',
+        uid: 2,
         status: 3,
         page_size: 2,
         offset: 0,
@@ -104,7 +104,7 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
 
     it 'view all status without sort' do
       post :view, params: {
-        uid: '1',
+        uid: 1,
         status: 3,
         page_size: 2,
         offset: 0,
@@ -143,7 +143,7 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
 
     it 'only view active(1) status without sort' do
       post :view, params: {
-        uid: '1',
+        uid: 1,
         status: 1,
         page_size: 2,
         offset: 0,
@@ -182,7 +182,7 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
 
     it 'view all status and sort by update_time desc' do
       post :view, params: {
-        uid: '1',
+        uid: 1,
         status: 3,
         page_size: 1,
         offset: 2,
@@ -221,7 +221,7 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
 
     it 'view all status and sort by create_time desc' do
       post :view, params: {
-        uid: '1',
+        uid: 1,
         status: 3,
         page_size: 1,
         offset: 2,
@@ -260,7 +260,7 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
 
     it 'view all status and sort by stars asc' do
       post :view, params: {
-        uid: '1',
+        uid: 1,
         status: 3,
         page_size: 1,
         offset: 1,
@@ -302,7 +302,8 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
     time1 = '2022-10-31T04:26:02.000Z'
 
     before(:all) do
-      Card.create(uid: '1', title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
+      Card.delete_all
+      Card.create(cid: 1, uid: 1, title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
                   stars: 1, used_time: 0, create_time: time1, update_time: time1)
     end
 

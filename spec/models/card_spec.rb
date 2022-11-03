@@ -5,7 +5,7 @@ describe Card do
   describe 'test create card' do
     it 'should insert a new record in card table successfully' do
       cnt = Card.count
-      cid = Card.create_card('1', '123', '123', '123')
+      cid = Card.create_card(1, '123', '123', '123')
       expect(Card.count).to eq cnt + 1
     end
   end
@@ -14,12 +14,16 @@ describe Card do
     time1 = '2022-10-31T04:26:02.000Z'
     time2 = '2022-10-31T05:26:02.000Z'
     time3 = '2022-10-31T06:26:02.000Z'
-    Card.create(uid: '1', title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
-                stars: 1, used_time: 0, create_time: time1, update_time: time1)
-    Card.create(uid: '1', title: 'Reverse Integer', source: 'LeetCode', description: 'medium', schedule_time: nil, status: 2,
-                stars: 0, used_time: 0, create_time: time2, update_time: time2)
-    Card.create(uid: '1', title: 'Median of Two Sorted Arrays', source: 'LeetCode', description: 'hard', schedule_time: nil, status: 0,
-                stars: 2, used_time: 0, create_time: time3, update_time: time3)
+
+    before(:all) do
+      Card.delete_all
+      Card.create(cid: 1, uid: 1, title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
+                  stars: 1, used_time: 0, create_time: time1, update_time: time1)
+      Card.create(cid: 2, uid: 1, title: 'Reverse Integer', source: 'LeetCode', description: 'medium', schedule_time: nil, status: 2,
+                  stars: 0, used_time: 0, create_time: time2, update_time: time2)
+      Card.create(cid: 3, uid: 1, title: 'Median of Two Sorted Arrays', source: 'LeetCode', description: 'hard', schedule_time: nil, status: 0,
+                  stars: 2, used_time: 0, create_time: time3, update_time: time3)
+    end
 
     card1_expect = {
       cid: 1,
@@ -92,8 +96,13 @@ describe Card do
 
   describe 'test view card detail' do
     time1 = '2022-10-31T04:26:02.000Z'
-    Card.create(uid: '1', title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
+
+    before(:all) do
+      Card.delete_all
+      Card.create(cid: 1, uid: 1, title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
                 stars: 1, used_time: 0, create_time: time1, update_time: time1)
+    end
+
     card1_expect = {
       cid: 1,
       uid: 1,
