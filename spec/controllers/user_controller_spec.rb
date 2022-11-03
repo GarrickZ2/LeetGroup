@@ -92,49 +92,110 @@ describe UserController do
       expect(session[:uid].nil?)
     end
   end
-  describe 'User can upload an avatar file' do
+  describe 'User can change an avatar' do
     before(:each) do
       @uid = UserHelper.create_account('GarrickZ2', '123@123.com', '123')
-      @file = fixture_file_upload('public/avatar/default.jpg')
+      UserHelper.update_avatar(@uid, '')
     end
-    it 'user can upload an avatar' do
-      post :upload_avatar, params: { file: @file }
-      expect !session[:temp_avatar].nil?
-      expect File.exists? session[:temp_avatar]
+    it 'user can change an avatar' do
+      session[:uid] = @uid
+      post :save_avatar, params: { uid: @uid, index: '4' }
+      profile = UserHelper.get_profile @uid
+      expect File.basename(profile.avatar) == 'face4.jpg'
     end
 
     it 'user can not save an avatar if not login ' do
-      post :upload_avatar, params: { file: @file }
-      get :save_avatar, params: { uid: @uid }
+      post :save_avatar, params: { uid: @uid, index: '4' }
       profile = UserHelper.get_profile @uid
-      expect !profile.avatar.nil?
+      expect File.basename(profile.avatar) != 'face4.jpg'
+    end
+  end
+
+  describe 'user can update the profile' do
+    before(:each) do
+      @uid = UserHelper.create_account('GarrickZ2', '123@123.com', '123')
+    end
+    it 'user can update the city of their profile``' do
+      post :update_profile, params: {
+        'uid': @uid,
+        'city': 'New York'
+      }
+      profile = UserHelper.get_profile @uid
+      expect profile.city == 'New York'
+    end
+    it 'user cannot update the profile if not exist' do
+      post :update_profile, params: {
+        'uid': 0,
+        'city': 'New York'
+      }
+      profile = UserHelper.get_profile 0
+      expect profile.nil?
+    end
+  end
+  describe 'User can change the password' do
+    before(:each) do
+      @uid = UserHelper.create_account('GarrickZ2', 'zzx135246@163.com', '!Zzx135246')
+    end
+    it 'User can change the password successfully' do
+      post :update_password, params: {
+        uid: @uid,
+        o_pass: '!Zzx135246',
+        pass: '!Zzx246351',
+        c_pass: '!Zzx246351'
+      }
+      info = UserHelper.get_user_log_info @uid
+      expect info[0] == '!Zzx246351'
+    end
+    it 'User cannot change password is does not exist' do
+      post :update_password, params: {
+        uid: 0,
+        o_pass: '!Zzx135246',
+        pass: '!Zzx246351',
+        c_pass: '!Zzx246351'
+      }
+      info = UserHelper.get_user_log_info 0
+      expect info[0].nil?
     end
 
-    it 'user can save an avatar after save' do
-      session[:uid] = @uid
-      post :upload_avatar, params: { file: @file }
-      get :save_avatar, params: { uid: @uid }
-      profile = UserHelper.get_profile @uid
-      expect !profile.avatar.nil?
+    it 'User cannot change password if original password is wrong' do
+      post :update_password, params: {
+        uid: @uid,
+        o_pass: '!Zzx135245',
+        pass: '!Zzx246351',
+        c_pass: '!Zzx246351'
+      }
+      info = UserHelper.get_user_log_info @uid
+      expect info[0] == '!Zzx135246'
     end
-
-    describe 'user can update the profile' do
-      it 'user can update the city of their profile``' do
-        post :update_profile, params: {
-          'uid': @uid,
-          'city': 'New York'
-        }
-        profile = UserHelper.get_profile @uid
-        expect profile.city == 'New York'
-      end
-      it 'user cannot update the profile if not exist' do
-        post :update_profile, params: {
-          'uid': 0,
-          'city': 'New York'
-        }
-        profile = UserHelper.get_profile 0
-        expect profile.nil?
-      end
+    it 'User cannot change password if password and confirm does not match' do
+      post :update_password, params: {
+        uid: @uid,
+        o_pass: '!Zzx135246',
+        pass: '!Zzx246351',
+        c_pass: '!Zzx246352'
+      }
+      info = UserHelper.get_user_log_info @uid
+      expect info[0] == '!Zzx135246'
+    end
+    it 'User cannot change password if password and confirm does not match' do
+      post :update_password, params: {
+        uid: @uid,
+        o_pass: '!Zzx135246',
+        pass: '!Zzx246351',
+        c_pass: '!Zzx246352'
+      }
+      info = UserHelper.get_user_log_info @uid
+      expect info[0] == '!Zzx135246'
+    end
+    it 'User cannot change password if password is not strong enough' do
+      post :update_password, params: {
+        uid: @uid,
+        o_pass: '!Zzx135246',
+        pass: 'zzx135246',
+        c_pass: 'zzx135246'
+      }
+      info = UserHelper.get_user_log_info @uid
+      expect info[0] == '!Zzx135246'
     end
   end
 end

@@ -45,11 +45,7 @@
         <div class="profile-desc">
           <div class="profile-pic">
             <div class="count-indicator">
-              <%if session[:profile]['avatar'].nil? || session[:profile]['avatar'] == ''%>
-                <img class="img-xs rounded-circle " src="/avatar/default.jpg" alt="">
-              <%else %>
-                <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="">
-              <%end %>
+              <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="">
               <span class="count bg-success"></span>
             </div>
             <div class="profile-name">
@@ -59,18 +55,18 @@
           </div>
           <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
           <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-            <a href="#" class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-dark rounded-circle">
-                  <i class="mdi mdi-settings text-primary"></i>
-                </div>
-              </div>
-              <div class="preview-item-content">
-                <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>
-              </div>
-            </a>
+<!--            <a href="#" class="dropdown-item preview-item">-->
+<!--              <div class="preview-thumbnail">-->
+<!--                <div class="preview-icon bg-dark rounded-circle">-->
+<!--                  <i class="mdi mdi-settings text-primary"></i>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="preview-item-content">-->
+<!--                <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>-->
+<!--              </div>-->
+<!--            </a>-->
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item preview-item">
+            <a href="/main/password" class="dropdown-item preview-item">
               <div class="preview-thumbnail">
                 <div class="preview-icon bg-dark rounded-circle">
                   <i class="mdi mdi-onepassword  text-info"></i>
@@ -275,11 +271,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
               <div class="navbar-profile">
-                <%if session[:profile]['avatar'].nil? || session[:profile]['avatar'] == ''%>
-                  <img class="img-xs rounded-circle " src="/avatar/default.jpg" alt="">
-                <%else %>
-                  <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="">
-                <%end %>
+                <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="">
                 <p class="mb-0 d-none d-sm-block navbar-profile-name"><%=session[:profile]['username']%></p>
                 <i class="mdi mdi-menu-down d-none d-sm-block"></i>
               </div>
