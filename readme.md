@@ -10,6 +10,8 @@ https://warm-meadow-85532.herokuapp.com/
 # GitHub repository link
 https://github.com/GarrickZ2/LeetGroup
 
+**IMPORTANT:** Our iteration 1 code is in `prod/iter1` branch.
+
 # Features of iteration 1
 - When you go to the welcome page, please click the button on **top right**. And then choose
 either `Login` or `Signup`. This will take you to the login/signup page.
@@ -96,6 +98,8 @@ Go to `coverage/index.html` for coverage report.
 **IMPORTANT NOTICE:** Since we are using Firefox for cucumber test, sometimes the test will be stuck and not responding. In this case,
 please terminate the process and rerun `bundle exec cucumber`, it should pass all the tests afterwards.
 # Production
+This part will inform you how to deploy the code to heroku.
+
 In order to visit certain versions, please use `git` to checkout to the
 corresponding branch. For example, for iteration 1, you should checkout at
 ```shell
