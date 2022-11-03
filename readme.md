@@ -75,7 +75,7 @@ git checkout prod/iter1
 ```
 2. Install gems
 ```shell
-bundle install
+bundle install --without production
 ```
 3. Setup database
 ```shell
