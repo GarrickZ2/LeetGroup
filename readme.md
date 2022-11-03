@@ -10,7 +10,7 @@ https://warm-meadow-85532.herokuapp.com/
 # GitHub repository link
 https://github.com/GarrickZ2/LeetGroup
 
-**IMPORTANT:** Our iteration 1 code is in `prod/iter1` branch.
+**IMPORTANT:** Our iteration 1 code is in `proj-iter1` branch.
 
 # Features of iteration 1
 - When you go to the welcome page, please click the button on **top right**. And then choose
