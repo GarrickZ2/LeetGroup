@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_04_024645) do
+ActiveRecord::Schema.define(version: 2022_11_04_030101) do
 
   create_table "cards", primary_key: "cid", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "uid"
@@ -30,6 +30,12 @@ ActiveRecord::Schema.define(version: 2022_11_04_024645) do
     t.string "description", limit: 500
     t.datetime "create_time"
     t.integer "status", default: 0
+  end
+
+  create_table "group_to_users", primary_key: ["gid", "uid"], options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.bigint "gid", null: false
+    t.bigint "uid", null: false
+    t.integer "role", default: 0
   end
 
   create_table "user_log_infos", primary_key: "username", id: :string, limit: 50, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
