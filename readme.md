@@ -1,3 +1,34 @@
+# Team Member
+- Lulu Zhang (lz2761)
+- Zixuan Zhang (zz2888)
+- Ruyue Wang (rw2905)
+- Ziyuan Jiang (zj2322)
+
+# Heroku website
+https://warm-meadow-85532.herokuapp.com/
+
+# GitHub repository link
+https://github.com/GarrickZ2/LeetGroup
+
+**IMPORTANT:** Our iteration 1 code is in `proj-iter1` branch.
+
+# Features of iteration 1
+- When you go to the welcome page, please click the button on **top right**. And then choose
+either `Login` or `Signup`. This will take you to the login/signup page.
+- If you don't have account, please sign up first. Notice that we apply some constraints to the information you enter, 
+including strong password, valid email format.
+- Sign in and you will be redirected to the `dashboard`. After logging in, you can always do the following things with our layout:
+  - Click **top right** button with your username, you can either choose to view your profile or logout.
+    - If you are in the profile page, you can (1) `Edit Avatar`, (2) `View Profile`, (3) `Edit Profile`.
+  - Next to that button, you will find a green button called `+ Create` on **top right**, and then click `New Card`. This will lead you to the card
+  creation page.
+  - Click the three dots next to your profile on the left side, you can change your password.
+  - There is a navigation bar on the left, you can always go to `Dashboard` or `Card-All cards`.
+- In the card creation page, you can enter the details and create the card.
+- After you go to `Card-All cards` page, you will see all the cards you've created. You can then click `See detail` to
+view the details of each card.
+
+Any button/feature/view that is not mentioned above has not been implemented in this iteration.
 # Prerequisite
 ## Packages for cucumber test
 For MacOS, Linux:
@@ -35,16 +66,16 @@ and [here](https://support.mozilla.org/en-US/kb/how-install-firefox-windows) for
    CREATE SCHEMA leetgroup_test;
    ```
 
-# Development instruction
+# Development instruction (Run and Test)
 This part includes steps to run the application locally. Before running the following commands,
-you need to clone the repo locally.
+you need to clone the repo locally. 
 1. Checkout to the correct branch.
 ```shell
-git checkout prod/iter1
+git checkout proj-iter1
 ```
 2. Install gems
 ```shell
-bundle install
+bundle install --without production
 ```
 3. Setup database
 ```shell
@@ -55,12 +86,24 @@ rake db:migrate
 ```shell
 rails s
 ```
+If anything goes wrong, please make sure your Ruby version is 2.6.6
 
+5. Test the application
+```shell
+bundle exec cucumber
+bundle exec rspec
+```
+Go to `coverage/index.html` for coverage report.
+
+**IMPORTANT NOTICE:** Since we are using Firefox for cucumber test, sometimes the test will be stuck and not responding. In this case,
+please terminate the process and rerun `bundle exec cucumber`, it should pass all the tests afterwards.
 # Production
+This part will inform you how to deploy the code to heroku.
+
 In order to visit certain versions, please use `git` to checkout to the
 corresponding branch. For example, for iteration 1, you should checkout at
 ```shell
-git checkout prod/iter1
+git checkout proj-iter1
 ```
 
 ## Step 1: Push and deploy
