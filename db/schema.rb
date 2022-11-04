@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_04_031402) do
+ActiveRecord::Schema.define(version: 2022_11_04_031530) do
+
+  create_table "card_to_comments", primary_key: "comment_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.bigint "cid"
+    t.bigint "uid"
+    t.string "content", limit: 500
+    t.datetime "create_time"
+    t.index ["cid"], name: "index_card_to_comments_on_cid"
+  end
 
   create_table "cards", primary_key: "cid", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "uid"
