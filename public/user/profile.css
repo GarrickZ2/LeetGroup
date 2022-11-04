@@ -83,6 +83,10 @@
     border: 0;
 }
 
+#inputBio {
+    overflow: auto;
+    text-align: left;
+}
 
 
 /* Other styles */
