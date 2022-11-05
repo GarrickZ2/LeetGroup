@@ -1,0 +1,86 @@
+<head>
+  <link rel="stylesheet" href="../main/assets/css/group.css" type="text/css"/>
+</head>
+
+<div class="content-wrapper">
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <button class="nav-link nav-group active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
+      <button class="nav-link nav-group" id="nav-group-cards-tab" data-bs-toggle="tab" data-bs-target="#nav-group-cards" type="button" role="tab" aria-controls="nav-group-cards" aria-selected="false">Group Cards</button>
+      <button class="nav-link nav-group" id="nav-members-tab" data-bs-toggle="tab" data-bs-target="#nav-members" type="button" role="tab" aria-controls="nav-members" aria-selected="false">Members</button>
+      <button class="nav-link nav-group" id="nav-setting-tab" data-bs-toggle="tab" data-bs-target="#nav-setting" type="button" role="tab" aria-controls="nav-setting" aria-selected="false">Setting</button>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <!-- Home Tab -->
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      home
+    </div>
+    <!-- Group Cards Tab -->
+    <div class="tab-pane fade" id="nav-group-cards" role="tabpanel" aria-labelledby="nav-group-cards-tab">
+      <!-- Group Cards Tab / Cards Container -->
+      <div class="row row-cols-2 row-cols-md-4 g-5" id="card-results">
+
+      </div>
+      <!-- Group Cards Tab / Pagination Container -->
+      <div class="row fixed-row pagination-container">
+        <div class="col pagination-cards align-self-center">
+        </div>
+      </div>
+    </div>
+    <!-- Members Tab -->
+    <div class="tab-pane fade" id="nav-members" role="tabpanel" aria-labelledby="nav-members-tab">
+      <input id="uid" name="uid" type="hidden" value="<%= session[:uid] %>">
+      <div class="row row-cols-2 row-cols-md-4 g-5">
+        <div class="col">
+          <div class="card h-100">
+            <img src="<%= session[:profile]['avatar'] %>" class="card-img-top" alt="...">
+            <div class="card-body ">
+              <p class="card-title group-members-name"><%= session[:profile]['username'] %></p>
+              <p class="card-text">This is a longer card with supporting </p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="<%= session[:profile]['avatar'] %>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-title group-members-name"><%= session[:profile]['username'] %></p>
+              <p class="card-text">This is a short card.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="<%= session[:profile]['avatar'] %>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-title group-members-name"><%= session[:profile]['username'] %></p>
+              <p class="card-text">This is a longer card</p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100">
+            <img src="<%= session[:profile]['avatar'] %>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-title group-members-name"><%= session[:profile]['username'] %></p>
+              <p class="card-text">This is a longer card with supporting text below </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Members Tab / Pagination Container -->
+      <div class="row fixed-row pagination-container">
+        <div class="col pagination-members align-self-center">
+        </div>
+      </div>
+
+    </div>
+    <!-- Setting Tab -->
+    <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab">
+      setting
+
+    </div>
+  </div>
+</div>
+<script src="assets/js/group.js"></script>

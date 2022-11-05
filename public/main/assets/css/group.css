@@ -1,0 +1,58 @@
+/* Navigation style */
+.nav-group:hover {
+    background-color: rgba(245, 245, 245, 0.89);
+    color: black;
+}
+
+.nav-tabs .nav-link{
+    border-radius: 3px;
+    border-bottom: 1px solid #2c2e33;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+}
+
+.nav-tabs .nav-link.active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 1px solid orange;
+
+}
+
+
+/* Group cards style */
+.card-details-btn:hover {
+    color: #151515 !important;
+}
+
+
+/* Pagnination style */
+.pagination-container {
+    margin-top: 30px;
+}
+
+.page-item.active a{
+    background-color: rgba(245, 245, 245, 0.55) !important;
+    border-color: whitesmoke !important;
+}
+
+
+/* Member Tab style */
+.group-members-card {
+    text-align: center;
+}
+
+.card-body {
+    padding: 15px !important;
+}
+
+.group-members-img {
+    margin-top: 18%;
+}
+
+.group-members-name {
+    text-transform: lowercase !important;
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 5px !important;
+}

@@ -1,27 +1,33 @@
 // initialize modal
-$('#cardViewModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget) // Button that triggered the modal
-    var cid = button.data('cid') // Extract info from data-* attributes
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    var cardDetail = []
-    let detailData = {
-        "uid": $("#uid").val(),
-        "cid": cid
-    };
-    $.ajax ({
-        url:"card/detail",
-        type:"GET",
-        data: detailData,
-        success: function(data) {
-            cardDetail = Object.values(data)[0];
-            console.log(cardDetail);
-            modifyCardDetail(cardDetail);
-        },
-        error: function(){
-            alert("Fail to get card details");
-        }
-    });
-})
+$( document ).ready(function() {
+    $('#cardViewModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var cid = button.data('cid') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        var cardDetail = []
+        let detailData = {
+            "uid": $("#uid").val(),
+            "cid": cid
+        };
+        $.ajax ({
+            url:"card/detail",
+            type:"GET",
+            data: detailData,
+            success: function(data) {
+                cardDetail = Object.values(data)[0];
+                console.log(cardDetail);
+                modifyCardDetail(cardDetail);
+            },
+            error: function(){
+                alert("Fail to get card details");
+            }
+        });
+    })
+});
+
+
+
+
 
 function modifyCardDetail(cardDetail) {
     $('#cardViewModalLabel').text("Card: " + cardDetail["title"]);
@@ -119,7 +125,7 @@ function generateAllCards(cardData) {
             let card_body = $("<div class=\"card-body\">")
             let card_title = $("<h5 class=\"card-title\"></h5>")
             let card_text = $("<p class=\"card-text\">")
-            let card_link = $("<a class=\"btn btn-inverse-secondary card-details-btn\" data-toggle=\"modal\" data-target=\"#cardViewModal\" >See detail</a>")
+            let card_link = $("<a class=\"btn btn-inverse-secondary card-details-btn\" onclick=\"openCardDetail()\" data-toggle=\"modal\" data-target=\"#cardViewModal\" >See detail</a>")
             card_link.attr("data-cid", datum["cid"]);
             card_link.attr("id", "card-detail-btn-"+datum["cid"]);
 
