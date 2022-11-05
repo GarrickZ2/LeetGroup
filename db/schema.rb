@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_04_041034) do
+ActiveRecord::Schema.define(version: 2022_11_05_144525) do
 
   create_table "card_to_comments", primary_key: "comment_id", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "cid"
@@ -50,6 +50,13 @@ ActiveRecord::Schema.define(version: 2022_11_04_041034) do
     t.bigint "uid", null: false
     t.integer "role", default: 0
     t.index ["uid"], name: "index_group_to_users_on_uid"
+  end
+
+  create_table "group_welcome_codes", primary_key: "code", id: :string, limit: 10, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.bigint "gid"
+    t.bigint "uid"
+    t.integer "type", default: 0
+    t.date "expiration_date"
   end
 
   create_table "user_log_infos", primary_key: "username", id: :string, limit: 50, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
