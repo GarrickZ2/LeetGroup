@@ -57,10 +57,11 @@ module GroupHelper
   def self.add_card_to_group(cid, gid)
     card = GroupToCard.find_by(gid: gid, cid: cid)
     if card != nil
-      return
+      return false
     end
 
     GroupToCard.create(gid: gid, cid: cid)
+    return true
   end
 
   def self.delete_card_from_group(cid, gid)
@@ -68,6 +69,6 @@ module GroupHelper
   end
 
   def self.get_card_from_group(gid)
-    GroupInfo.find_by(gid: gid)
+    GroupToCard.where(gid: gid)
   end
 end
