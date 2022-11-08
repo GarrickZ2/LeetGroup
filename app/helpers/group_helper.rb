@@ -57,20 +57,20 @@ module GroupHelper
     end
 
     code = CodeGenerator.generate
-    welcome_code = GroupWelcomeCode.create(code: code, gid: gid, uid: uid, type: GroupWelcomeCode.welcome_type[:private], expiration_date: expiration_date )
+    welcome_code = GroupWelcomeCode.create(code: code, gid: gid, uid: uid, status: GroupWelcomeCode.welcome_type[:private], expiration_date: expiration_date )
     while welcome_code.nil?
       code = CodeGenerator.generate
-      welcome_code = GroupWelcomeCode.create(code: code, gid: gid, uid: uid, type: GroupWelcomeCode.welcome_type[:private], expiration_date: expiration_date )
+      welcome_code = GroupWelcomeCode.create(code: code, gid: gid, uid: uid, status: GroupWelcomeCode.welcome_type[:private], expiration_date: expiration_date )
     end
     code
   end
 
   def self.generate_public_invite_code(gid, expiration_date)
     code = CodeGenerator.generate
-    welcome_code = GroupWelcomeCode.create(code: code, gid: gid, expiration_date: expiration_date, type: GroupWelcomeCode.welcome_type[:public])
+    welcome_code = GroupWelcomeCode.create(code: code, gid: gid, expiration_date: expiration_date, status: GroupWelcomeCode.welcome_type[:public])
     while welcome_code.nil?
       code = CodeGenerator.generate
-      welcome_code = GroupWelcomeCode.create(code: code, gid: gid, expiration_date: expiration_date, type: GroupWelcomeCode.welcome_type[:public])
+      welcome_code = GroupWelcomeCode.create(code: code, gid: gid, expiration_date: expiration_date, status: GroupWelcomeCode.welcome_type[:public])
     end
     code
   end
