@@ -147,7 +147,7 @@ class GroupController < ApplicationController
       when -4
         'The target user does not exist'
       end
-    render json: { success: res > 0, msg: message }
+    render json: { success: res.positive?, msg: message }
   end
 
   # get /group/:gid/users
