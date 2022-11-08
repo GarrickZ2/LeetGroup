@@ -1,6 +1,5 @@
 # require 'instances/user_view'
 module GroupHelper
-
   def self.create_group(uid, name, description, status = GroupInfo.group_status[:private])
     group = GroupInfo.create(name: name, description: description, create_time: Time.now, status: status)
     return -1 if group.nil?
@@ -53,6 +52,10 @@ module GroupHelper
   end
 
   def self.generate_private_invite_code(gid, uid, expiration_date = nil)
+    unless UserProfile.exists? uid
+      return nil
+    end
+
     code = CodeGenerator.generate
     welcome_code = GroupWelcomeCode.create(code: code, gid: gid, uid: uid, type: GroupWelcomeCode.welcome_type[:private], expiration_date: expiration_date )
     while welcome_code.nil?

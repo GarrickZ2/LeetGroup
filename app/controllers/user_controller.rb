@@ -135,4 +135,11 @@ class UserController < ApplicationController
     UserHelper.update_user_log_info user
     redirect_to '/user/logout'
   end
+
+  # get /user/:uid/group
+  def get_user_groups
+    uid = params[:uid]
+    groups = GroupHelper.get_user_groups uid
+    render json: { success: true, msg: nil, groups: groups.to_json }
+  end
 end
