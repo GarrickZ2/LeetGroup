@@ -84,6 +84,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    composite_primary_keys (12.0.10)
+      activerecord (~> 6.0.0)
     concurrent-ruby (1.1.10)
     connection_pool (2.3.0)
     crass (1.0.6)
@@ -326,7 +328,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.5)
+    zeitwerk (2.6.6)
 
 PLATFORMS
   ruby
@@ -334,6 +336,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   coffee-rails
+  composite_primary_keys
   cucumber-rails
   cucumber-rails-training-wheels
   database_cleaner (= 1.4.1)

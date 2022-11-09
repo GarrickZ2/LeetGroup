@@ -4,11 +4,7 @@ module GroupHelper
     group = GroupInfo.create(name: name, description: description, create_time: Time.now, status: status)
     return -1 if group.nil?
 
-    user = GroupToUser.create(gid: group.gid, uid: uid, role: GroupToUser.role_status[:owner])
-    if user.nil?
-      GroupInfo.delete(gid: group.gid)
-      return -1
-    end
+    GroupToUser.create(gid: group.gid, uid: uid, role: GroupToUser.role_status[:owner])
     group.gid
   end
 
@@ -29,7 +25,7 @@ module GroupHelper
     return false if group_info.gid.nil?
 
     user = GroupToUser.find_by(gid: group_info.gid, uid: uid)
-    if user.nil? || user.role != GroupToUser.role_status[:owner] || user.role != GroupToUser.role_status[:manager]
+    if user.nil? || (user.role != GroupToUser.role_status[:owner] && user.role != GroupToUser.role_status[:manager])
       return false
     end
 
@@ -83,14 +79,14 @@ module GroupHelper
     end
 
     delete_code = false
-    if welcome.type == GroupWelcomeCode.welcome_type[:private] # private
+    if welcome.status == GroupWelcomeCode.welcome_type[:private] # private
       if welcome.uid != uid
         return -2 # didn't invite to such user
       end
 
       delete_code = true
     end
-    if Time.now.to_i > welcome.expiration_date.to_i # has been expired
+    if Time.now.to_i > welcome.expiration_date.to_time.to_i # has been expired
       GroupWelcomeCode.delete_by(code: code)
       return -3 # the welcome has expired
     end
@@ -117,7 +113,7 @@ module GroupHelper
       return -4 # doesn't have target user
     end
 
-    if permission_role.role != GroupToUser.role_status[:owner] || permission_role.role != GroupToUser.role_status[:manager]
+    if permission_role.role != GroupToUser.role_status[:owner] && permission_role.role != GroupToUser.role_status[:manager]
       return -3 # no permission to do
     end
 
@@ -155,7 +151,7 @@ module GroupHelper
 
   def self.get_group_users(gid, size = nil, page = nil)
     unless GroupInfo.exists? gid
-      return -1 # group doesn't exist
+      return UserResult.new nil, nil # group doesn't exist
     end
 
     total_num = GroupToUser.where(gid: gid).count
@@ -180,9 +176,11 @@ module GroupHelper
     groups = GroupToUser.where(uid: uid)
     result = []
     groups.each do |g|
-      result.append g
+      group = GroupInfo.find_by(gid: g.gid)
+      next if group.nil?
+
+      result.append group
     end
     result
   end
-
 end
