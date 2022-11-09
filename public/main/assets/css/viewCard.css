@@ -11,10 +11,12 @@
 
 
 /* general style */
-.modal-content{
+#card-modal-content {
     color: white;
-    width: 600px;
+    width: 710px;
     margin: 0 auto;
+    min-height: 550px;
+
 }
 
 .close-button {
@@ -26,10 +28,38 @@
     font-weight: bold;
 }
 
+#delete-card-modal {
+    z-index: 10000 !important;
+}
+
+
 /* card view left panel style*/
 #card-view-comment {
     width: 100%;
     margin:0;
+    font-size: 14px;
+    transition: 0.27s;
+    height: 28px;
+    border-radius: 2px;
+    margin-top: 5px;
+}
+
+#comment-save-btn {
+    visibility: hidden;
+    /*border: none;*/
+    /*background: none;*/
+}
+
+#comment-save-btn:hover {
+    color: black;
+}
+
+#card-view-comment:focus + button {
+    visibility: visible;
+}
+
+#card-view-comment:focus {
+    height: 90px;
 }
 
 .card-comment-avatar-container {
@@ -69,6 +99,11 @@
     margin-bottom: 0;
     color: white;
     border-radius: 2px !important;
+}
+
+.list-group-item:hover {
+    cursor: pointer;
+    color: black;
 }
 
 .action-icon {
