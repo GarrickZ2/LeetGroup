@@ -21,8 +21,9 @@
     <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
       <div class="modal-content" id="card-modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="cardViewModalLabel"></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <h5 class="modal-title" id="cardViewModalLabel">Card: </h5>
+          <input type="text" class="form-control card-view-input" id="card-view-title">
+          <button type="button" class="close" data-dismiss="modal" id="close-card-detail-btn" aria-label="Close">
             <span aria-hidden="true" class="close-button">&times;</span>
           </button>
         </div>
@@ -32,11 +33,11 @@
               <form>
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Source</label>
-                  <input type="text" class="form-control" id="card-view-source">
+                  <input type="text" class="form-control card-view-input2" id="card-view-source">
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Description</label>
-                  <textarea class="form-control" id="card-view-description"></textarea>
+                  <textarea class="form-control card-view-input2" id="card-view-description"></textarea>
                 </div>
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Comment</label>
@@ -76,9 +77,9 @@
                 <div class="col-md-12 action-container">
                   <p class="item-title">Actions</p>
                   <ul class="list-group action-list-group">
-                    <li class="list-group-item action-item">
+                    <li class="list-group-item action-item" onclick="editCard()">
                       <i class="mdi mdi-border-color action-icon"></i>
-                      Edit
+                      Save edit changes
                     </li>
                     <li class="list-group-item action-item">
                       <i class="mdi mdi-archive action-icon"></i>
@@ -125,7 +126,7 @@
           Are you sure you want to delete this card?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" id="close-delete-card-btn" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-danger" id="delete-card-btn" onclick="deleteCard()">Yes</button>
         </div>
       </div>

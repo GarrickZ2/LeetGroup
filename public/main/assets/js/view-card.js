@@ -30,16 +30,11 @@ $( document ).ready(function() {
             }
         });
     });
-
-
-    // $('#delete-card-modal').on('show.bs.modal', function (event) {
-    //
-
 });
 
 
 function putCardDetail(cardDetail, cid) {
-    $('#cardViewModalLabel').text("Card: " + cardDetail["title"]);
+    $('#card-view-title').val(cardDetail["title"]);
     $('#card-view-description').text(cardDetail["description"]);
     $('#card-view-source').val(cardDetail["source"]);
     $('#card-view-create-time').text(processDate(cardDetail["create_time"]));
@@ -86,6 +81,7 @@ function generatePagination(pageData, offset) {
         page: offset,
         maxVisible: 5,
         leaps: true,
+        activeClass: "active-page"
     });
     // add class style for pagination
     $('[data-lp]').addClass('page-item');
@@ -112,7 +108,9 @@ function generateCardDetail(cardData) {
             card_col.append(card_div)
             let card_body = $("<div class=\"card-body\">")
             let card_title = $("<h5 class=\"card-title\"></h5>")
-            let card_text = $("<p class=\"card-text\">")
+            card_title.attr("id", "card-title-"+datum["cid"]);
+            let card_text = $("<p class=\"card-text\">");
+            card_text.attr("id", "card-text-"+datum["cid"]);
             let card_link = $("<a class=\"btn btn-inverse-secondary card-details-btn\"  data-toggle=\"modal\" data-target=\"#cardViewModal\" >See detail</a>")
             card_link.attr("data-cid", datum["cid"]);
             card_link.attr("id", "card-detail-btn-"+datum["cid"]);
@@ -125,34 +123,64 @@ function generateCardDetail(cardData) {
             card_body.append(card_link)
             card_div.append(card_body)
         });
-
     }
 }
 
 // Card: Edit
 function editCard() {
-
+    // get the data and send ajax request
+    let edit_data = {
+        "uid": $("#uid").val(),
+        "title": $("#card-view-title").val(),
+        "source": $("#card-view-source").val() ,
+        "description": $("#card-view-description").val()
+    };
+    console.log("debug edit ", edit_data)
+    $.ajax ({
+        url:"/card/" + $("#delete-card-cid").val() + "/edit",
+        type:"POST",
+        data: edit_data,
+        success: function(data) {
+           if(data["success"]) {
+               let cid = $("#delete-card-cid").val()
+               $('#card-title-'+ cid).text($("#card-view-title").val());
+               $('#card-text-'+ cid).text($("#card-view-source").val());
+               show_notice_with_text("Successfully saved the changes");
+           }else {
+               alert(data["msg"]);
+           }
+        },
+        error: function(){
+            alert("Fail to edit the card");
+        }
+    });
 }
 
 
 
 // Card: Delete
 function deleteCard() {
-    let data = {
-        "uid": $("#uid").val(),
-        "cid": $("#delete-card-cid").val()
-    }
-    // $.ajax ({
-    //     url:"card/delete",
-    //     type:"POST",
-    //     data: data,
-    //     success: function(data) {
-    //         // @TODO add successfully delete the card message and close the modal
-    //     },
-    //     error: function(){
-    //         alert("Fail to delete the card");
-    //     }
-    // });
+    $.ajax ({
+        url:"/card/delete?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val(),
+        type:"GET",
+        success: function(data) {
+            // @TODO add successfully delete the card message and close the modal
+            if(data["success"]) {
+                // close the modal
+                $('#close-delete-card-btn').click();
+                $('#close-card-detail-btn').click();
+                show_notice_with_text("Successfully delete the card");
+                // rerender all cards based on page
+                setTimeout(generateAllCardsBasedOnPage($(".active-page").text()), 1500);
+            }else {
+                alert("Fail to delete the card. Please try again.");
+            }
+
+        },
+        error: function(){
+            alert("Fail to delete the card");
+        }
+    });
 }
 
 // Card: Add star

@@ -34,6 +34,35 @@
 
 
 /* card view left panel style*/
+#card-view-title {
+    font-size: 18px;
+}
+
+.card-view-input{
+    background-color: black !important;
+    border: 0;
+    font-size: 18px;
+}
+
+.card-view-input:focus{
+    background-color: whitesmoke !important;
+    border: 2px solid #28a745;
+    border-radius: 2px !important;
+    color: black !important;
+}
+
+.card-view-input2{
+    background-color: black !important;
+}
+
+.card-view-input2:focus {
+    background-color: whitesmoke !important;
+    border: 2px solid #28a745;
+    border-radius: 2px !important;
+    color: black !important;
+}
+
+
 #card-view-comment {
     width: 100%;
     margin:0;
