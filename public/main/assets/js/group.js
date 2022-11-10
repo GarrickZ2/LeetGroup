@@ -7,11 +7,62 @@ $( document ).ready(function() {
     });
 
     // @TODO generate members tab and pagination
+    // generateMembersBasedOnPage(1);
+    // $('.pagination-members').bootpag({
+    // }).on("page", function(event, num) {
+    //     generateMembersBasedOnPage(num);
+    // });
 
 
     // @TODO generate setting tab
 
 });
+
+// change role (owner) ; remove(group owner / manager) ; view profile
+function generateMembersBasedOnPage(offset) {
+    let pagination_data = {
+        "size": 6,
+        "page": offset
+    };
+    $.ajax ({
+        url:"/group//users",
+        type:"POST",
+        data: pagination_data,
+        success: function(data) {
+           // generate all members for this page
+            let memberData=data[""];
+            generateAllMembers(memberData);
+        },
+        error: function(){
+            alert("Fail to get group members data");
+        }
+    });
+}
+
+function generateAllMembers(memberData) {
+    // get the card results container
+    let member_container = $("#group-member-container");
+    // empty the container
+    member_container.empty();
+    $.each(memberData, function(i, data) {
+        let datum = JSON.parse(data);
+        // initialize card
+        let card_col = $("<div class=\"col\">")
+        let card_div = $("<div class=\"card h-100\">")
+        member_container.append(card_col)
+        card_col.append(card_div)
+        // image/avatar
+        let img = $("<img class=\"card-img-top\" alt=\"member avatar\">");
+        card_div.append(img);
+        // username
+        let card_body = $("<div class=\"card-body\">");
+        let member_username = $("<p class=\"card-title group-members-name\">");
+        card_body.append(member_username);
+        // role
+        let member_role = $("<p class=\"card-text group-members-role\">");
+        card_body.append(member_role);
+    });
+}
 
 
 // function to generate all cards
@@ -45,7 +96,6 @@ function generateCardsBasedOnPage(offset) {
         }
     });
 }
-
 
 // Helper function for generating all group cards
 function generateAllCards(cardData) {
@@ -83,7 +133,7 @@ function generateAllCards(cardData) {
 }
 
 // Helper function to generate group cards pagination based on the page info
-function generatePagination(pageData, offset) {
+function generateCardPagination(pageData, offset) {
     $('.pagination-cards').bootpag({
         total: pageData["total_page"],
         page: offset,
