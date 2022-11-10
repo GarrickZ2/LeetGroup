@@ -37,4 +37,18 @@ class CardController < ApplicationController
     card_detail = Card.view_card_detail params[:cid], params[:uid]
     render json: { card: card_detail }
   end
+  def edit
+    render json: { success: true, msg: nil }
+  end
+
+  def delete
+    uid = params[:uid]
+    cid = params[:cid]
+    res = CardHelper.delete_card uid, cid
+    unless res
+      render json: { success: false, msg: "The card doesn't exist" }
+      return
+    end
+    render json: { success: true, msg: nil }
+  end
 end

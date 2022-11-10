@@ -30,6 +30,10 @@ Rails.application.routes.draw do
   # temp, need to chaneg
   get "main/group" => "main#group"
 
+  # Card
+  get 'card/delete' => 'card#delete'
+  post 'card/edit' => 'card#edit'
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
