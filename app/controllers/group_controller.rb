@@ -153,7 +153,9 @@ class GroupController < ApplicationController
   # get /group/:gid/users
   def get_group_users
     gid = params[:gid]
-    users = GroupHelper.get_group_users gid
+    size = params[:size]
+    page = params[:page]
+    users = GroupHelper.get_group_users gid, size, page
     render json: { success: true, msg: nil, users: users.to_json }
   end
 

@@ -4,9 +4,10 @@ class UserView
     @username = user.username
     @avatar = user.avatar
     @bio = user.bio
+    @work = user.role
     @role = role
   end
-  attr_reader :uid, :username, :avatar, :bio, :role
+  attr_reader :uid, :username, :work, :avatar, :bio, :role
 end
 
 class UserResult

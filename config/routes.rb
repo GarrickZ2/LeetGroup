@@ -27,12 +27,12 @@ Rails.application.routes.draw do
   get "main/card/detail" => "card#view_card_detail"
   get "main/password" => "main#password", as: :update_password
 
-  # temp, need to chaneg
-  get "main/group" => "main#group"
-
   # Card
   get 'card/delete' => 'card#delete'
-  post 'card/edit' => 'card#edit'
+  post 'card/:cid/edit' => 'card#edit'
+
+  # Group
+  get 'main/group' => 'main#group'
 
 
   # Example of regular route:

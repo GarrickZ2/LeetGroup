@@ -54,16 +54,6 @@
           </div>
           <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
           <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-<!--            <a href="#" class="dropdown-item preview-item">-->
-<!--              <div class="preview-thumbnail">-->
-<!--                <div class="preview-icon bg-dark rounded-circle">-->
-<!--                  <i class="mdi mdi-settings text-primary"></i>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="preview-item-content">-->
-<!--                <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>-->
-<!--              </div>-->
-<!--            </a>-->
             <div class="dropdown-divider"></div>
             <a href="/main/password" class="dropdown-item preview-item">
               <div class="preview-thumbnail">
@@ -123,7 +113,36 @@
         </a>
         <div class="collapse" id="ui-group">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="group.html" id="nav-sub-group-1">Group_1</a></li>
+
+            <li class="nav-item"> <a class="nav-link" href="group" id="nav-sub-group-1">Group_1</a></li>
+            <%session[:groups].each do |group| %>
+              <li class="nav-item"> <a class="nav-link" href="group/<%=group.id %>" id="nav-sub-group-1"><%=group.name %></a></li>
+            <%end %>
+            <li class="nav-item"> <a class="nav-link" href="group" id="group-dropdown" data-bs-toggle="dropdown">+</a></li>
+            <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="group-dropdown">
+              <div class="dropdown-divider"></div>
+              <a href="/main/password" class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-onepassword  text-info"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-calendar-today text-success"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject ellipsis mb-1 text-small">To-do list</p>
+                </div>
+              </a>
+            </div>
           </ul>
         </div>
       </li>
@@ -135,7 +154,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          <p class="description"><%=flash[:main_notice] %></p>
+          <p class="description" id="main-notice"><%=flash[:main_notice] %></p>
         </div>
       </div>
     </div>
@@ -402,7 +421,11 @@
     });
     function show_notice() {
         $("#notice-modal").modal('show')
-        setTimeout("$('#notice-modal').modal('hide')", 1000);
+        setTimeout("$('#notice-modal').modal('hide')", 2000);
+    }
+    function show_notice_with_text(content) {
+        $("#main-notice").text(content);
+        show_notice();
     }
 </script>
 <!-- container-scroller -->
