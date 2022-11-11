@@ -1,20 +1,80 @@
 <head>
   <link rel="stylesheet" href="/main/assets/css/group.css" type="text/css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
+  <script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
 </head>
 
 <div class="content-wrapper">
+  <input type="hidden" value="<%= @gid %>" id="gid">
   <nav>
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <button class="nav-link nav-group active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
-      <button class="nav-link nav-group" id="nav-group-cards-tab" data-bs-toggle="tab" data-bs-target="#nav-group-cards" type="button" role="tab" aria-controls="nav-group-cards" aria-selected="false">Group Cards</button>
+      <button class="nav-link nav-group" id="nav-group-cards-tab" data-bs-toggle="tab" data-bs-target="#nav-group-cards" type="button" role="tab" aria-controls="nav-group-cards" aria-selected="false">Group
+        Cards
+      </button>
       <button class="nav-link nav-group" id="nav-members-tab" data-bs-toggle="tab" data-bs-target="#nav-members" type="button" role="tab" aria-controls="nav-members" aria-selected="false">Members</button>
-      <button class="nav-link nav-group" id="nav-setting-tab" data-bs-toggle="tab" data-bs-target="#nav-setting" type="button" role="tab" aria-controls="nav-setting" aria-selected="false">Setting</button>
+      <button class="nav-link nav-group" id="nav-setting-tab" data-bs-toggle="tab" data-bs-target="#nav-setting" type="button" role="tab" aria-controls="nav-setting" aria-selected="false">Settings</button>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
     <!-- Home Tab -->
     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-      home
+      <div class="row">
+        <div class="grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-row justify-content-between">
+                <h3 class="card-title mb-1">Group Overview</h3>
+                <div>
+                  Description of the group.
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-row justify-content-between">
+                <h3 class="card-title mb-1">Member Overview</h3>
+                <div>
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex flex-row justify-content-between">
+                <h3 class="card-title mb-1">Card Overview</h3>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
     <!-- Group Cards Tab -->
     <div class="tab-pane fade" id="nav-group-cards" role="tabpanel" aria-labelledby="nav-group-cards-tab">
@@ -28,66 +88,173 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="invite-member" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Invite Members</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-check form-check-primary">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input invite-check" name="code-status" value="1" checked>
+                    Public
+                    <i class="input-helper"></i>
+                  </label>
+                </div>
+                <div class="form-check form-check-danger">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input invite-check" name="code-status" value="0">
+                    Private
+                    <i class="input-helper"></i>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="invite-code">Invited Member Username</label>
+                <input type="text" class="form-control" placeholder="Invited Member Username" id="invite-username" disabled style="width: 100%"/>
+              </div>
+            </div>
+            <div class="row">
+              <small>Select The Expiration Date</small>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-check form-check-warning">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input invite-check" name="expiration_date" value="7" checked>
+                    7 Days
+                    <i class="input-helper"></i>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check form-check-warning">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input invite-check" name="expiration_date" value="30">
+                    30 Days
+                    <i class="input-helper"></i>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check form-check-warning">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input invite-check" name="expiration_date" value="forever">
+                    Forever
+                    <i class="input-helper"></i>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="modal-body">
+            <input type="text" class="form-control" readonly id="code-place" placeholder="The code is generated here" style="width: 100%"/>
+          </div>
+          <div id="invite-qrcode" style="padding-left: 22%"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="generate_invite()" id="generate-invite-btn">Generate Code</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <!-- Members Tab -->
     <div class="tab-pane fade" id="nav-members" role="tabpanel" aria-labelledby="nav-members-tab">
+      <div class="container">
+        <div class="row bootstrap snippets bootdeys">
+          <div class="col-md-3 col-sm-5">
+            <form method="get" role="form" class="search-form-full">
+              <div class="form-group">
+                <input type="text" class="form-control" name="s" id="search-input" placeholder="Search...">
+              </div>
+            </form>
+          </div>
+          <div class="col-md-9 col-sm-7 text-right">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#invite-member">
+              <i class="fa-solid fa-user-plus"></i>Invite
+            </button>
+          </div>
+        </div>
+        <% @members.each do |member| %>
+          <div class="member-entry">
+            <a href="#" class="member-img">
+              <img src="<%= member.avatar %>" class="img-rounded">
+            </a>
+            <div class="member-details">
+              <div class="row">
+                <div class="col-md-6 col-sm-4">
+                  <h4><span><%= member.username %></span></h4>
+                </div>
+                <div class="col-md-6 col-sm-8 text-right">
+                  <div class="btn-group">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <% if member.role == 0 %>
+                        Owner
+                      <% elsif member.role == 1 %>
+                        Manager
+                      <% else %>
+                        Member
+                      <% end %>
+                    </button>
+                    <div class="dropdown-menu member-dropdown">
+                      <% if member.role != 0 %>
+                        <a class="dropdown-item">Owner</a>
+                      <% end %>
+                      <% if member.role != 1 %>
+                        <a class="dropdown-item">Manager</a>
+                      <% end %>
+                      <% if member.role != 2 %>
+                        <a class="dropdown-item">Member</a>
+                      <% end %>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-danger btn-sm" onclick="removeMember(<%= member.uid %>)">Remove</button>
+                </div>
+              </div>
+              <div class="row info-list">
+                <div class="col-sm-4 col-md-4">
+                  <i class="fa-solid fa-user"></i>
+                  <span><%= member.work %></span>
+                </div>
+                <div class="col-sm-4 col-md-4">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <span><%= member.city %></span>
+                </div>
+                <div class="col-sm-8 col-md-8">
+                  <span><%= member.bio %></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
       <input id="uid" name="uid" type="hidden" value="<%= session[:uid] %>">
-      <div class="row">
-        <div class="col">
-          <button class="btn btn-inverse-secondary">Change Role</button>
-          <button class="btn btn-inverse-secondary">Edit</button>
-        </div>
-      </div>
-      <br>
-      <div class="row row-cols-2 row-cols-md-4 g-5" id="group-member-container">
-        <div class="col">
-          <div class="card h-100">
-            <img src="<%= session[:profile]['avatar'] %>" class="card-img-top" alt="...">
-            <div class="card-body ">
-              <p class="card-title group-members-name"><%= session[:profile]['username'] %></p>
-              <p class="card-text">This is a longer card with supporting </p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src="<%= session[:profile]['avatar'] %>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-title group-members-name"><%= session[:profile]['username'] %></p>
-              <p class="card-text">This is a short card.</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src="<%= session[:profile]['avatar'] %>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-title group-members-name"><%= session[:profile]['username'] %></p>
-              <p class="card-text">This is a longer card</p>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card h-100">
-            <img src="<%= session[:profile]['avatar'] %>" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-title group-members-name"><%= session[:profile]['username'] %></p>
-              <p class="card-text">This is a longer card with supporting text below </p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Members Tab / Pagination Container -->
-      <div class="row fixed-row pagination-container">
-        <div class="col pagination-members align-self-center">
-        </div>
-      </div>
-
     </div>
+
     <!-- Setting Tab -->
     <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab">
-      setting
+      settings
 
     </div>
   </div>
 </div>
-<script src="assets/js/group.js"></script>
+
+<script src="/main/assets/js/group.js"></script>
+<script>
+  $(document).ready(function () {
+      <%if flash[:tab] != nil? %>
+      let id = "#nav-<%=flash[:tab] %>-tab";
+      $(id).click();
+      <%end %>
+  })
+</script>

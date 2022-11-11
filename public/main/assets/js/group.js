@@ -6,64 +6,45 @@ $( document ).ready(function() {
         generateCardsBasedOnPage(num);
     });
 
-    // @TODO generate members tab and pagination
-    // generateMembersBasedOnPage(1);
-    // $('.pagination-members').bootpag({
-    // }).on("page", function(event, num) {
-    //     generateMembersBasedOnPage(num);
-    // });
-
-
     // @TODO generate setting tab
 
 });
 
-// change role (owner) ; remove(group owner / manager) ; view profile
-function generateMembersBasedOnPage(offset) {
-    let pagination_data = {
-        "size": 6,
-        "page": offset
+
+function createGroup() {
+    // get fields from the form and post request
+    // alert("test create group");
+    let sel = $('input[type=radio]:checked').map(function(_, el) {
+        return $(el).val();
+    }).get();
+
+    let form_data = {
+        "uid": $("#groupUID").val(),
+        "name": $("#groupInputName").val(),
+        "description": $("#groupInputDescription").val(),
+        "status": sel
     };
-    $.ajax ({
-        url:"/group//users",
-        type:"POST",
-        data: pagination_data,
-        success: function(data) {
-           // generate all members for this page
-            let memberData=data[""];
-            generateAllMembers(memberData);
+    console.log("form data for create group is: " + JSON.stringify(form_data));
+
+    $.ajax({
+        type: "POST",
+        url: "/group/new",
+        data: form_data,
+        success: function(msg) {
+            if (msg['success']) {
+                $("#create-group-notice").text('Successfully creat card')
+                setTimeout("$('#new-group-btn').click()", 2000)
+                setTimeout("$(':input','#groupForm').val('')", 2000)
+                setTimeout("window.location.href = '/main/dashboard'", 2000)
+            }else {
+                $("#create-group-notice").text(msg['msg']);
+            }
         },
         error: function(){
-            alert("Fail to get group members data");
+            alert("Fail to create the card. Please try again.");
         }
     });
 }
-
-function generateAllMembers(memberData) {
-    // get the card results container
-    let member_container = $("#group-member-container");
-    // empty the container
-    member_container.empty();
-    $.each(memberData, function(i, data) {
-        let datum = JSON.parse(data);
-        // initialize card
-        let card_col = $("<div class=\"col\">")
-        let card_div = $("<div class=\"card h-100\">")
-        member_container.append(card_col)
-        card_col.append(card_div)
-        // image/avatar
-        let img = $("<img class=\"card-img-top\" alt=\"member avatar\">");
-        card_div.append(img);
-        // username
-        let card_body = $("<div class=\"card-body\">");
-        let member_username = $("<p class=\"card-title group-members-name\">");
-        card_body.append(member_username);
-        // role
-        let member_role = $("<p class=\"card-text group-members-role\">");
-        card_body.append(member_role);
-    });
-}
-
 
 // function to generate all cards
 function generateCardsBasedOnPage(offset) {
@@ -82,7 +63,7 @@ function generateCardsBasedOnPage(offset) {
     var pageData = [];
     // @TODO need to change to get group cards
     $.ajax ({
-        url:"card/view",
+        url:"/card/view",
         type:"POST",
         data: pagination_data,
         success: function(data) {
@@ -143,4 +124,74 @@ function generateCardPagination(pageData, offset) {
     // add class style for pagination
     $('[data-lp]').addClass('page-item');
     $('.page-item > a').addClass('page-link');
+}
+
+function joinGroup() {
+    const uid = $('#cardUID').val();
+    const link = $('#invite-code').val();
+    const part = link.split('/');
+    const code = part[part.length-1];
+    $.get(
+        '/group/join/' + code + "?uid=" + uid,
+        function (data) {
+            show_notice_with_text(data['msg']);
+            if (data['success']) {
+                setTimeout("window.location.href = '/main/dashboard'", 2000);
+            }
+        }
+    )
+}
+
+// Member Tab js
+$('.invite-check').change(function(){
+    let select = $("#invite-username");
+    if( $(this).val() == '0')
+        select.attr('disabled' , false );
+    else
+        select.attr('disabled' , true );
+})
+
+function generate_invite() {
+    let gid = $("#gid").val()
+    let status = $("input[name='code-status']:checked").val()
+    let username = $("#invite-username").val()
+    let date = $("input[name='expiration_date']:checked").val()
+    let btn = $("#generate-invite-btn")
+    btn.attr('disabled', true);
+
+    $.get("/group/" + gid + "/invite?username=" + username + "&status=" + status + "&date=" + date, function(data) {
+        btn.attr('disabled', false);
+        if (data['success']) {
+            $('#invite-qrcode').html("")
+            $("#code-place").val(data['url']);
+            new QRCode(document.getElementById('invite-qrcode'), {
+                text: data['url'],
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        } else {
+            show_notice_with_text(data['msg']);
+        }
+    });
+}
+
+function removeMember(member_uid) {
+    const gid = $('#gid').val()
+    const operator = $('#uid').val();
+    $.ajax ({
+        url:"/group/" + gid + "/remove_user?operator=" + operator + "&uid=" + member_uid,
+        type:"GET",
+        success: function(data) {
+            show_notice_with_text(data['msg']);
+            if (data['success']) {
+                let path = '/group/' + gid + '?tab=members';
+                let command = "window.location.href='" + path + "'";
+                setTimeout(command, 2000);
+            }
+        },
+        error: function(){
+            show_notice_with_text("Fail to remove this member");
+        }
+    });
 }

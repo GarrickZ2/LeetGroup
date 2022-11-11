@@ -18,14 +18,16 @@ class GroupController < ApplicationController
     description = params[:description]
     status = params[:status]
     status = 0 if status.nil?
-    group = GroupHelper.create_group uid, name, description
-    flash[:main_notice] = if group.nil?
+    group = GroupHelper.create_group uid, name, description, status
+    message = if group.nil?
                             # create failed, state some reason
                             'Create Group Failed, Please try again later'
                           else
                             "Create Group #{group.name} successfully!"
                           end
     # render to the group page
+    session[:groups] = GroupHelper.get_user_groups uid unless group.nil?
+    render json: { success: !group.nil?, msg: message }
   end
 
   # get /group/:gid/destroy
@@ -64,20 +66,27 @@ class GroupController < ApplicationController
   end
 
   # get /group/:gid/invite
-  # input: uid, expiration_date
+  # input: uid, date
   def generate_invite_code
     gid = params[:gid]
-    uid = params[:uid]
-    expiration_date = params[:expiration_date]
-    type = params[:status]
+    username = params[:username]
+    date = params[:date]
+    type = params[:status].to_i
+    expiration_date =
+      case date
+      when '7'
+        Time.now + 7.days
+      when '30'
+        Time.now + 30.days
+      end
     code =
       if type.zero?
-        GroupHelper.generate_private_invite_code gid, uid, expiration_date
+        GroupHelper.generate_private_invite_code gid, username, expiration_date
       else
         GroupHelper.generate_public_invite_code gid, expiration_date
       end
     if code.nil?
-      render json: { success: false, msg: "The user does not exist" }
+      render json: { success: false, msg: 'The user does not exist' }
       return
     end
 
@@ -88,20 +97,37 @@ class GroupController < ApplicationController
   # get /group/join/:code
   # input: uid
   def join_group
-    res = GroupHelper.join_group params[:uid], params[:code]
-    flash[:main_notice] =
+    uid = params[:uid]
+    uid = session[:uid] if uid.nil?
+    if uid.nil?
+      flash[:l_notice] = 'Please login firstly to join a group'
+      redirect_to user_index_path type: 'login'
+      return
+    end
+    res = GroupHelper.join_group uid, params[:code]
+    message =
       case res
-      when 1
-        'Join the group successfully'
       when -1
         'The code does not exist'
       when -2
         'The code is private, can not use it'
       when -3
         'The code has been expired'
+      when -4
+        'You have already joined this group'
+      else
+        'Join the group successfully'
       end
-    # return to the main dashboard
-    redirect_to main_dashboard_path
+    p uid
+    session[:groups] = GroupHelper.get_user_groups uid if res.positive?
+
+    if params[:uid].nil?
+      flash[:main_notice] = message
+      redirect_to main_dashboard_path
+      return
+    end
+
+    render json: { success: res.positive?, msg: message }
   end
 
   # get /group/:gid/remove_user
@@ -111,7 +137,7 @@ class GroupController < ApplicationController
     uid = params[:uid]
 
     res = GroupHelper.remove_user_from_group gid, operator, uid
-    flash[:main_notice] =
+    message =
       case res
       when 1
         'Remove the user successfully'
@@ -124,7 +150,7 @@ class GroupController < ApplicationController
       when -4
         'The target user does not exist'
       end
-    # render to the group info page
+    render json: { success: res.positive?, msg: message }
   end
 
   # post /group/:gid/update_role

@@ -38,7 +38,7 @@ function createCard() {
 
     $.ajax({
         type: "POST",
-        url: "card/new",
+        url: "/card/new",
         data: form_data,
         success: function(msg) {
             if (msg['success']) {

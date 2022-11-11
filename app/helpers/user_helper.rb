@@ -34,7 +34,7 @@ module UserHelper
     # select a random avatar
     index = rand(1..27)
     avatar_path = "/main/assets/images/faces/face#{index}.jpg"
-    UserProfile.create(username: username, avatar: avatar_path, role: 'N/A Role')
+    UserProfile.create(username: username, avatar: avatar_path, role: 'N/A')
     uid = UserProfile.find_by(username: username).uid
     UserLogInfo.create(username: username, email: email, password: password, uid: uid)
     uid

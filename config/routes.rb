@@ -22,8 +22,8 @@ Rails.application.routes.draw do
   get 'main/dashboard' => 'main#dashboard', as: :dashboard
   get 'main/profile' => 'main#profile'
   get "main/all_cards" => "main#all_cards"
-  post "main/card/new" => "card#create"
-  post "main/card/view" => "card#view"
+  post "card/new" => "card#create"
+  post "card/view" => "card#view"
   get "main/card/detail" => "card#view_card_detail"
   get "main/password" => "main#password", as: :update_password
 
@@ -32,7 +32,11 @@ Rails.application.routes.draw do
   post 'card/:cid/edit' => 'card#edit'
 
   # Group
-  get 'main/group' => 'main#group'
+  get 'group/:gid' => 'main#group'
+  post '/group/new' => 'group#create_group'
+  get '/group/join/:code' => 'group#join_group'
+  get '/group/:gid/invite' => 'group#generate_invite_code'
+  get '/group/:gid/remove_user' => 'group#user_remove'
 
 
   # Example of regular route:

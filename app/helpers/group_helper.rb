@@ -5,7 +5,7 @@ module GroupHelper
     return -1 if group.nil?
 
     GroupToUser.create(gid: group.gid, uid: uid, role: GroupToUser.role_status[:owner])
-    group.gid
+    group
   end
 
   def self.delete_group(gid, uid)
@@ -47,16 +47,15 @@ module GroupHelper
     GroupInfo.find_by(gid: gid)
   end
 
-  def self.generate_private_invite_code(gid, uid, expiration_date = nil)
-    unless UserProfile.exists? uid
-      return nil
-    end
+  def self.generate_private_invite_code(gid, username, expiration_date = nil)
+    user = UserLogInfo.find_by(username: username)
+    return nil if user.nil?
 
     code = CodeGenerator.generate
-    welcome_code = GroupWelcomeCode.create(code: code, gid: gid, uid: uid, status: GroupWelcomeCode.welcome_type[:private], expiration_date: expiration_date )
+    welcome_code = GroupWelcomeCode.create(code: code, gid: gid, uid: user.uid, status: GroupWelcomeCode.welcome_type[:private], expiration_date: expiration_date)
     while welcome_code.nil?
       code = CodeGenerator.generate
-      welcome_code = GroupWelcomeCode.create(code: code, gid: gid, uid: uid, status: GroupWelcomeCode.welcome_type[:private], expiration_date: expiration_date )
+      welcome_code = GroupWelcomeCode.create(code: code, gid: gid, uid: user.uid, status: GroupWelcomeCode.welcome_type[:private], expiration_date: expiration_date)
     end
     code
   end
@@ -86,9 +85,13 @@ module GroupHelper
 
       delete_code = true
     end
-    if Time.now.to_i > welcome.expiration_date.to_time.to_i # has been expired
+    if !welcome.expiration_date.nil? && Time.now.to_i > welcome.expiration_date.to_time.to_i # has been expired
       GroupWelcomeCode.delete_by(code: code)
       return -3 # the welcome has expired
+    end
+    exist = GroupToUser.find_by(gid: welcome.gid, uid: uid)
+    unless exist.nil?
+      return -4 # the user already in this group
     end
     GroupToUser.create(gid: welcome.gid, uid: uid, role: GroupToUser.role_status[:member])
     GroupWelcomeCode.delete_by(code: code) if delete_code

@@ -32,5 +32,8 @@
     overflow-y: scroll;
 }
 
+.dropdown-menu {
+    z-index: 1000000 !important;
+}
 
 

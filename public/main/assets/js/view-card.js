@@ -59,7 +59,7 @@ function generateAllCardsBasedOnPage(offset) {
     var cardData = [];
     var pageData = [];
     $.ajax ({
-        url:"card/view",
+        url:"/card/view",
         type:"POST",
         data: pagination_data,
         success: function(data) {

@@ -22,5 +22,20 @@ class MainController < ApplicationController
   def dashboard; end
   def profile; end
   def password; end
-  def group; end
+
+  def group
+    @gid = params[:gid]
+    uid = session[:uid]
+    if GroupToUser.find_by(gid: @gid, uid: uid).nil?
+      flash[:main_notice] = 'You haven\'t join this group'
+      session[:groups] = GroupHelper.get_user_groups uid
+      redirect_to main_dashboard_path
+      return
+    end
+
+    @group_info = GroupHelper.get_group_info @gid
+    member_result = GroupHelper.get_group_users @gid
+    @members = member_result.result
+    flash[:tab] = params[:tab] unless params[:tab].nil?
+  end
 end
