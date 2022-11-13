@@ -20,11 +20,10 @@ class GroupController < ApplicationController
     status = 0 if status.nil?
     group = GroupHelper.create_group uid, name, description, status
     message = if group.nil?
-                            # create failed, state some reason
-                            'Create Group Failed, Please try again later'
-                          else
-                            "Create Group #{group.name} successfully!"
-                          end
+                'Create Group Failed, Please try again later'
+              else
+                "Create Group #{group.name} successfully!"
+              end
     # render to the group page
     session[:groups] = GroupHelper.get_user_groups uid unless group.nil?
     render json: { success: !group.nil?, msg: message }
@@ -158,7 +157,7 @@ class GroupController < ApplicationController
     uid = params[:uid]
     gid = params[:gid]
     operator = params[:operator]
-    role = params[:role]
+    role = params[:role].to_i
     res = GroupHelper.assign_role_to_user gid, operator, uid, role
     message =
       case res

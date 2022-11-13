@@ -144,7 +144,7 @@ module GroupHelper
     end
 
     if role == GroupToUser.role_status[:owner] # transfer the ownership
-      permission_role.role = GroupToUser.role_status[:manager]
+      permission_role.role = GroupToUser.role_status[:member]
       permission_role.save
     end
     target_user.role = role

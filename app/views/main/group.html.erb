@@ -2,6 +2,11 @@
   <link rel="stylesheet" href="/main/assets/css/group.css" type="text/css"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
   <script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
+  <style>
+      .btn.disabled {
+          pointer-events: auto;
+      }
+  </style>
 </head>
 
 <div class="content-wrapper">
@@ -180,12 +185,54 @@
             </form>
           </div>
           <div class="col-md-9 col-sm-7 text-right">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#invite-member">
+            <button <%='disabled' if @group_info.status == 0 && @member.role == 2 %> type="button" class="btn btn-primary" data-toggle="modal" data-target="#invite-member">
               <i class="fa-solid fa-user-plus"></i>Invite
             </button>
           </div>
         </div>
+
+        <div class="member-entry">
+          <a href="#" class="member-img">
+            <img src="<%= @member.avatar %>" class="img-rounded">
+          </a>
+          <div class="member-details">
+            <div class="row">
+              <div class="col-md-6 col-sm-4">
+                <h4>
+                  <span><%= @member.username %></span>
+                  <div class="badge badge-outline-success">
+                    <%if @member.role == 0 %>
+                    Owner
+                    <%elsif @member.role == 1%>
+                    Manager
+                    <%else %>
+                    Member
+                    <%end %>
+                  </div>
+                </h4>
+              </div>
+              <div class="col-md-6 col-sm-8 text-right">
+                <button <%='disabled' if @member.role == 0 %> type="button" class="btn btn-danger btn-sm" onclick="removeMember(<%= @member.uid %>)">Leave Group</button>
+              </div>
+            </div>
+            <div class="row info-list">
+              <div class="col-sm-4 col-md-4">
+                <i class="fa-solid fa-user"></i>
+                <span><%= @member.work %></span>
+              </div>
+              <div class="col-sm-4 col-md-4">
+                <i class="fa-solid fa-location-dot"></i>
+                <span><%= @member.city %></span>
+              </div>
+              <div class="col-sm-8 col-md-8">
+                <span><%= @member.bio %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dropdown-divider"></div>
         <% @members.each do |member| %>
+          <%next if member.uid == @member.uid %>
           <div class="member-entry">
             <a href="#" class="member-img">
               <img src="<%= member.avatar %>" class="img-rounded">
@@ -197,7 +244,7 @@
                 </div>
                 <div class="col-md-6 col-sm-8 text-right">
                   <div class="btn-group">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button <%= if @member.role != 0 then 'disabled' end %> class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <% if member.role == 0 %>
                         Owner
                       <% elsif member.role == 1 %>
@@ -207,18 +254,15 @@
                       <% end %>
                     </button>
                     <div class="dropdown-menu member-dropdown">
-                      <% if member.role != 0 %>
-                        <a class="dropdown-item">Owner</a>
-                      <% end %>
-                      <% if member.role != 1 %>
-                        <a class="dropdown-item">Manager</a>
-                      <% end %>
-                      <% if member.role != 2 %>
-                        <a class="dropdown-item">Member</a>
-                      <% end %>
+                      <a disabled class="dropdown-item" onclick="assignRole(<%=member.uid %>, 0)"
+                         style="display: <%= if member.role == 0 then 'none' else '' end%>">Owner</a>
+                      <a disabled class="dropdown-item" onclick="assignRole(<%=member.uid %>, 1)"
+                         style="display: <%= if member.role == 1 then 'none' else '' end%>">Manager</a>
+                      <a disabled class="dropdown-item" onclick="assignRole(<%=member.uid %>, 2)"
+                         style="display: <%= if member.role == 2 then 'none' else '' end%>">Member</a>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-danger btn-sm" onclick="removeMember(<%= member.uid %>)">Remove</button>
+                  <button <%= 'disabled' if @member.role >= member.role %> type="button" class="btn btn-danger btn-sm" onclick="removeMember(<%= member.uid %>)">Remove</button>
                 </div>
               </div>
               <div class="row info-list">

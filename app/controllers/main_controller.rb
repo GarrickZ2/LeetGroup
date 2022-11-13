@@ -36,6 +36,7 @@ class MainController < ApplicationController
     @group_info = GroupHelper.get_group_info @gid
     member_result = GroupHelper.get_group_users @gid
     @members = member_result.result
+    @member = @members.find { |m| m.uid == uid }
     flash[:tab] = params[:tab] unless params[:tab].nil?
   end
 end

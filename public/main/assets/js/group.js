@@ -177,11 +177,36 @@ function generate_invite() {
 }
 
 function removeMember(member_uid) {
-    const gid = $('#gid').val()
+    const gid = $('#gid').val();
     const operator = $('#uid').val();
     $.ajax ({
         url:"/group/" + gid + "/remove_user?operator=" + operator + "&uid=" + member_uid,
         type:"GET",
+        success: function(data) {
+            show_notice_with_text(data['msg']);
+            if (data['success']) {
+                let path = '/group/' + gid + '?tab=members';
+                let command = "window.location.href='" + path + "'";
+                setTimeout(command, 2000);
+            }
+        },
+        error: function(){
+            show_notice_with_text("Fail to remove this member");
+        }
+    });
+}
+
+function assignRole(uid, role) {
+    const gid = $('#gid').val();
+    const operator = $('#uid').val();
+    $.ajax ({
+        url:"/group/" + gid + "/update_role",
+        type:"POST",
+        data: {
+            'uid': uid,
+            'operator': operator,
+            'role': role
+        },
         success: function(data) {
             show_notice_with_text(data['msg']);
             if (data['success']) {

@@ -37,6 +37,7 @@ Rails.application.routes.draw do
   get '/group/join/:code' => 'group#join_group'
   get '/group/:gid/invite' => 'group#generate_invite_code'
   get '/group/:gid/remove_user' => 'group#user_remove'
+  post '/group/:gid/update_role' => 'group#change_user_role'
 
 
   # Example of regular route:
