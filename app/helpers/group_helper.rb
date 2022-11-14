@@ -186,4 +186,45 @@ module GroupHelper
     end
     result
   end
+
+  def self.view_card(gid, status, page_size, offset, sort_by, sort_type)
+    @card_list = GroupToCard.where(gid: gid)
+    cid_list = []
+    @card_list.each do |onecard|
+      cid_list.append onecard.cid
+    end
+    puts cid_list
+    @cards = Card.where(cid: cid_list)
+    @cards = @cards.where(status: status) unless status == 3
+
+    if !sort_by.nil? && sort_type == 'asc'
+      @cards = @cards.order(sort_by => :asc)
+    end
+    if !sort_by.nil? && sort_type == 'desc'
+      @cards = @cards.order(sort_by => :desc)
+    end
+
+    total_size = @cards.count
+
+    @cards = @cards.limit(page_size).offset(offset * page_size)
+
+    total_page = total_size / page_size
+    if total_size % page_size != 0
+      total_page += 1
+    end
+    current_size = if total_size.zero?
+                     0
+                   elsif offset == total_page - 1
+                     total_size - (total_page - 1) * page_size
+                   else
+                     page_size
+                   end
+
+    page_info = PageInfo.new(total_page, total_size, offset, current_size)
+    CardView.new(page_info, @cards)
+  end
+
+  def self.view_card_detail(gid, cid)
+    Card.find_by(cid: cid)
+  end
 end

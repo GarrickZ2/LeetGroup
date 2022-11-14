@@ -8,13 +8,13 @@
   <div class="container">
     <!-- Card Lists -->
     <div class="row row-cols-2 row-cols-md-3 g-4" id="card-results">
-
     </div>
     <div class="row fixed-row pagination-container">
       <div class="col pagination-here align-self-center">
       </div>
     </div>
   </div>
+
 
   <!-- Card Modal -->
   <div class="modal fade" id="cardViewModal" tabindex="-1" role="dialog" aria-labelledby="cardViewModalLabel" aria-hidden="true" data-toggle="modal" data-target="delete-card-modal">
@@ -94,7 +94,7 @@
                       Delete
                     </li>
                     <input hidden id="delete-card-cid" >
-                    <li class="list-group-item action-item">
+                    <li class="list-group-item action-item" data-toggle="modal" data-target="#userGroupModal">
                       <i class="mdi mdi-share-variant action-icon"></i>
                       Share
                     </li>
@@ -117,6 +117,31 @@
       </div>
     </div>
   </div>
+
+
+  <!-- userGroupModal -->
+  <div class="modal fade" id="userGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Select group(s) to share this card: </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="col-md-12">
+          <p class="alert-warning" id="share-card-notice"></p>
+        </div>
+        <div class="modal-body" id="group-results">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="share_button" onclick="shareCard()">Share</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- Delete Confirmation Modal -->
   <div class="modal fade bd-example-modal-sm" id="delete-card-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

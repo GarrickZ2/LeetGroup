@@ -41,4 +41,13 @@ module CardHelper
     prev_card.delete
     true
   end
+
+  def self.share_card(gid, cid)
+    if GroupToCard.exists?(gid: gid, cid: cid)
+      return false
+    else
+      GroupToCard.create(cid: cid, gid: gid)
+    end
+    true
+  end
 end

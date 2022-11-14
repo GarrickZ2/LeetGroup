@@ -184,4 +184,24 @@ class GroupController < ApplicationController
     render json: { success: true, msg: nil, users: users.to_json }
   end
 
+  # post /group/:gid/cards
+  def view_group_cards
+    card_view = GroupHelper.view_card params[:gid], params[:status].to_i, params[:page_size].to_i, params[:offset].to_i, params[:sort_by],
+                               params[:sort_type]
+
+    page_info = card_view.page_info.to_json
+    card_info = card_view.card_info
+    cards = []
+    card_info.each { |card|
+      cards.append(card.to_json)
+    }
+    render json: { card_info: cards, page_info: page_info}
+  end
+
+  # get /group/:gid/card_detail/:cid
+  def view_group_card_detail
+    res = GroupHelper.view_card_detail params[:gid], params[:cid]
+    render json: {card: res}
+  end
+
 end

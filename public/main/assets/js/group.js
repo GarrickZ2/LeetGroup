@@ -6,52 +6,43 @@ $( document ).ready(function() {
         generateCardsBasedOnPage(num);
     });
 
+    $('#cardViewModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var cid = button.data('cid') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        var cardDetail = [];
+        $.ajax ({
+            url:"/group/" + $("#gid").val() + "/card_detail/" + cid,
+            type:"GET",
+            success: function(data) {
+                cardDetail = Object.values(data)[0];
+                putCardDetail(cardDetail,cid);
+            },
+            error: function(){
+                alert("Fail to get card details");
+            }
+        });
+    });
+
     // @TODO generate setting tab
 
 });
 
-
-function createGroup() {
-    // get fields from the form and post request
-    // alert("test create group");
-    let sel = $('input[type=radio]:checked').map(function(_, el) {
-        return $(el).val();
-    }).get();
-
-    let form_data = {
-        "uid": $("#groupUID").val(),
-        "name": $("#groupInputName").val(),
-        "description": $("#groupInputDescription").val(),
-        "status": sel
-    };
-    console.log("form data for create group is: " + JSON.stringify(form_data));
-
-    $.ajax({
-        type: "POST",
-        url: "/group/new",
-        data: form_data,
-        success: function(msg) {
-            if (msg['success']) {
-                $("#create-group-notice").text('Successfully creat card')
-                setTimeout("$('#new-group-btn').click()", 2000)
-                setTimeout("$(':input','#groupForm').val('')", 2000)
-                setTimeout("window.location.href = '/main/dashboard'", 2000)
-            }else {
-                $("#create-group-notice").text(msg['msg']);
-            }
-        },
-        error: function(){
-            alert("Fail to create the card. Please try again.");
-        }
-    });
+function putCardDetail(cardDetail, cid) {
+    $('#card-view-title').val(cardDetail["title"]);
+    $('#card-view-description').text(cardDetail["description"]);
+    $('#card-view-source').val(cardDetail["source"]);
+    $('#card-view-create-time').text(processDate(cardDetail["create_time"]));
+    $('#card-view-star').text("Star " + cardDetail["stars"]);
+    $('#card-view-used-time').text(processUsedTime(cardDetail["used_time"]));
+    $('#delete-card-cid').val(cid);
 }
 
 // function to generate all cards
 function generateCardsBasedOnPage(offset) {
-    let uid = $("#uid").val();
-    // @TODO need to change to get group cards
+    let gid = $("#gid").val();
+    console.log("gid is", gid);
     let pagination_data = {
-        "uid": uid,
         "status": 3 ,
         "page_size": 6,
         "offset": offset - 1,
@@ -63,12 +54,13 @@ function generateCardsBasedOnPage(offset) {
     var pageData = [];
     // @TODO need to change to get group cards
     $.ajax ({
-        url:"/card/view",
+        url: "/group/" + gid + "/cards",
         type:"POST",
         data: pagination_data,
         success: function(data) {
             cardData = data["card_info"];
             pageData = data["page_info"];
+            console.log(cardData);
             generateAllCards(cardData);
             generatePagination(JSON.parse(pageData), offset);
         },
@@ -86,7 +78,7 @@ function generateAllCards(cardData) {
     card_container.empty();
     if (Object.keys(cardData).length === 0) {
         let card_empty_text = $("<h5 class=\"card-title\"></h5>");
-        card_empty_text.text("No card. Go create your card.");
+        card_empty_text.text("No card. Add card to this group.");
         card_container.append(card_empty_text);
     } else{
         $.each(cardData, function(i, data) {
@@ -113,18 +105,20 @@ function generateAllCards(cardData) {
     }
 }
 
-// Helper function to generate group cards pagination based on the page info
-function generateCardPagination(pageData, offset) {
+// generate pagination based on the page info
+function generatePagination(pageData, offset) {
     $('.pagination-cards').bootpag({
         total: pageData["total_page"],
         page: offset,
         maxVisible: 5,
         leaps: true,
+        activeClass: "active-page"
     });
     // add class style for pagination
     $('[data-lp]').addClass('page-item');
     $('.page-item > a').addClass('page-link');
 }
+
 
 function joinGroup() {
     const uid = $('#cardUID').val();
@@ -219,4 +213,23 @@ function assignRole(uid, role) {
             show_notice_with_text("Fail to remove this member");
         }
     });
+}
+
+// helper function
+function processDate(date) {
+    return new Date(Date.parse(date)).toLocaleString()
+}
+
+// helper function
+function processUsedTime(totalSeconds) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    // format as MM:SS
+    const result = `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
+    return result;
 }

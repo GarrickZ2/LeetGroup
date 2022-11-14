@@ -30,6 +30,23 @@ $( document ).ready(function() {
             }
         });
     });
+
+    $('#userGroupModal').on('show.bs.modal', function (event) {
+        let uid = $("#uid").val();
+        // // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        var groupDetails = [];
+        $.ajax ({
+            url:"user/" + uid + "/group",
+            type:"GET",
+            success: function(data) {
+                groupData = data["groups"];
+                generateGroupDetail(groupData);
+            },
+            error: function(){
+                alert("Fail to get group details");
+            }
+        });
+    });
 });
 
 
@@ -126,6 +143,56 @@ function generateCardDetail(cardData) {
     }
 }
 
+
+function generateGroupDetail(groupData) {
+    let group_body = $("#group-results");
+    // empty the body
+    group_body.empty();
+    $("#share-card-notice").empty();
+
+    let gid_list = [];
+
+    if (Object.keys(groupData).length === 0) {
+        let group_empty_text = $("<h5></h5>");
+        group_empty_text.text("No group. Go create/join your group.");
+        group_body.append(group_empty_text);
+    } else{
+
+        $.each(JSON.parse(groupData), function(i, data) {
+            console.log(data);
+            gid_list.push(data["gid"]);
+            let groupOption = "<label>"
+                + "<input name='group_items' type='checkbox' value="
+                + data["gid"] + " id=group_" + data["gid"] +">"
+                + data["name"] + "</label> <br>";
+            group_body.append(groupOption);
+        });
+
+
+        let gidList = {
+            "gid_list": gid_list
+        }
+
+        // checked those groups that have included this card
+        $.ajax ({
+            url:"card/" + $("#delete-card-cid").val() + "/check_exist",
+            type:"POST",
+            data: gidList,
+            success: function(data) {
+                console.log("Check result:");
+                console.log(data);
+                $.each(data["exist_list"], function(i, singledata){
+                    $("#group_" + singledata).attr("checked", true);
+                    $("#group_" + singledata).attr("disabled", true);
+                });
+            },
+            error: function(){
+                alert("Fail to check card existence in groups");
+            }
+        });
+    }
+}
+
 // Card: Edit
 function editCard() {
     // get the data and send ajax request
@@ -179,6 +246,35 @@ function deleteCard() {
         },
         error: function(){
             alert("Fail to delete the card");
+        }
+    });
+}
+
+function shareCard() {
+    var group_list = [];
+    $("input[name=group_items]:checkbox:checked").each(function(){
+        group_list.push($(this).val());
+    });
+    console.log(group_list);
+    let share_data = {
+        "gid_list": group_list
+    }
+    $.ajax ({
+        url: "card/" + $("#delete-card-cid").val() + "/share",
+        type:"POST",
+        data: share_data,
+        success: function(data) {
+            if(data["success"]) {
+                console.log('success!');
+                $("#share-card-notice").text('The card is shared successfully!');
+                setTimeout("window.location.href = '/main/all_cards'", 500);
+            }
+            else {
+                alert("Fail to share the card. Please try again.");
+            }
+        },
+        error: function(){
+            alert("Fail to share the card");
         }
     });
 }

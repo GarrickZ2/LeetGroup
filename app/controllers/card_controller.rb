@@ -71,4 +71,31 @@ class CardController < ApplicationController
     # redirect_to '/main/all_cards.html'
     render json: { success: true, msg: 'The card deleted successfully' }
   end
+
+  # post /card/:cid/share
+  # params: list of :gid
+  # return: json { success: bool, msg: string }
+  def share
+    cid = params[:cid]
+    gid_list = params[:gid_list]
+    gid_list.each { |gid|
+      CardHelper.share_card gid, cid
+    }
+    render json: { success: true, msg: 'The card is shared successfully' }
+  end
+
+  # post /card/:cid/check_exist
+  # params: list of :gid
+  # return: exist_list: list of gids that contain the card
+  def check_card_exist
+    cid = params[:cid]
+    gid_list = params[:gid_list]
+    exist_list = []
+    gid_list.each { |gid|
+      if GroupToCard.exists?(gid: gid, cid: cid)
+        exist_list.append(gid)
+      end
+    }
+    render json: {success: true, exist_list: exist_list}
+  end
 end

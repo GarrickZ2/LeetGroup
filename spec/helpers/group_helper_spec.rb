@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe GroupHelper do
   describe 'User can create a group' do
     it 'user can create a group with name, desp and status' do
@@ -204,6 +206,22 @@ describe GroupHelper do
       GroupToUser.create(gid: 3, uid: 2, role: GroupToUser.role_status[:member])
       res = GroupHelper.get_user_groups 2
       expect(res.length).to eql 2
+    end
+  end
+
+  describe 'User get all cards from certain group' do
+    it 'return all the cards from this group' do
+      GroupInfo.create(gid: 1)
+      Card.create(uid: 1, title: 'first card')
+      GroupToCard.create(gid: 1, cid: 1)
+      res = GroupHelper.view_card 1, 3, 6, 0, "create_time", "asc"
+      res.each do |card|
+        assert_equal 1, card.cid
+        assert_equal 'first card', card.title
+      end
+
+      # expect(res.title).to eql 'first caxrd'
+      # expect(res.length).to eql 1
     end
   end
 end
