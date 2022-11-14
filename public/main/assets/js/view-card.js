@@ -151,11 +151,11 @@ function generateGroupDetail(groupData) {
     $("#share-card-notice").empty();
 
     let gid_list = [];
-
-    if (Object.keys(groupData).length === 0) {
+    if (JSON.parse(groupData).length == 0) {
         let group_empty_text = $("<h5></h5>");
         group_empty_text.text("No group. Go create/join your group.");
         group_body.append(group_empty_text);
+        $("#share_button").remove();
     } else{
 
         $.each(JSON.parse(groupData), function(i, data) {

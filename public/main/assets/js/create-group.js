@@ -32,3 +32,19 @@ function createGroup() {
         }
     });
 }
+
+function joinGroup() {
+    const uid = $('#cardUID').val();
+    const link = $('#invite-code').val();
+    const part = link.split('/');
+    const code = part[part.length-1];
+    $.get(
+        '/group/join/' + code + "?uid=" + uid,
+        function (data) {
+            show_notice_with_text(data['msg']);
+            if (data['success']) {
+                setTimeout("window.location.href = '/main/dashboard'", 2000);
+            }
+        }
+    )
+}

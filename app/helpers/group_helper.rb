@@ -233,7 +233,7 @@ module GroupHelper
     card_owner = Card.find_by(cid: cid)
 
     # have no permission
-    if permission_role.role != GroupToUser.role_status[:owner] && card_owner.uid != uid
+    if permission_role.role != GroupToUser.role_status[:owner] && card_owner.uid != uid.to_i
       return -1
     end
 
