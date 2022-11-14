@@ -204,4 +204,21 @@ class GroupController < ApplicationController
     render json: {card: res}
   end
 
+  # get 'group/:gid/check_permission/:uid/:cid' => 'group#check_permission'
+  # only group owner or card owner can delete the card
+  def check_permission
+    res = GroupHelper.check_permission params[:gid], params[:uid], params[:cid]
+    render json: {result: res}
+  end
+
+  # get 'group/card/delete' => 'group#delete_card'
+  # delete certain card from group
+  def delete_card
+    res = GroupHelper.delete_card params[:gid], params[:cid]
+    unless res
+      render json: { success: false, msg: "The card doesn't exist" }
+      return
+    end
+    render json: { success: true, msg: 'The card deleted successfully' }
+  end
 end

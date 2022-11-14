@@ -44,7 +44,8 @@ Rails.application.routes.draw do
   post '/group/:gid/update_role' => 'group#change_user_role'
   post '/group/:gid/cards' => 'group#view_group_cards'
   get '/group/:gid/card_detail/:cid' => 'group#view_group_card_detail'
-
+  get 'group/:gid/check_permission/:uid/:cid' => 'group#check_permission'
+  get 'group/card/delete' => 'group#delete_card'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -1,5 +1,6 @@
 <head>
   <link rel="stylesheet" href="/main/assets/css/group.css" type="text/css"/>
+  <link rel="stylesheet" href="/main/assets/css/viewCard.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
   <script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
   <style>
@@ -291,108 +292,109 @@
 
     </div>
   </div>
-</div>
 
-<div class="modal fade" id="cardViewModal" tabindex="-1" role="dialog" aria-labelledby="cardViewModalLabel" aria-hidden="true" data-toggle="modal" data-target="delete-card-modal">
-  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-    <div class="modal-content" id="card-modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cardViewModalLabel">Card: </h5>
-        <input type="text" class="form-control card-view-input" id="card-view-title">
-        <button type="button" class="close" data-dismiss="modal" id="close-card-detail-btn" aria-label="Close">
-          <span aria-hidden="true" class="close-button">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-8">
-            <form>
-              <div class="form-group">
-                <label for="recipient-name" class="col-form-label">Source</label>
-                <input type="text" class="form-control card-view-input2" id="card-view-source">
-              </div>
-              <div class="form-group">
-                <label for="message-text" class="col-form-label">Description</label>
-                <textarea class="form-control card-view-input2" id="card-view-description"></textarea>
-              </div>
-              <div class="form-group">
-                <label for="message-text" class="col-form-label">Comment</label>
-                <div class="row">
-                  <!-- My comment -->
-                  <div class="col-md-2 col-sm-2 card-comment-avatar-container">
-                    <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
-                  </div>
-                  <div class="col-md-10 col-sm-10 card-comment-container">
-                    <textarea id="card-view-comment" placeholder="Write your comment..."></textarea>
-                    <button class="btn btn-inverse-secondary float-end" id="comment-save-btn">Save</button>
-                  </div>
-                  <!-- Other comments -->
-                  <div class="col-12">
-                    <div class="row">
-                      <div class="col-md-2 col-sm-2 card-comment-avatar-container">
-                        <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
-                      </div>
-                      <div class="col-md-10 col-sm-10 card-comment-container">
-                        <span>Here is the comment</span>
+  <div class="modal fade" id="cardViewModal" tabindex="-1" role="dialog" aria-labelledby="cardViewModalLabel" aria-hidden="true" data-toggle="modal" data-target="delete-card-modal">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+      <div class="modal-content" id="card-modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cardViewModalLabel">Card: </h5>
+          <input type="text" class="form-control card-view-input" id="card-view-title">
+          <button type="button" class="close" data-dismiss="modal" id="close-card-detail-btn" aria-label="Close">
+            <span aria-hidden="true" class="close-button">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-8">
+              <form>
+                <div class="form-group">
+                  <label for="recipient-name" class="col-form-label">Source</label>
+                  <div class="form-control card-view-input2" id="card-view-source"> </div>
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Description</label>
+                  <div class="form-control card-view-input2" id="card-view-description"></div>
+                </div>
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label">Comment</label>
+                  <div class="row">
+                    <!-- My comment -->
+                    <div class="col-md-2 col-sm-2 card-comment-avatar-container">
+                      <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
+                    </div>
+                    <div class="col-md-10 col-sm-10 card-comment-container">
+                      <textarea id="card-view-comment" placeholder="Write your comment..."></textarea>
+                      <button class="btn btn-inverse-secondary float-end" id="comment-save-btn">Save</button>
+                    </div>
+                    <!-- Other comments -->
+                    <div class="col-12">
+                      <div class="row">
+                        <div class="col-md-2 col-sm-2 card-comment-avatar-container">
+                          <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
+                        </div>
+                        <div class="col-md-10 col-sm-10 card-comment-container">
+                          <span>Here is the comment</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
+                  </div>
                 </div>
-              </div>
-            </form>
-          </div>
-          <div class="col-md-4">
-            <div class="row">
-              <div class="col-md-12 use-time-container">
-                <p class="item-title">Used time</p>
-                <span id="card-view-used-time"></span>
-                <br>
-                <br>
-              </div>
-              <div class="col-md-12 action-container">
-                <p class="item-title">Actions</p>
-                <ul class="list-group action-list-group">
-                  <li class="list-group-item action-item" onclick="editCard()">
-                    <i class="mdi mdi-border-color action-icon"></i>
-                    Save edit changes
-                  </li>
-                  <li class="list-group-item action-item">
-                    <i class="mdi mdi-archive action-icon"></i>
-                    Archive
-                  </li>
-                  <li class="list-group-item action-item">
-                    <i class="mdi mdi-content-copy action-icon"></i>
-                    Copy
-                  </li>
-                  <li class="list-group-item action-item" data-toggle="modal" data-target="#delete-card-modal" >
-                    <i class="mdi mdi-delete action-icon"></i>
-                    Delete
-                  </li>
-                  <input hidden id="delete-card-cid" >
-                  <li class="list-group-item action-item" data-toggle="modal" data-target="#userGroupModal">
-                    <i class="mdi mdi-share-variant action-icon"></i>
-                    Share
-                  </li>
-                </ul>
+              </form>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-12 use-time-container">
+                  <p class="item-title">Used time</p>
+                  <span id="card-view-used-time"></span>
+                  <br>
+                  <br>
+                </div>
+                <div class="col-md-12 action-container">
+                  <p class="item-title">Actions</p>
+                  <ul class="list-group action-list-group">
+                    <li class="list-group-item action-item">
+                      <i class="mdi mdi-content-copy action-icon"></i>
+                      Copy to your card collection
+                    </li>
+                    <li class="list-group-item action-item" data-toggle="modal" data-target="#deleteGroupCardModal" >
+                      <i class="mdi mdi-delete action-icon"></i>
+                      Delete from this group
+                    </li>
+                    <input hidden id="delete-card-cid" >
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="modal-footer">
-        <div class="mr-auto create-time-text">
-          Created time
-          <span id="card-view-create-time">11:59 10/31/2022</span>
+        <div class="modal-footer">
+          <div class="mr-auto create-time-text">
+            Created time
+            <span id="card-view-create-time">11:59 10/31/2022</span>
+          </div>
+          <i class="mdi mdi-star-outline star-icon" onclick="changeStarIcon()">
+          </i>
+          <span class="star-text" id="card-view-star">Stars </span>
         </div>
-        <i class="mdi mdi-star-outline star-icon" onclick="changeStarIcon()">
-        </i>
-        <span class="star-text" id="card-view-star">Stars </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal fade bd-example-modal-sm" id="deleteGroupCardModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body" id="delete-body">
+        </div>
+        <div class="modal-footer" id="delete-buttons-container">
+        </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <script src="/main/assets/js/group.js"></script>
 <script>

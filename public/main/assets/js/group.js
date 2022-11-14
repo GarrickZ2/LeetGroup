@@ -24,6 +24,23 @@ $( document ).ready(function() {
         });
     });
 
+    $('#deleteGroupCardModal').on('show.bs.modal', function (event) {
+        let uid = $("#uid").val();
+        // // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        let permission = 0;
+        $.ajax ({
+            url: $("#gid").val() + "/check_permission/" + uid + "/" + $('#delete-card-cid').val(),
+            type:"GET",
+            success: function(data) {
+                permission = data["result"];
+                deleteGroupCard(permission);
+            },
+            error: function(){
+                alert("Fail to get group details");
+            }
+        });
+    });
+
     // @TODO generate setting tab
 
 });
@@ -31,7 +48,7 @@ $( document ).ready(function() {
 function putCardDetail(cardDetail, cid) {
     $('#card-view-title').val(cardDetail["title"]);
     $('#card-view-description').text(cardDetail["description"]);
-    $('#card-view-source').val(cardDetail["source"]);
+    $('#card-view-source').text(cardDetail["source"]);
     $('#card-view-create-time').text(processDate(cardDetail["create_time"]));
     $('#card-view-star').text("Star " + cardDetail["stars"]);
     $('#card-view-used-time').text(processUsedTime(cardDetail["used_time"]));
@@ -211,6 +228,48 @@ function assignRole(uid, role) {
         },
         error: function(){
             show_notice_with_text("Fail to remove this member");
+        }
+    });
+}
+
+
+function deleteGroupCard(permission) {
+    $("#delete-body").empty();
+    $("#delete-buttons-container").empty();
+    let close_btn = $('<button type="button" class="btn btn-secondary" id="close-delete-card-btn" data-dismiss="modal">Close</button>');
+    $("#delete-buttons-container").append(close_btn);
+
+
+    if (permission == 1){
+        $("#delete-body").text("Are you sure you want to delete this card from this group?");
+        let confirm_btn = '<button type="button" class="btn btn-danger" id="delete-card-btn" onclick="deleteCardFromGroup()">Yes</button>';
+        $("#delete-buttons-container").append(confirm_btn);
+    } else {
+        $("#delete-body").text("Sorry, you don't have the permission to delete this card.");
+    }
+}
+
+function deleteCardFromGroup(){
+    console.log("Click Delete!");
+    $.ajax ({
+        url:"card/delete?gid=" + $("#gid").val() + "&cid=" + $("#delete-card-cid").val(),
+        type:"GET",
+        success: function(data) {
+            // @TODO add successfully delete the card message and close the modal
+            if(data["success"]) {
+                // close the modal
+                $('#close-delete-card-btn').click();
+                $('#close-card-detail-btn').click();
+                show_notice_with_text("Successfully delete the card");
+                // rerender all cards based on page
+                setTimeout(generateCardsBasedOnPage($(".active-page").text()), 1500);
+            }else {
+                alert("Fail to delete the card. Please try again.");
+            }
+
+        },
+        error: function(){
+            alert("Fail to delete the card");
         }
     });
 }

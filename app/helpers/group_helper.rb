@@ -227,4 +227,24 @@ module GroupHelper
   def self.view_card_detail(gid, cid)
     Card.find_by(cid: cid)
   end
+
+  def self.check_permission(gid, uid, cid)
+    permission_role = GroupToUser.find_by(gid: gid, uid: uid)
+    card_owner = Card.find_by(cid: cid)
+
+    # have no permission
+    if permission_role.role != GroupToUser.role_status[:owner] && card_owner.uid != uid
+      return -1
+    end
+
+    return 1
+  end
+
+  def self.delete_card(gid, cid)
+    prev_card = GroupToCard.find_by(gid: gid, cid: cid)
+    return false if prev_card.nil?
+
+    prev_card.delete
+    true
+  end
 end
