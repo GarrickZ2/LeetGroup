@@ -193,7 +193,7 @@ module GroupHelper
     @card_list.each do |onecard|
       cid_list.append onecard.cid
     end
-    puts cid_list
+
     @cards = Card.where(cid: cid_list)
     @cards = @cards.where(status: status) unless status == 3
 

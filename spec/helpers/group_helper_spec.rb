@@ -107,6 +107,13 @@ describe GroupHelper do
       expect(res).to eql(-3)
       expect(GroupToUser.exists?(gid: @gid, uid: @uid2)).to eql false
     end
+    it 'User cannot join if already in the group' do
+      GroupToUser.create(gid: @gid, uid: @uid2)
+      code = GroupHelper.generate_private_invite_code @gid, 'Alinda', Time.now + 7.days
+      res = GroupHelper.join_group @uid2, code
+      expect(res).to eql(-4)
+      expect(GroupToUser.exists?(gid: @gid, uid: @uid2)).to eql true
+    end
   end
   describe 'Assign role to user' do
     before(:each) do
@@ -191,6 +198,11 @@ describe GroupHelper do
       res = GroupHelper.get_group_users @gid
       expect(res.result.length).to eql 3
     end
+    it 'should delete user from group if the user does not exist' do
+      UserProfile.delete_by(uid: 3)
+      res = GroupHelper.get_group_users @gid
+      expect(res.result.length).to eql 2
+    end
     it 'should not get result if does not exist' do
       res = GroupHelper.get_group_users @gid + 1
       expect(res.result).to eql nil
@@ -206,6 +218,122 @@ describe GroupHelper do
       GroupToUser.create(gid: 3, uid: 2, role: GroupToUser.role_status[:member])
       res = GroupHelper.get_user_groups 2
       expect(res.length).to eql 2
+    end
+  end
+
+  describe 'User view card in group' do
+    time1 = '2022-10-31T04:26:02.000Z'
+    time2 = '2022-10-31T05:26:02.000Z'
+    time3 = '2022-10-31T06:26:02.000Z'
+
+    before(:each) do
+      Card.create(cid: 1, uid: 1, title: 'Two Sum', source: 'LeetCode', description: 'easy', schedule_time: nil, status: 1,
+                  stars: 1, used_time: 0, create_time: time1, update_time: time1)
+      Card.create(cid: 2, uid: 1, title: 'Reverse Integer', source: 'LeetCode', description: 'medium', schedule_time: nil, status: 2,
+                  stars: 0, used_time: 0, create_time: time2, update_time: time2)
+      Card.create(cid: 3, uid: 2, title: 'Median of Two Sorted Arrays', source: 'LeetCode', description: 'hard', schedule_time: nil, status: 0,
+                  stars: 2, used_time: 0, create_time: time3, update_time: time3)
+      GroupToCard.create(gid: 1, cid: 1)
+      GroupToCard.create(gid: 1, cid: 2)
+      GroupToCard.create(gid: 1, cid: 3)
+    end
+
+    card_expect = {
+      cid: 1,
+      uid: 1,
+      title: 'Two Sum',
+      source: 'LeetCode',
+      description: 'easy',
+      status: 1,
+      used_time: 0,
+      stars: 1,
+      create_time: time1,
+      update_time: time1,
+      schedule_time: nil
+    }
+
+    it 'should show card of all status by create_time in asc' do
+      @card_view = GroupHelper.view_card(1, 3, 2, 0, 'create_time', 'asc')
+      @cards = @card_view.card_info
+      @page_info = @card_view.page_info
+      page_info_expect = PageInfo.new(2, 3, 0, 2)
+      expect(@page_info.to_json).to eq page_info_expect.to_json
+      expect(@cards[0].to_json).to eq card_expect.to_json
+    end
+
+    it 'should show card of all status by create_time in desc' do
+      @card_view = GroupHelper.view_card(1, 3, 1, 2, 'create_time', 'desc')
+      @cards = @card_view.card_info
+      @page_info = @card_view.page_info
+      page_info_expect = PageInfo.new(3, 3, 2, 1)
+      expect(@page_info.to_json).to eq page_info_expect.to_json
+      expect(@cards[0].to_json).to eq card_expect.to_json
+    end
+
+    it 'should show card of status 1' do
+      @card_view = GroupHelper.view_card(1, 1, 1, 0, nil, nil)
+      @cards = @card_view.card_info
+      @page_info = @card_view.page_info
+      page_info_expect = PageInfo.new(1, 1, 0, 1)
+      expect(@page_info.to_json).to eq page_info_expect.to_json
+      expect(@cards[0].to_json).to eq card_expect.to_json
+    end
+
+    it 'should get nothing if there is no card in the group' do
+      @card_view = GroupHelper.view_card(2, 3, 2, 0, nil, nil)
+      @cards = @card_view.card_info
+      @page_info = @card_view.page_info
+      page_info_expect = PageInfo.new(0, 0, 0, 0)
+      expect(@page_info.to_json).to eq page_info_expect.to_json
+      expect(@cards.count).to eq 0
+    end
+  end
+
+  describe 'view card detail in group' do
+    it 'should successfully get the card detail' do
+      @card = Card.create(uid: 23, cid: 22, title: '000', source: '123', description: '321')
+      card = GroupHelper.view_card_detail(1, 22)
+      expect(card).to eq @card
+    end
+  end
+
+  describe 'check user permission of the card' do
+    before(:each) do
+      Card.create(uid: 3, cid: 22, title: '000', source: '123', description: '321')
+      GroupToUser.create(gid: 1, uid: 1, role: GroupToUser.role_status[:owner])
+      GroupToUser.create(gid: 1, uid: 2, role: GroupToUser.role_status[:member])
+      GroupToUser.create(gid: 1, uid: 3, role: GroupToUser.role_status[:member])
+    end
+
+    it 'should return 1 if user is the owner of the group ' do
+      permission = GroupHelper.check_permission(1, 1, 22)
+      expect(permission).to eq 1
+    end
+
+    it 'should return 1 if user is the owner of the card ' do
+      permission = GroupHelper.check_permission(1, 3, 22)
+      expect(permission).to eq 1
+    end
+
+    it 'should return -1 if user is not the owner of the group or the card' do
+      permission = GroupHelper.check_permission(1, 2, 22)
+      expect(permission).to eq -1
+    end
+  end
+
+  describe 'delete card from group' do
+    before(:each) do
+      GroupToCard.create(gid: 1, cid: 1)
+    end
+
+    it 'should successfully delete if the card exists in group' do
+      res = GroupHelper.delete_card(1, 1)
+      expect res
+    end
+
+    it 'should fail to delete if the card does not exist in group' do
+      res = GroupHelper.delete_card(1, 2)
+      expect !res
     end
   end
 end
