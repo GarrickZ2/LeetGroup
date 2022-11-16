@@ -10,6 +10,9 @@ describe MainController do
 
     it 'user goto the main page if login' do
       session[:uid] = 2
+      session[:profile] = 2
+      session[:email] = 2
+      session[:groups] = []
       get :dashboard
       expect(response).to render_template('main/dashboard')
     end
