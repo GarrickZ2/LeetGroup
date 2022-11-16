@@ -16,3 +16,9 @@ Given /the following welcome code exist/ do |codes|
     GroupWelcomeCode.create code
   end
 end
+
+Given /the following group cards exist/ do |cards|
+  cards.hashes.each do |card|
+    GroupToCard.create card
+  end
+end
