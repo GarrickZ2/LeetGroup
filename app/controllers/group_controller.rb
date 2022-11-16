@@ -96,13 +96,14 @@ class GroupController < ApplicationController
   # get /group/join/:code
   # input: uid
   def join_group
-    uid = params[:uid].to_i
+    uid = params[:uid]
     uid = session[:uid] if uid.nil?
     if uid.nil?
       flash[:l_notice] = 'Please login firstly to join a group'
       redirect_to user_index_path type: 'login'
       return
     end
+    uid = uid.to_i if uid.is_a? String
     res = GroupHelper.join_group uid, params[:code]
     message =
       case res
@@ -117,14 +118,7 @@ class GroupController < ApplicationController
       else
         'Join the group successfully'
       end
-    p uid
     session[:groups] = GroupHelper.get_user_groups uid if res.positive?
-
-    if params[:uid].nil?
-      flash[:main_notice] = message
-      redirect_to main_dashboard_path
-      return
-    end
 
     render json: { success: res.positive?, msg: message }
   end

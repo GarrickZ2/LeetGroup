@@ -20,7 +20,7 @@ Feature: user create groups
     Then I should be on the dashboard page
     When I click the element with id "nav-group"
     Then I should see "LeetGroup"
-#    When I follow "LeetGroup"
-#    Then I should see "Group Overview"
+    When I follow "LeetGroup"
+    Then I should see "Group Overview"
 
 
