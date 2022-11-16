@@ -29,6 +29,9 @@ describe MainController do
 
     it "redirect to dashboard if user hasn't joined a group" do
       session[:uid] = 2
+      session[:profile] = 2
+      session[:email] = 2
+      session[:groups] = []
       get :group, params: {
         gid: 1
       }
@@ -37,6 +40,9 @@ describe MainController do
 
     it 'should show all the groups the user joined' do
       session[:uid] = 1
+      session[:profile] = 1
+      session[:email] = 1
+      session[:groups] = []
       get :group, params: {
         gid: 1
       }
