@@ -12,14 +12,14 @@ Feature: user update the profile
 Scenario: I can goto the profile detail page
   Given I log in with "Alien" and "!G1535"
   When I am on the profile edit page
-  Then I should see "View Your Profile"
+  Then I should see "Details"
 
 @javascript
 Scenario: I can update my profile information
   Given I log in with "Alien" and "!G1535"
   When I am on the profile edit page
   And I click the element with id "edit-tab"
-  Then I should see "Save Your Profile"
+  Then I should see "Save"
   When I fill in "school" with "Columbia University"
   And I click the element with id "save-btn"
   Then I should be on the profile edit page
@@ -29,7 +29,7 @@ Scenario: I can change my avatar
   Given I log in with "Alien" and "!G1535"
   When I am on the profile edit page
   And I click the element with id "avatar-tab"
-  Then I should see "Save Your Avatar"
+  Then I should see "Change your avatar"
   When I click the element with id "i1"
-  And I click the element with id "save-btn"
+  And I click the element with id "avatar-btn"
   Then I should be on the profile edit page

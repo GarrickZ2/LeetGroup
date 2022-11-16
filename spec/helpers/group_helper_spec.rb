@@ -4,7 +4,7 @@ describe GroupHelper do
   describe 'User can create a group' do
     it 'user can create a group with name, desp and status' do
       gid = GroupHelper.create_group(1, 'LeetGroup', 'test')
-      expect(gid.positive?).eql? true
+      expect(gid != -1).eql? true
     end
   end
 
@@ -12,7 +12,7 @@ describe GroupHelper do
     before(:each) do
       UserProfile.create(uid: 1)
       UserProfile.create(uid: 2)
-      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test')
+      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test').gid
     end
     it 'should delete the group if user is owner' do
       GroupHelper.delete_group @gid, 1
@@ -28,7 +28,7 @@ describe GroupHelper do
     before(:each) do
       UserProfile.create(uid: 1)
       UserProfile.create(uid: 2)
-      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test')
+      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test').gid
       @group_info = GroupInfo.new
       @group_info.gid = @gid
       @group_info.name = 'LG'
@@ -49,7 +49,7 @@ describe GroupHelper do
 
   describe 'User can get the information of group' do
     it 'get the information of one group' do
-      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test')
+      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test').gid
       info = GroupHelper.get_group_info @gid
       expect(info.name).eql? 'LeetGroup'
       expect(info.description).eql? 'test'
@@ -58,18 +58,18 @@ describe GroupHelper do
 
   describe 'Generate the invite code' do
     before(:each) do
-      UserProfile.create(uid: 1)
-      UserProfile.create(uid: 2)
-      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test')
+      @uid1 = UserHelper.create_account 'Garrick', '1', '!Zzx135246'
+      @uid2 = UserHelper.create_account 'Alinda', '2', '!Zzx135246'
+      @gid = GroupHelper.create_group(@uid1, 'LeetGroup', 'test').gid
     end
     it 'should generate a private invite code' do
-      code = GroupHelper.generate_private_invite_code @gid, 2, nil
+      code = GroupHelper.generate_private_invite_code @gid, 'Alinda', nil
       expect(code.length).to eql 6
       res = GroupWelcomeCode.find code
       expect(res).not_to eql nil
     end
     it 'should not generate a private code if the user does not exist' do
-      code = GroupHelper.generate_private_invite_code @gid, 3, nil
+      code = GroupHelper.generate_private_invite_code @gid, 'Viper', nil
       expect(code).to eql nil
     end
     it 'should generate a public code with an expiration date' do
@@ -80,32 +80,32 @@ describe GroupHelper do
 
   describe 'User Join a group' do
     before(:each) do
-      UserProfile.create(uid: 1)
-      UserProfile.create(uid: 2)
-      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test')
+      @uid1 = UserHelper.create_account 'Garrick', '1', '!Zzx135246'
+      @uid2 = UserHelper.create_account 'Alinda', '2', '!Zzx135246'
+      @gid = GroupHelper.create_group(@uid1, 'LeetGroup', 'test').gid
     end
     it 'User can join a group with a valid code' do
       code = GroupHelper.generate_public_invite_code @gid, Time.now + 7.days
-      res = GroupHelper.join_group 2, code
+      res = GroupHelper.join_group @uid2, code
       expect(res).to eql 1
-      expect(GroupToUser.exists?(gid: @gid, uid: 2)).to eql true
+      expect(GroupToUser.exists?(gid: @gid, uid: @uid2)).to eql true
     end
     it 'User cannot join with an invalid code' do
-      res = GroupHelper.join_group 2, '12345'
+      res = GroupHelper.join_group @uid2, '12345'
       expect(res).to eql(-1)
-      expect(GroupToUser.exists?(gid: @gid, uid: 2)).to eql false
+      expect(GroupToUser.exists?(gid: @gid, uid: @uid2)).to eql false
     end
     it 'User cannot join with not invited private code' do
-      code = GroupHelper.generate_private_invite_code @gid, 2, Time.now + 1.days
-      res = GroupHelper.join_group 3, code
+      code = GroupHelper.generate_private_invite_code @gid, 'Alinda', Time.now + 1.days
+      res = GroupHelper.join_group 0, code
       expect(res).to eql(-2)
-      expect(GroupToUser.exists?(gid: @gid, uid: 2)).to eql false
+      expect(GroupToUser.exists?(gid: @gid, uid: @uid2)).to eql false
     end
     it 'User cannot join with an expired code' do
-      code = GroupHelper.generate_private_invite_code @gid, 2, Time.now - 1.days
-      res = GroupHelper.join_group 2, code
+      code = GroupHelper.generate_private_invite_code @gid, 'Alinda', Time.now - 1.days
+      res = GroupHelper.join_group @uid2, code
       expect(res).to eql(-3)
-      expect(GroupToUser.exists?(gid: @gid, uid: 2)).to eql false
+      expect(GroupToUser.exists?(gid: @gid, uid: @uid2)).to eql false
     end
   end
   describe 'Assign role to user' do
@@ -113,7 +113,7 @@ describe GroupHelper do
       UserProfile.create(uid: 1)
       UserProfile.create(uid: 2)
       UserProfile.create(uid: 3)
-      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test')
+      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test').gid
       GroupToUser.create(gid: @gid, uid: 2, role: GroupToUser.role_status[:member])
       GroupToUser.create(gid: @gid, uid: 3, role: GroupToUser.role_status[:member])
     end
@@ -139,7 +139,7 @@ describe GroupHelper do
       res = GroupHelper.assign_role_to_user @gid, 1, 2, GroupToUser.role_status[:owner]
       expect(res).to eql(1)
       user = GroupToUser.find_by(gid: @gid, uid: 1)
-      expect(user.role).to eql GroupToUser.role_status[:manager]
+      expect(user.role).to eql GroupToUser.role_status[:member]
     end
   end
 
@@ -148,7 +148,7 @@ describe GroupHelper do
       UserProfile.create(uid: 1)
       UserProfile.create(uid: 2)
       UserProfile.create(uid: 3)
-      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test')
+      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test').gid
       GroupToUser.create(gid: @gid, uid: 2, role: GroupToUser.role_status[:member])
       GroupToUser.create(gid: @gid, uid: 3, role: GroupToUser.role_status[:member])
     end
@@ -183,7 +183,7 @@ describe GroupHelper do
       UserProfile.create(uid: 1)
       UserProfile.create(uid: 2)
       UserProfile.create(uid: 3)
-      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test')
+      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test').gid
       GroupToUser.create(gid: @gid, uid: 2, role: GroupToUser.role_status[:member])
       GroupToUser.create(gid: @gid, uid: 3, role: GroupToUser.role_status[:member])
     end
@@ -192,7 +192,7 @@ describe GroupHelper do
       expect(res.result.length).to eql 3
     end
     it 'should not get result if does not exist' do
-      res = GroupHelper.get_group_users @gid+1
+      res = GroupHelper.get_group_users @gid + 1
       expect(res.result).to eql nil
     end
   end
@@ -206,22 +206,6 @@ describe GroupHelper do
       GroupToUser.create(gid: 3, uid: 2, role: GroupToUser.role_status[:member])
       res = GroupHelper.get_user_groups 2
       expect(res.length).to eql 2
-    end
-  end
-
-  describe 'User get all cards from certain group' do
-    it 'return all the cards from this group' do
-      GroupInfo.create(gid: 1)
-      Card.create(uid: 1, title: 'first card')
-      GroupToCard.create(gid: 1, cid: 1)
-      res = GroupHelper.view_card 1, 3, 6, 0, "create_time", "asc"
-      res.each do |card|
-        assert_equal 1, card.cid
-        assert_equal 'first card', card.title
-      end
-
-      # expect(res.title).to eql 'first caxrd'
-      # expect(res.length).to eql 1
     end
   end
 end

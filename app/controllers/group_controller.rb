@@ -1,5 +1,5 @@
 class GroupController < ApplicationController
-  # get /group/:gid
+  # get /group/:gid/info
   def get_group_info
     gid = params[:gid]
     group = GroupHelper.get_group_info gid
@@ -96,7 +96,7 @@ class GroupController < ApplicationController
   # get /group/join/:code
   # input: uid
   def join_group
-    uid = params[:uid]
+    uid = params[:uid].to_i
     uid = session[:uid] if uid.nil?
     if uid.nil?
       flash[:l_notice] = 'Please login firstly to join a group'

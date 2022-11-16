@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   post 'main/card/:cid/check_exist' => 'card#check_card_exist'
 
   # Group
+  get 'group/:gid/info' => 'group#get_group_info'
   get 'group/:gid' => 'main#group'
   post '/group/new' => 'group#create_group'
   get '/group/join/:code' => 'group#join_group'
