@@ -49,15 +49,12 @@ class CardController < ApplicationController
     card.source = params[:source]
     card.description = params[:description]
     res = CardHelper.update_card card
-    message = 'Update the profile successfully'
-    unless res
-      message = 'Update the profile failed'
-    end
+    message = 'Update the card successfully'
+    message = 'Update the card failed' unless res
     render json: { success: res, msg: message }
   end
 
   def delete
-    p params
     uid = params[:uid]
     cid = params[:cid]
     res = CardHelper.delete_card uid, cid

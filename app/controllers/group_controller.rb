@@ -25,7 +25,7 @@ class GroupController < ApplicationController
                 "Create Group #{group.name} successfully!"
               end
     # render to the group page
-    session[:groups] = GroupHelper.get_user_groups uid unless group.nil?
+    session[:groups] = GroupHelper.get_user_groups uid
     render json: { success: !group.nil?, msg: message }
   end
 
