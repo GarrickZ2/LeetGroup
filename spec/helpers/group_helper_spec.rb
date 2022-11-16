@@ -8,45 +8,6 @@ describe GroupHelper do
     end
   end
 
-  describe 'User can destroy a group' do
-    before(:each) do
-      UserProfile.create(uid: 1)
-      UserProfile.create(uid: 2)
-      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test').gid
-    end
-    it 'should delete the group if user is owner' do
-      GroupHelper.delete_group @gid, 1
-      expect(GroupInfo.exists?(@gid)).to eql false
-    end
-    it 'should not delete the group if not the owner' do
-      GroupHelper.delete_group @gid, 2
-      expect(GroupInfo.exists?(@gid)).to eql true
-    end
-  end
-
-  describe 'User can update the group information' do
-    before(:each) do
-      UserProfile.create(uid: 1)
-      UserProfile.create(uid: 2)
-      @gid = GroupHelper.create_group(1, 'LeetGroup', 'test').gid
-      @group_info = GroupInfo.new
-      @group_info.gid = @gid
-      @group_info.name = 'LG'
-    end
-    it 'should update the group if user is valid' do
-      res = GroupHelper.update_group 1, @group_info
-      expect(res).to eql true
-      group_info = GroupInfo.find(@gid)
-      expect(group_info.name).to eql @group_info.name
-    end
-    it 'should not update the group without permission' do
-      res = GroupHelper.update_group 2, @group_info
-      expect(res).to eql false
-      group_info = GroupInfo.find @gid
-      expect(group_info.name).not_to eql @group_info.name
-    end
-  end
-
   describe 'User can get the information of group' do
     it 'get the information of one group' do
       @gid = GroupHelper.create_group(1, 'LeetGroup', 'test').gid

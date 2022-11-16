@@ -109,14 +109,14 @@
               <div class="col-md-6">
                 <div class="form-check form-check-primary">
                   <label class="form-check-label">
-                    <input type="radio" class="form-check-input invite-check" name="code-status" value="1" checked>
+                    <input type="radio" id="public-code" class="form-check-input invite-check" name="code-status" value="1" checked>
                     Public
                     <i class="input-helper"></i>
                   </label>
                 </div>
                 <div class="form-check form-check-danger">
                   <label class="form-check-label">
-                    <input type="radio" class="form-check-input invite-check" name="code-status" value="0">
+                    <input type="radio" id="private-code" class="form-check-input invite-check" name="code-status" value="0">
                     Private
                     <i class="input-helper"></i>
                   </label>
@@ -255,11 +255,11 @@
                       <% end %>
                     </button>
                     <div class="dropdown-menu member-dropdown">
-                      <a disabled class="dropdown-item" onclick="assignRole(<%=member.uid %>, 0)"
+                      <a disabled class="dropdown-item" id="change-to-owner" onclick="assignRole(<%=member.uid %>, 0)"
                          style="display: <%= if member.role == 0 then 'none' else '' end%>">Owner</a>
-                      <a disabled class="dropdown-item" onclick="assignRole(<%=member.uid %>, 1)"
+                      <a disabled class="dropdown-item" id="change-to-manager" onclick="assignRole(<%=member.uid %>, 1)"
                          style="display: <%= if member.role == 1 then 'none' else '' end%>">Manager</a>
-                      <a disabled class="dropdown-item" onclick="assignRole(<%=member.uid %>, 2)"
+                      <a disabled class="dropdown-item" id="change-to-member" onclick="assignRole(<%=member.uid %>, 2)"
                          style="display: <%= if member.role == 2 then 'none' else '' end%>">Member</a>
                     </div>
                   </div>
@@ -357,7 +357,7 @@
                       <i class="mdi mdi-content-copy action-icon"></i>
                       Copy to your card collection
                     </li>
-                    <li class="list-group-item action-item" data-toggle="modal" data-target="#deleteGroupCardModal" >
+                    <li class="list-group-item action-item" data-toggle="modal" data-target="#deleteGroupCardModal" id="delete-group-card-btn">
                       <i class="mdi mdi-delete action-icon"></i>
                       Delete from this group
                     </li>
