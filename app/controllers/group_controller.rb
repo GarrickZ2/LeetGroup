@@ -5,8 +5,12 @@ class GroupController < ApplicationController
     uid = params[:uid]
     name = params[:name]
     description = params[:description]
-    status = params[:status][0].to_i
-    status = 0 if status.nil?
+    status = params[:status]
+    status = if status.nil?
+               GroupInfo.group_status[:private]
+             else
+               status[0].to_i
+             end
     group = GroupHelper.create_group uid, name, description, status
     message = if group.nil?
                 'Create Group Failed, Please try again later'
@@ -126,7 +130,7 @@ class GroupController < ApplicationController
   # post /group/:gid/cards
   def view_group_cards
     card_view = GroupHelper.view_card params[:gid], params[:status].to_i, params[:page_size].to_i, params[:offset].to_i, params[:sort_by],
-                               params[:sort_type]
+                                      params[:sort_type]
 
     page_info = card_view.page_info.to_json
     card_info = card_view.card_info

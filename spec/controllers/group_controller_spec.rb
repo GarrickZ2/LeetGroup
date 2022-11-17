@@ -98,6 +98,29 @@ describe GroupController do
       }
       parsed_result = JSON.parse(result.body)
       expect(parsed_result['success']).to eql false
+    end
+    it 'cannot change if target user not exist' do
+      result = post :change_user_role, params: {
+        uid: 0,
+        gid: @group.gid,
+        operator: @uid1,
+        role: GroupToUser.role_status[:manager]
+      }
+      parsed_result = JSON.parse(result.body)
+      expect(parsed_result['success']).to eql false
+    end
+
+    it 'cannot change if without permission' do
+      result = post :change_user_role, params: {
+        uid: @uid1,
+        gid: @group.gid,
+        operator: @uid2,
+        role: GroupToUser.role_status[:manager]
+      }
+      parsed_result = JSON.parse(result.body)
+      expect(parsed_result['success']).to eql false
+    end
+  end
   # one scenario
   describe 'create group' do
     it 'should successfully create the group' do
@@ -444,26 +467,6 @@ describe GroupController do
       expect(msg).to eq "The card doesn't exist"
     end
 
-    it 'cannot change if target user not exist' do
-      result = post :change_user_role, params: {
-        uid: 0,
-        gid: @group.gid,
-        operator: @uid1,
-        role: GroupToUser.role_status[:manager]
-      }
-      parsed_result = JSON.parse(result.body)
-      expect(parsed_result['success']).to eql false
-    end
 
-    it 'cannot change if without permission' do
-      result = post :change_user_role, params: {
-        uid: @uid1,
-        gid: @group.gid,
-        operator: @uid2,
-        role: GroupToUser.role_status[:manager]
-      }
-      parsed_result = JSON.parse(result.body)
-      expect(parsed_result['success']).to eql false
-    end
   end
 end
