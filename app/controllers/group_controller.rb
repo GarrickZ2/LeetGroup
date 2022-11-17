@@ -5,7 +5,7 @@ class GroupController < ApplicationController
     uid = params[:uid]
     name = params[:name]
     description = params[:description]
-    status = params[:status]
+    status = params[:status][0].to_i
     status = 0 if status.nil?
     group = GroupHelper.create_group uid, name, description, status
     message = if group.nil?
