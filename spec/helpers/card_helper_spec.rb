@@ -4,11 +4,11 @@ require 'spec_helper'
 describe CardHelper do
   describe 'user creates a card' do
     it 'leave title blank' do
-      expect CardHelper.check_title_empty("")== false
+      expect(CardHelper.check_title_empty('')).to eq false
     end
 
     it 'title is not blank' do
-      expect CardHelper.check_title_empty("123") == false
+      expect(CardHelper.check_title_empty('123')).to eq true
     end
 
     it 'input title exceeds maximum length' do
@@ -76,6 +76,22 @@ abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij
     it 'delete a card failed' do
       res = CardHelper.delete_card(23, 21)
       expect !res
+    end
+  end
+
+  describe 'User share a card to group' do
+    before(:each) do
+      GroupToCard.create(gid: 1, cid: 1)
+    end
+
+    it 'fail to share if card already exists in group' do
+      res = CardHelper.share_card(1, 1)
+      expect !res
+    end
+
+    it 'successfully share if card is not in group' do
+      res = CardHelper.share_card(1, 2)
+      expect res
     end
   end
 end
