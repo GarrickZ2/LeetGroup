@@ -12,14 +12,25 @@ https://github.com/GarrickZ2/LeetGroup
 
 **IMPORTANT:** Our iteration 2 code is in `proj-iter2` branch.
 
+# Detailed Feature Instruction
+
+| Feature                      | Link                                           |
+| ---------------------------- | ---------------------------------------------- |
+| User Related Feature         | [Here](feature_readme/user_feature.md)         |
+| Profile Related Feature      | [Here](feature_readme/profile_feature.md)      |
+| Card Related Feature         | [Here](feature_readme/card_feature.md)         |
+| Group Related Feature        | [Here](feature_readme/group_feature.md)        |
+| Group Member Related Feature | [Here](feature_readme/group_member_feature.md) |
+| Group Card Related Feature   | [Here](feature_readme/group_card_feature.md)   |
+
 # Features of iteration 2
 - After a user login, on the **top right** corner, there is a green button called `+ create`, click it
-and you can click `create group` to create a group.
+  and you can click `create group` to create a group.
   - Inside the group create modal, you need to enter the group name, group type (public/private) and the
   description of the group.
 -  You can also click `join group` to join the group, by entering the invitation code that the group member gave you.
 - On the left side, when you navigate to the all card pages, and click a certain card for details, you will be able
-to: 
+  to: 
   - `share` the card to any group that you have joined.
   - `delete` the card from your collection.
   
@@ -30,8 +41,8 @@ to:
   - Click `member` tab to see all the members in the group. You can: 
     - If you are the owner of the group, you can delete people from the group.
     - As a team member, you can click `invite` to invite others to your group. This is done by selecting the
-    features of the invitation code (expiration date, public/private), and then the system will generate a code for you,
-    and people can use the link to join the group.
+      features of the invitation code (expiration date, public/private), and then the system will generate a code for you,
+      and people can use the link to join the group.
       - If it is set to be private, you should enter the username in order to generate the code.
 # Features of iteration 1
 - When you go to the welcome page, please click the button on **top right**. And then choose
