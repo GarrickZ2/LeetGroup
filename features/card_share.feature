@@ -1,9 +1,9 @@
-Feature:
+Feature: Share Card to Group
   As a group member
-  I want to invite other into groups
-  So that I can share card with my friend
+  I want to share my card to group
+  So that group members can view my card
 
-  Background: users in database
+  Background: database information
     Given the following users exist:
       | username  | password   | email       | uid |
       | Zzx135246 | !Zzx135246 | 123@123.com | 1   |
@@ -24,7 +24,7 @@ Feature:
       | 3   | 1   | Tree Traversal  | LeetCode | hard        | 2      | 40        | 10    | 2022-10-31T03:26:02.000Z | 2022-10-31T04:16:02.000Z | nil           |
 
   @javascript
-  Scenario: view card detail
+  Scenario: Share a card to group
     Given I log in with "Zzx135246" and "!Zzx135246"
     When I click the element with id "nav-card"
     And I click the element with id "nav-sub-all-cards"

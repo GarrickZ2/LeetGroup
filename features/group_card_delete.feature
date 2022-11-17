@@ -1,9 +1,9 @@
-Feature:
+Feature: Delete Card From Group
   As a group member
-  I want to invite other into groups
-  So that I can share card with my friend
+  I want to delete a group card
+  So that I can keep group card pool with high quality
 
-  Background: users in database
+  Background: database information
     Given the following users exist:
       | username  | password   | email       | uid |
       | Zzx135246 | !Zzx135246 | 123@123.com | 1   |
@@ -27,7 +27,7 @@ Feature:
       | 1   | 1   |
 
   @javascript
-  Scenario: view card detail
+  Scenario: Delete the card successfully
     Given I log in with "Zzx135246" and "!Zzx135246"
     Then I go to the group page with id 1
     And I click the element with id "nav-group-cards-tab"
@@ -39,7 +39,7 @@ Feature:
     Then I should not see "Two Sum"
 
   @javascript
-  Scenario: cannot remove the card others shared
+  Scenario: No permission to delete card
     Given I log in with "Alien" and "!G1535"
     Then I go to the group page with id 1
     And I click the element with id "nav-group-cards-tab"

@@ -1,9 +1,9 @@
 Feature:
   As a group member
-  I want to invite other into groups
-  So that I can share card with my friend
+  I want to join group with code
+  So that I can join my friend's group
 
-  Background: users in database
+  Background: database information
     Given the following users exist:
       | username  | password   | email        | uid |
       | Zzx135246 | !Zzx135246 | 123@123.com  | 1   |

@@ -1,9 +1,9 @@
 Feature:
   As a group member
-  I want to invite other into groups
-  So that I can share card with my friend
+  I want to manage group members
+  So that I can assign role or remove members
 
-  Background: users in database
+  Background: database information
     Given the following users exist:
       | username  | password   | email       | uid |
       | Zzx135246 | !Zzx135246 | 123@123.com | 1   |
