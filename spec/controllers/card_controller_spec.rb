@@ -330,4 +330,107 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
       expect(card_info.to_json).to eq card1_expect.to_json
     end
   end
+
+  describe 'User edits a card' do
+    before(:each) do
+      Card.delete_all
+      Card.create(uid: 1, cid: 1, title: '000', source: '123', description: '321')
+    end
+
+    it 'should get success msg if edit card successfully' do
+      post :edit, params: {
+        uid: 1,
+        cid: 1,
+        title: 111,
+        source: 123,
+        description: 321
+      }
+      success = JSON.parse(response.body)['success']
+      msg = JSON.parse(response.body)['msg']
+      expect(success).to eq true
+      expect(msg).to eq 'Update the card successfully'
+    end
+
+    it 'should get failure msg if fail to edit card' do
+      post :edit, params: {
+        uid: 2,
+        cid: 1,
+        title: 111,
+        source: 123,
+        description: 321
+      }
+      success = JSON.parse(response.body)['success']
+      msg = JSON.parse(response.body)['msg']
+      expect(success).to eq false
+      expect(msg).to eq 'Update the card failed'
+    end
+  end
+
+  describe 'User deletes a card' do
+    before(:each) do
+      Card.delete_all
+      Card.create(uid: 1, cid: 1, title: '000', source: '123', description: '321')
+    end
+
+    it 'should get success msg if delete card successfully' do
+      post :delete, params: {
+        uid: 1,
+        cid: 1
+      }
+      success = JSON.parse(response.body)['success']
+      msg = JSON.parse(response.body)['msg']
+      expect(success).to eq true
+      expect(msg).to eq 'The card deleted successfully'
+    end
+
+    it 'should get failure msg if fail to delete card' do
+      post :delete, params: {
+        uid: 2,
+        cid: 1
+      }
+      success = JSON.parse(response.body)['success']
+      msg = JSON.parse(response.body)['msg']
+      expect(success).to eq false
+      expect(msg).to eq "The card doesn't exist"
+    end
+  end
+
+  describe 'User shares a card' do
+    before(:each) do
+      Card.delete_all
+      Card.create(uid: 1, cid: 1, title: '000', source: '123', description: '321')
+    end
+
+    it 'should share card to groups successfully' do
+      post :share, params: {
+        cid: 1,
+        gid_list: [1, 2]
+      }
+      success = JSON.parse(response.body)['success']
+      msg = JSON.parse(response.body)['msg']
+      expect(success).to eq true
+      expect(msg).to eq 'The card is shared successfully'
+    end
+  end
+
+  describe 'User checks if the card exists in groups' do
+    before(:each) do
+      Card.delete_all
+      Card.create(uid: 1, cid: 1, title: '000', source: '123', description: '321')
+      GroupToCard.create(gid: 1, cid: 1)
+      GroupToCard.create(gid: 3, cid: 1)
+    end
+
+    it 'should return the correct group list' do
+      get :check_card_exist, params: {
+        cid: 1,
+        gid_list: [1, 2, 3]
+      }
+      success = JSON.parse(response.body)['success']
+      exist_list = JSON.parse(response.body)['exist_list']
+      expect_exist_list = ["1", "3"]
+      expect(success).to eq true
+      expect(exist_list).to eq expect_exist_list
+    end
+  end
 end

@@ -17,63 +17,34 @@ Rails.application.routes.draw do
   post 'user/update' => 'user#update_profile'
   post 'user/avatar' => 'user#save_avatar'
   post "user/change_password" => "user#update_password"
+  get 'main/user/:uid/group' => 'user#get_user_groups'
 
   # Main
   get 'main/dashboard' => 'main#dashboard', as: :dashboard
   get 'main/profile' => 'main#profile'
   get "main/all_cards" => "main#all_cards"
-  post "main/card/new" => "card#create"
-  post "main/card/view" => "card#view"
+  post "card/new" => "card#create"
+  post "card/view" => "card#view"
+
   get "main/card/detail" => "card#view_card_detail"
   get "main/password" => "main#password", as: :update_password
 
+  # Card
+  get 'card/delete' => 'card#delete'
+  post 'card/:cid/edit' => 'card#edit'
+  post 'main/card/:cid/share' => 'card#share'
+  post 'main/card/:cid/check_exist' => 'card#check_card_exist'
 
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
+  # Group
+  get 'group/:gid' => 'main#group', as: :group_info
+  post '/group/new' => 'group#create_group'
+  get '/group/join/:code' => 'group#join_group'
+  get '/group/:gid/invite' => 'group#generate_invite_code'
+  get '/group/:gid/remove_user' => 'group#user_remove'
+  post '/group/:gid/update_role' => 'group#change_user_role'
+  post '/group/:gid/cards' => 'group#view_group_cards'
+  get '/group/:gid/card_detail/:cid' => 'group#view_group_card_detail'
+  get 'group/:gid/check_permission/:uid/:cid' => 'group#check_permission'
+  get 'group/card/delete' => 'group#delete_card'
 
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end

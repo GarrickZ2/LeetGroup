@@ -3,27 +3,27 @@ require 'rails_helper'
 describe UserHelper do
   describe 'user register account' do
     it 'input email with wrong format' do
-      expect UserHelper.check_email_format('abcde!!!') == false
+      expect(UserHelper.check_email_format('abcde!!!')).to eq false
     end
 
     it 'input email with correct format' do
-      expect UserHelper.check_email_format('abcd@zzz.com') == false
+      expect(UserHelper.check_email_format('abcd@zzz.com')).to eq true
     end
 
     it 'input username with wrong format' do
-      expect UserHelper.check_username_format('abc') == false
+      expect(UserHelper.check_username_format('abc')).to eq false
     end
 
     it 'input username with correct format' do
-      expect UserHelper.check_username_format('abcdddass') == false
+      expect(UserHelper.check_username_format('abcdddass')).to eq true
     end
 
     it 'input weak password' do
-      expect UserHelper.check_password_strong('abc') == false
+      expect(UserHelper.check_password_strong('abc')).to eq false
     end
 
     it 'input strong(correct) password' do
-      expect UserHelper.check_password_strong('Aabc1234567!!') == true
+      expect(UserHelper.check_password_strong('Aabc1234567!!')).to eq true
     end
 
     before(:all) do

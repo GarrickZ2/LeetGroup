@@ -6,23 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>LeetGroup!</title>
   <!-- plugins:css -->
-  <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="/main/assets/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="/main/assets/vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!-- endinject -->
   <!-- Plugin css for this page -->
-  <link rel="stylesheet" href="assets/vendors/jvectormap/jquery-jvectormap.css">
-  <link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css">
-  <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.carousel.min.css">
-  <link rel="stylesheet" href="assets/vendors/owl-carousel-2/owl.theme.default.min.css">
+  <link rel="stylesheet" href="/main/assets/vendors/jvectormap/jquery-jvectormap.css">
+  <link rel="stylesheet" href="/main/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="/main/assets/vendors/owl-carousel-2/owl.carousel.min.css">
+  <link rel="stylesheet" href="/main/assets/vendors/owl-carousel-2/owl.theme.default.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <!-- End plugin css for this page -->
   <!-- inject:css -->
   <!-- endinject -->
   <!-- Layout styles -->
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/card.css">
+  <link rel="stylesheet" href="/main/assets/css/style.css">
+  <link rel="stylesheet" href="/main/assets/css/card.css">
   <!-- End layout styles -->
   <%= csrf_meta_tags %>
 </head>
@@ -36,8 +36,8 @@
   <!-- partial:partials/_sidebar.html -->
   <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-      <a class="sidebar-brand brand-logo" href="dashboard.html"><img src="assets/images/logo.png" alt="logo" /></a>
-      <a class="sidebar-brand brand-logo-mini" href="dashboard.html"><img src="assets/images/logo-mini.png" alt="logo" /></a>
+      <a class="sidebar-brand brand-logo" href="/main/dashboard"><img src="/main/assets/images/logo.png" alt="logo" /></a>
+      <a class="sidebar-brand brand-logo-mini" href="/main/dashboard"><img src="/main/assets/images/logo-mini.png" alt="logo" /></a>
     </div>
     <ul class="nav">
       <li class="nav-item profile">
@@ -54,16 +54,6 @@
           </div>
           <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
           <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-<!--            <a href="#" class="dropdown-item preview-item">-->
-<!--              <div class="preview-thumbnail">-->
-<!--                <div class="preview-icon bg-dark rounded-circle">-->
-<!--                  <i class="mdi mdi-settings text-primary"></i>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="preview-item-content">-->
-<!--                <p class="preview-subject ellipsis mb-1 text-small">Account settings</p>-->
-<!--              </div>-->
-<!--            </a>-->
             <div class="dropdown-divider"></div>
             <a href="/main/password" class="dropdown-item preview-item">
               <div class="preview-thumbnail">
@@ -92,7 +82,7 @@
         <span class="nav-link">Navigation</span>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="dashboard.html">
+        <a class="nav-link" href="/main/dashboard">
               <span class="menu-icon">
                 <i class="mdi mdi-speedometer"></i>
               </span>
@@ -109,7 +99,27 @@
         </a>
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="all_cards.html" id="nav-sub-all-cards">All Cards</a></li>
+            <li class="nav-item"> <a class="nav-link" href="/main/all_cards.html" id="nav-sub-all-cards">All Cards</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item menu-items">
+        <a class="nav-link" data-bs-toggle="collapse" href="#ui-group" aria-expanded="false" aria-controls="ui-group">
+              <span class="menu-icon">
+                <i class="mdi mdi-note"></i>
+              </span>
+          <span class="menu-title" id="nav-group">Group</span>
+          <i class="menu-arrow"></i>
+        </a>
+        <div class="collapse" id="ui-group">
+          <ul class="nav flex-column sub-menu">
+            <%if session[:groups].nil? %>
+            <li class="nav-item">No Group, Join One</li>
+            <%else %>
+              <%session[:groups].each do |group| %>
+                <li class="nav-item"> <a class="nav-link" href="/group/<%=group["gid"] %>"><%=group["name"] %></a></li>
+              <%end %>
+            <%end %>
           </ul>
         </div>
       </li>
@@ -121,7 +131,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-body">
-          <p class="description"><%=flash[:main_notice] %></p>
+          <p class="description" id="main-notice"><%=flash[:main_notice] %></p>
         </div>
       </div>
     </div>
@@ -133,7 +143,7 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar p-0 fixed-top d-flex flex-row">
       <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo-mini" href="dashboard.html"><img src="assets/images/logo-mini.png" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="/main/dashboard"><img src="/main/assets/images/logo-mini.png" alt="logo" /></a>
       </div>
       <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -167,110 +177,27 @@
                     <i class="mdi mdi-web text-info"></i>
                   </div>
                 </div>
-                <div class="preview-item-content">
-                  <p class="preview-subject ellipsis mb-1" >New Project</p>
+                <div class="preview-item-content" data-toggle="modal" data-target="#groupModal">
+                  <p class="preview-subject ellipsis mb-1" id="new-group-btn">Create Group</p>
+                </div>
+              </a>
+              <a class="dropdown-item preview-item">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-google-circles-group"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content" data-toggle="modal" data-target="#joinGroupModal">
+                  <p class="preview-subject ellipsis mb-1" id="join-group-btn">Join Group</p>
                 </div>
               </a>
               <div class="dropdown-divider"></div>
             </div>
           </li>
-<!--          <li class="nav-item nav-settings d-none d-lg-block">-->
-<!--            <a class="nav-link" href="#">-->
-<!--              <i class="mdi mdi-view-grid"></i>-->
-<!--            </a>-->
-<!--          </li>-->
-<!--          <li class="nav-item dropdown border-left">-->
-<!--            <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--              <i class="mdi mdi-email"></i>-->
-<!--              <span class="count bg-success"></span>-->
-<!--            </a>-->
-<!--            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">-->
-<!--              <h6 class="p-3 mb-0">Messages</h6>-->
-<!--              <div class="dropdown-divider"></div>-->
-<!--              <a class="dropdown-item preview-item">-->
-<!--                <div class="preview-thumbnail">-->
-<!--                  <img src="assets/images/faces/face4.jpg" alt="image" class="rounded-circle profile-pic">-->
-<!--                </div>-->
-<!--                <div class="preview-item-content">-->
-<!--                  <p class="preview-subject ellipsis mb-1">Mark send you a message</p>-->
-<!--                  <p class="text-muted mb-0"> 1 Minutes ago </p>-->
-<!--                </div>-->
-<!--              </a>-->
-<!--              <div class="dropdown-divider"></div>-->
-<!--              <a class="dropdown-item preview-item">-->
-<!--                <div class="preview-thumbnail">-->
-<!--                  <img src="assets/images/faces/face2.jpg" alt="image" class="rounded-circle profile-pic">-->
-<!--                </div>-->
-<!--                <div class="preview-item-content">-->
-<!--                  <p class="preview-subject ellipsis mb-1">Cregh send you a message</p>-->
-<!--                  <p class="text-muted mb-0"> 15 Minutes ago </p>-->
-<!--                </div>-->
-<!--              </a>-->
-<!--              <div class="dropdown-divider"></div>-->
-<!--              <a class="dropdown-item preview-item">-->
-<!--                <div class="preview-thumbnail">-->
-<!--                  <img src="assets/images/faces/face3.jpg" alt="image" class="rounded-circle profile-pic">-->
-<!--                </div>-->
-<!--                <div class="preview-item-content">-->
-<!--                  <p class="preview-subject ellipsis mb-1">Profile picture updated</p>-->
-<!--                  <p class="text-muted mb-0"> 18 Minutes ago </p>-->
-<!--                </div>-->
-<!--              </a>-->
-<!--              <div class="dropdown-divider"></div>-->
-<!--              <p class="p-3 mb-0 text-center">4 new messages</p>-->
-<!--            </div>-->
-<!--          </li>-->
-<!--          <li class="nav-item dropdown border-left">-->
-<!--            <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-bs-toggle="dropdown">-->
-<!--              <i class="mdi mdi-bell"></i>-->
-<!--              <span class="count bg-danger"></span>-->
-<!--            </a>-->
-<!--            <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">-->
-<!--              <h6 class="p-3 mb-0">Notifications</h6>-->
-<!--              <div class="dropdown-divider"></div>-->
-<!--              <a class="dropdown-item preview-item">-->
-<!--                <div class="preview-thumbnail">-->
-<!--                  <div class="preview-icon bg-dark rounded-circle">-->
-<!--                    <i class="mdi mdi-calendar text-success"></i>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="preview-item-content">-->
-<!--                  <p class="preview-subject mb-1">Event today</p>-->
-<!--                  <p class="text-muted ellipsis mb-0"> Just a reminder that you have an event today </p>-->
-<!--                </div>-->
-<!--              </a>-->
-<!--              <div class="dropdown-divider"></div>-->
-<!--              <a class="dropdown-item preview-item">-->
-<!--                <div class="preview-thumbnail">-->
-<!--                  <div class="preview-icon bg-dark rounded-circle">-->
-<!--                    <i class="mdi mdi-settings text-danger"></i>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="preview-item-content">-->
-<!--                  <p class="preview-subject mb-1">Settings</p>-->
-<!--                  <p class="text-muted ellipsis mb-0"> Update dashboard </p>-->
-<!--                </div>-->
-<!--              </a>-->
-<!--              <div class="dropdown-divider"></div>-->
-<!--              <a class="dropdown-item preview-item">-->
-<!--                <div class="preview-thumbnail">-->
-<!--                  <div class="preview-icon bg-dark rounded-circle">-->
-<!--                    <i class="mdi mdi-link-variant text-warning"></i>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="preview-item-content">-->
-<!--                  <p class="preview-subject mb-1">Launch Admin</p>-->
-<!--                  <p class="text-muted ellipsis mb-0"> New admin wow! </p>-->
-<!--                </div>-->
-<!--              </a>-->
-<!--              <div class="dropdown-divider"></div>-->
-<!--              <p class="p-3 mb-0 text-center">See all notifications</p>-->
-<!--            </div>-->
-<!--          </li>-->
           <li class="nav-item dropdown">
             <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
               <div class="navbar-profile">
-                <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="">
+                <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
                 <p class="mb-0 d-none d-sm-block navbar-profile-name"><%=session[:profile]['username']%></p>
                 <i class="mdi mdi-menu-down d-none d-sm-block"></i>
               </div>
@@ -311,6 +238,30 @@
     <!-- partial -->
     <!-- Modal -->
     <input id="cardUID" type="hidden" value="<%= session[:uid] %>">
+    <input id="groupUID" type="hidden" value="<%= session[:uid] %>">
+
+
+    <div class="modal fade" id="joinGroupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Join Group</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <label for="invite-code">Please input your invite link or code</label>
+            <input type="text" placeholder="Please input your invitation link or code" id="invite-code" style="width: 100%" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="joinGroup()">Submit Request</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade" id="cardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -369,6 +320,69 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="groupModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body clear-padding">
+            <div class="col-md-12 stretch-card clear-padding" >
+              <div class="card">
+                <div class="modal-header">
+                  <h4 class="modal-title">Creat New Group</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modal-close-btn">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="card-body">
+                  <form class="row g-3 needs-validation" novalidate id="groupForm">
+                    <div class="col-md-12">
+                      <p class="alert-warning" id="create-group-notice"></p>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="validationCustom01" class="form-label">Group Name</label>
+                      <input type="text" class="form-control card-input" id="groupInputName" placeholder="Group Name" required>
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                        Please enter a group name.
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="validationCustom02" class="form-label">Status</label>
+                      <div>
+                        <label class="radio-inline">
+                          <input type="radio" name="inlineRadioOptions" id="groupStatus0" value=0> Private
+                          <input type="radio" name="inlineRadioOptions" id="groupStatus1" value=1> Public
+                        </label>
+                      </div>
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                      <div class="invalid-feedback">
+                        Please choose a status.
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="validationCustomUsername" class="form-label">Description</label>
+                      <div class="input-group has-validation">
+                        <textarea class="form-control card-input" aria-label="With textarea" placeholder="Description" rows="8" id="groupInputDescription" aria-describedby="inputGroupPrepend"></textarea>
+                      </div>
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-primary" type="submit" id="createGroupButton" onclick="createGroup()">Create</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- partial -->
     <div class="main-panel">
       <%= yield %>
@@ -388,36 +402,40 @@
     });
     function show_notice() {
         $("#notice-modal").modal('show')
-        setTimeout("$('#notice-modal').modal('hide')", 1000);
+        setTimeout("$('#notice-modal').modal('hide')", 2000);
+    }
+    function show_notice_with_text(content) {
+        $("#main-notice").text(content);
+        show_notice();
     }
 </script>
 <!-- container-scroller -->
 <!-- plugins:js -->
-<script src="assets/vendors/js/vendor.bundle.base.js"></script>
+<script src="/main/assets/vendors/js/vendor.bundle.base.js"></script>
 <!-- endinject -->
 <!-- Plugin js for this page -->
-<script src="assets/vendors/chart.js/Chart.min.js"></script>
-<script src="assets/vendors/progressbar.js/progressbar.min.js"></script>
-<script src="assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
-<script src="assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<script src="assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-<script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
+<script src="/main/assets/vendors/chart.js/Chart.min.js"></script>
+<script src="/main/assets/vendors/progressbar.js/progressbar.min.js"></script>
+<script src="/main/assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+<script src="/main/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="/main/assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
+<script src="/main/assets/js/jquery.cookie.js" type="text/javascript"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcdn.net/ajax/libs/bootpag/1.0.7/jquery.bootpag.js"></script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
-<script src="assets/js/off-canvas.js"></script>
-<script src="assets/js/hoverable-collapse.js"></script>
-<script src="assets/js/misc.js"></script>
-<script src="assets/js/settings.js"></script>
-<script src="assets/js/todolist.js"></script>
+<script src="/main/assets/js/off-canvas.js"></script>
+<script src="/main/assets/js/hoverable-collapse.js"></script>
+<script src="/main/assets/js/misc.js"></script>
+<script src="/main/assets/js/settings.js"></script>
+<script src="/main/assets/js/todolist.js"></script>
 <!-- endinject -->
 <!-- Custom js for this page -->
-<script src="assets/js/dashboard.js"></script>
-<script src="assets/js/card.js"></script>
-<script src="assets/js/view-card.js"></script>
+<script src="/main/assets/js/dashboard.js"></script>
+<script src="/main/assets/js/card.js"></script>
+<script src="/main/assets/js/create-group.js"></script>
 <!-- End custom js for this page -->
 </body>
 </html>
