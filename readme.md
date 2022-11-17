@@ -92,7 +92,7 @@ This part includes steps to run the application locally. Before running the foll
 you need to clone the repo locally. 
 1. Checkout to the correct branch.
 ```shell
-git checkout proj-iter1
+git checkout proj-iter2
 ```
 2. Install gems
 ```shell
