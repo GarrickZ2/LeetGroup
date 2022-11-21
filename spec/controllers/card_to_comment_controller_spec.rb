@@ -72,8 +72,8 @@ describe CardToCommentController do
 
   describe 'user view comments' do
     before(:each) do
-      UserLogInfo.delete_all
-      UserLogInfo.create(username: 'MaggieZ', password: 'Zll82756491!', email: '123@gmail.com', uid: 1)
+      UserProfile.delete_all
+      UserProfile.create(username: 'MaggieZ', avatar: '/avatar/1..jpg', status: 0, uid: 1)
       CardToComment.create(cid: 1, uid: 1, comment_id: 1, content: 'This problem appears in Google OA', create_time: Time.now)
       CardToComment.create(cid: 2, uid: 2, comment_id: 2, content: 'should use binary search', create_time: Time.now)
       CardToComment.create(cid: 1, uid: 1, comment_id: 3, content: 'should use binary search', create_time: Time.now)
