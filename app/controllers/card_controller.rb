@@ -95,4 +95,11 @@ class CardController < ApplicationController
     }
     render json: {success: true, exist_list: exist_list}
   end
+
+  def card_statistics
+    status = params[:status]
+    period = params[:period]
+    data = Card.get_card_statistics(status, period)
+    render json: { cur_data: data[0], prev_data: data[1] }
+  end
 end

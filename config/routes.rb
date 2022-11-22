@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   post 'card/:cid/edit' => 'card#edit'
   post 'main/card/:cid/share' => 'card#share'
   post 'main/card/:cid/check_exist' => 'card#check_card_exist'
+  get 'card/statistics' => 'card#card_statistics'
 
   # Group
   get 'group/:gid' => 'main#group', as: :group_info
