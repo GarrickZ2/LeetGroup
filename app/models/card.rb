@@ -1,5 +1,5 @@
 class Card < ActiveRecord::Base
-  @@card_status = { doing: 0, archived: 1, finished: 2}
+  @@card_status = { active: 0, archived: 1, finished: 2}
 
   def self.card_status
     @@card_status
