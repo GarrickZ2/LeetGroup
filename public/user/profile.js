@@ -34,7 +34,6 @@ function editProfile(name) {
         company.removeClass("edit-mode");
         city.removeClass("edit-mode");
         bio.removeClass("edit-mode");
-        location.reload();
     }
 }
 

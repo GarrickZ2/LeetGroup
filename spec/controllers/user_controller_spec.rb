@@ -198,4 +198,33 @@ describe UserController do
       expect info[0] == '!Zzx135246'
     end
   end
+
+  describe "Get user's groups" do
+    before(:each) do
+      GroupToUser.create(gid: 1, uid: 1)
+      UserProfile.delete_all
+      UserProfile.create(uid: 1, username: 'MaggieZ')
+      GroupInfo.delete_all
+      GroupInfo.create(gid: 1, name: 'ColumbiaStudent', description: '1')
+    end
+
+    it 'should get all the groups the user is in' do
+      get :get_user_groups, params: {
+        uid: 1
+      }
+      success = JSON.parse(response.body)['success']
+      msg = JSON.parse(response.body)['msg']
+      groups = JSON.parse(response.body)['groups']
+      expect_groups = [{
+        gid: 1,
+        name: 'ColumbiaStudent',
+        description: '1',
+        create_time: nil,
+        status: 0
+      }]
+      expect(success).to eq true
+      expect(msg).to eq nil
+      expect(groups).to eq expect_groups.to_json
+    end
+  end
 end

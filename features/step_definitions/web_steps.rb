@@ -270,3 +270,7 @@ Then /^(?:|I )should see the text "([^"]*)"$/ do |text|
   #   assert page.has_text?(text)
   # end
 end
+
+Then /^I wait for (\d+) seconds$/ do |number|
+  sleep(number.to_i)
+end

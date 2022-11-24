@@ -23,6 +23,8 @@ module NavigationHelpers
       main_profile_path
     when /^the password change page$/ then
       update_password_path
+    when /^the group page with id (.*)$/ then
+      group_info_path($1)
     else
       begin
         page_name =~ /^the (.*) page$/

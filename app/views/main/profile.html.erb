@@ -1,6 +1,5 @@
 <head>
-<!--  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>-->
-<!--  <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css"/>-->
+
   <link rel="stylesheet" href="../user/profile.css" type="text/css"/>
 </head>
 <div class="content-wrapper">
@@ -31,7 +30,7 @@
           <div class="row">
             <div class="col col-md-5 col-lg-5 profile-header-title-detail">
               Details
-               <span style="cursor: pointer" onclick="editProfile('edit')" >
+               <span id="edit-tab" style="cursor: pointer" onclick="editProfile('edit')" >
               <i class="mdi mdi-pencil profile-detail-edit">&nbsp;&nbsp;&nbsp;</i>
                </span>
             </div>
@@ -106,8 +105,8 @@
               </div>
             </div>
             <!-- Save changes button-->
-            <button hidden class="btn btn-secondary profile-edit-btn" type="button" onclick="editProfile('cancel')" >Cancel</button>
-            <button hidden class="btn btn-primary profile-edit-btn" type="button" onclick="submitProfileChange()">Save</button>
+            <button hidden class="btn btn-secondary profile-edit-btn" type="reset" onclick="editProfile('cancel')" >Cancel</button>
+            <button hidden class="btn btn-primary profile-edit-btn" id="save-btn" type="button" onclick="submitProfileChange()">Save</button>
           </form>
           <!-- Avatar div panel -->
           <div hidden id="avatar-panel" class="container tab-pane">
@@ -151,7 +150,7 @@
               </div>
             </div>
             <button class="btn btn-secondary profile-edit-btn" type="button" onclick="hideAvatarPanel()" >Cancel</button>
-            <button class="btn btn-primary avatar-save-btn profile-edit-btn" type="button" onclick="submitAvatarChange()">Save</button>
+            <button class="btn btn-primary avatar-save-btn profile-edit-btn" id="avatar-btn" type="button" onclick="submitAvatarChange()">Save</button>
           </div>
         </div>
       </div>
