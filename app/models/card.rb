@@ -51,7 +51,7 @@ class Card < ActiveRecord::Base
     end
   end
 
-  def self.get_card_statistics(status, period)
+  def self.get_card_statistics(uid, status, period)
     case period
     when 'month'
       cur_date = Date.today - Date.today.mday + 1
@@ -65,12 +65,12 @@ class Card < ActiveRecord::Base
     end
 
     if status == 'finished' # today, this week, this month finished cards
-      @cur_period_cards = Card.where(status: @@card_status[:finished]).where('update_time >= ?', cur_date.to_time)
-      @prev_period_cards = Card.where(status: @@card_status[:finished]).where('update_time >= ?', prev_date.to_time)
+      @cur_period_cards = Card.where(status: @@card_status[:finished], uid: uid).where('update_time >= ?', cur_date.to_time)
+      @prev_period_cards = Card.where(status: @@card_status[:finished], uid: uid).where('update_time >= ?', prev_date.to_time)
                                .where('update_time < ?', cur_date.to_time)
     else # today created cards
-      @cur_period_cards = Card.where('create_time >= ?', cur_date.to_time)
-      @prev_period_cards = Card.where('create_time >= ?', prev_date.to_time).where('update_time < ?', cur_date.to_time)
+      @cur_period_cards = Card.where(uid: uid).where('create_time >= ?', cur_date.to_time)
+      @prev_period_cards = Card.where(uid: uid).where('create_time >= ?', prev_date.to_time).where('update_time < ?', cur_date.to_time)
     end
 
     [@cur_period_cards.count, @prev_period_cards.count]
