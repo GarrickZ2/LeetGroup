@@ -13,13 +13,10 @@ class CardToCommentController < ApplicationController
     case if_delete
     when 0
       render json: { success: false, msg: 'the comment does not exist' }
-      return
     when 1
       render json: { success: false, msg: 'fail to delete as the user is not the card owner' }
-      return 
     else
       render json: { success: true, msg: 'successfully delete the comment' }
-      return
     end
   end
 

@@ -23,21 +23,15 @@ Rails.application.routes.draw do
   get 'main/dashboard' => 'main#dashboard', as: :dashboard
   get 'main/profile' => 'main#profile'
   get 'main/all_cards' => 'main#all_cards'
-  post 'main/card/new' => 'card#create'
-  post 'main/card/view' => 'card#view'
-  get 'main/card/detail' => 'card#view_card_detail'
+  get 'card/detail' => 'card#view_card_detail'
   get 'main/password' => 'main#password', as: :update_password
 
   # Comment
-  post 'main/card/comment/new' => 'card_to_comment#add'
-  post 'main/card/comment/delete' => 'card_to_comment#delete'
-  get 'main/card/comment/show' => 'card_to_comment#show'
-  get "main/all_cards" => "main#all_cards"
-  post "card/new" => "card#create"
-  post "card/view" => "card#view"
-
-  get "main/card/detail" => "card#view_card_detail"
-  get "main/password" => "main#password", as: :update_password
+  post 'card/comment/new' => 'card_to_comment#add'
+  post 'card/comment/delete' => 'card_to_comment#delete'
+  get 'card/comment/show' => 'card_to_comment#show'
+  post 'card/new' => 'card#create'
+  post 'card/view' => 'card#view'
 
   # Card
   get 'card/delete' => 'card#delete'
