@@ -72,7 +72,15 @@ class Card < ActiveRecord::Base
       @cur_period_cards = Card.where(uid: uid).where('create_time >= ?', cur_date.to_time)
       @prev_period_cards = Card.where(uid: uid).where('create_time >= ?', prev_date.to_time).where('update_time < ?', cur_date.to_time)
     end
-
-    [@cur_period_cards.count, @prev_period_cards.count]
+    if @prev_period_cards.count.zero?
+      [@cur_period_cards.count, 'New', 'text-success', 'icon-box-success', 'mdi-arrow-top-right']
+    else
+      percent = "#{((@cur_period_cards.count - @prev_period_cards.count).to_d / @prev_period_cards.count).to_i * 100}%"
+      if @cur_period_cards.count >= @prev_period_cards.count
+        [@cur_period_cards.count, "+#{percent}", 'text-success', 'icon-box-success', 'mdi-arrow-top-right']
+      else
+        [@cur_period_cards.count, percent, 'text-danger', 'icon-box-danger', 'mdi-arrow-bottom-left']
+      end
+    end
   end
 end
