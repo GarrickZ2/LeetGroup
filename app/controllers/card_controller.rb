@@ -121,4 +121,15 @@ class CardController < ApplicationController
       render json: {success: true, star_number: star_number}
     end
   end
+
+  def archive
+    cid = params[:cid]
+    uid = params[:uid]
+    res = CardHelper.change_status uid, cid, Card.card_status[:archived]
+    unless res
+      render json: { success: false, msg: "The card doesn't exist" }
+      return
+    end
+    render json: { success: true, msg: 'The card archived successfully' }
+  end
 end

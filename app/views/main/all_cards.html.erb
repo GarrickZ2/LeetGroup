@@ -81,7 +81,7 @@
                       <i class="mdi mdi-border-color action-icon"></i>
                       Save edit changes
                     </li>
-                    <li class="list-group-item action-item">
+                    <li class="list-group-item action-item" data-toggle="modal" data-target="#archive-card-modal" id="archive-card-modal-btn">
                       <i class="mdi mdi-archive action-icon"></i>
                       Archive
                     </li>
@@ -168,6 +168,21 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="close-copy-card-btn" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-danger" id="copy-card-btn" onclick="copyCard()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Archive Card Modal -->
+  <div class="modal fade bd-example-modal-sm" id="archive-card-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          Are you sure you want to archive this card?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="close-archive-card-btn" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="archive-card-btn" onclick="archiveCard()">Yes</button>
         </div>
       </div>
     </div>
