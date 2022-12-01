@@ -51,8 +51,8 @@ module CardHelper
     true
   end
 
-  def self.copy_card(copyFrom, copyTo, cid)
-    this_card = Card.find_by(uid: copyFrom, cid: cid)
+  def self.copy_card(copyTo, cid)
+    this_card = Card.find_by(cid: cid)
     return false if this_card.nil?
     self.create_card(copyTo, this_card.title, this_card.source, this_card.description)
     true

@@ -250,6 +250,31 @@ function deleteCard() {
     });
 }
 
+//Card: copy
+function copyCard() {
+    $.ajax ({
+        url:"/card/copy?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val(),
+        type:"GET",
+        success: function(data) {
+            // @TODO add successfully delete the card message and close the modal
+            if(data["success"]) {
+                // close the modal
+                $('#close-copy-card-btn').click();
+                $('#close-card-detail-btn').click();
+                show_notice_with_text("Successfully copy the card");
+                // rerender all cards based on page
+                setTimeout(generateAllCardsBasedOnPage($(".active-page").text()), 1500);
+            }else {
+                alert("Fail to copy the card. Please try again.");
+            }
+
+        },
+        error: function(){
+            alert("Fail to delete the card");
+        }
+    });
+}
+
 function shareCard() {
     var group_list = [];
     $("input[name=group_items]:checkbox:checked").each(function(){

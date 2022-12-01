@@ -31,6 +31,7 @@ Rails.application.routes.draw do
 
   # Card
   get 'card/delete' => 'card#delete'
+  get 'card/copy' => 'card#copy'
   post 'card/:cid/edit' => 'card#edit'
   post 'main/card/:cid/share' => 'card#share'
   post 'main/card/:cid/check_exist' => 'card#check_card_exist'

@@ -85,7 +85,7 @@
                       <i class="mdi mdi-archive action-icon"></i>
                       Archive
                     </li>
-                    <li class="list-group-item action-item">
+                    <li class="list-group-item action-item" data-toggle="modal" data-target="#copy-card-modal" id="copy-card-modal-btn">
                       <i class="mdi mdi-content-copy action-icon"></i>
                       Copy
                     </li>
@@ -157,6 +157,22 @@
       </div>
     </div>
   </div>
+
+  <!-- Copy Card Modal -->
+  <div class="modal fade bd-example-modal-sm" id="copy-card-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          Are you sure you want to copy this card?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="close-copy-card-btn" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="copy-card-btn" onclick="copyCard()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Notice Modal -->
   <div class="modal fade" id="notice-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -180,6 +196,7 @@
         $("#notice-modal").modal('show')
         setTimeout("$('#card-view-modal').modal('hide')", 800);
         setTimeout("$('#delete-card-modal').modal('hide')", 800);
+        setTimeout("$('#copy-card-modal').modal('hide')", 800);
     }
 </script>
 <script src="assets/js/view-card.js"></script>
