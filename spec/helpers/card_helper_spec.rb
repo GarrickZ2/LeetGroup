@@ -110,4 +110,38 @@ abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij
       expect res
     end
   end
+
+  describe 'User change status of card' do
+    before(:all) do
+      Card.delete_all
+      Card.create(uid: 23, cid: 22, title: '000', source: '123', description: '321')
+    end
+
+    it 'fail to do so because this card does not exist' do
+      res = CardHelper.change_status(100,100,1)
+      expect !res
+    end
+
+    it 'change the status' do
+      res = CardHelper.change_status(23,22,1)
+      expect res
+    end
+  end
+
+  describe 'User add star to a card' do
+    before(:all) do
+      Card.delete_all
+      Card.create(uid: 23, cid: 22, title: '000', source: '123', description: '321', 'stars': 0)
+    end
+
+    it 'fail to do so because this card does not exist' do
+      res = CardHelper.star(100)
+      expect(res).to eq -1
+    end
+
+    it 'add a star' do
+      res = CardHelper.star(22)
+      expect(res).to eq 1
+    end
+  end
 end

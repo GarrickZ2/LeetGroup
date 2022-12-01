@@ -462,4 +462,58 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
       expect(exist_list).to eq expect_exist_list
     end
   end
+
+  describe 'User add star to a card' do
+    before(:all) do
+      Card.delete_all
+      Card.create(uid: 1, cid: 1, title: '000', source: '123', description: '321', stars: 0)
+    end
+
+    it 'cannot add star because the card does not exist' do
+      post :addStar, params: {
+        uid: 1,
+        cid: 10
+      }
+      success = JSON.parse(response.body)['success']
+      expect(success).to eq false
+    end
+
+    it 'successfully add a star to the card' do
+      post :addStar, params: {
+        uid: 1,
+        cid: 1
+      }
+      success = JSON.parse(response.body)['success']
+      star_number = JSON.parse(response.body)['star_number']
+      expect(success).to eq true
+      expect(star_number).to eq 1
+    end
+  end
+
+  describe 'User archive the card' do
+    before(:all) do
+      Card.delete_all
+      Card.create(uid: 1, cid: 1, title: '000', source: '123', description: '321', stars: 0)
+    end
+
+    it 'cannot archive because the card does not exist' do
+      post :archive, params: {
+        uid: 1,
+        cid: 10
+      }
+      success = JSON.parse(response.body)['success']
+      expect(success).to eq false
+    end
+
+    it 'successfully archive the card' do
+      post :archive, params: {
+        uid: 1,
+        cid: 1
+      }
+      success = JSON.parse(response.body)['success']
+      msg = JSON.parse(response.body)['msg']
+      expect(success).to eq true
+      expect(msg).to eq "The card archived successfully"
+    end
+  end
 end
