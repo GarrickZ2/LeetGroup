@@ -413,6 +413,35 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
     end
   end
 
+  describe 'User copy a card' do
+    before(:all) do
+      Card.delete_all
+      Card.create(uid: 1, cid: 1, title: '000', source: '123', description: '321')
+    end
+
+    it 'cannot copy because the card does not exist' do
+      post :copy, params: {
+        uid: 1,
+        cid: 10
+      }
+      success = JSON.parse(response.body)['success']
+      msg = JSON.parse(response.body)['msg']
+      expect(success).to eq false
+      expect(msg).to eq "The card doesn't exist"
+    end
+
+    it 'successfully copy the card' do
+      post :copy, params: {
+        uid: 1,
+        cid: 1
+      }
+      success = JSON.parse(response.body)['success']
+      msg = JSON.parse(response.body)['msg']
+      expect(success).to eq true
+      expect(msg).to eq "The card copied successfully"
+    end
+  end
+
   describe 'User checks if the card exists in groups' do
     before(:each) do
       Card.delete_all

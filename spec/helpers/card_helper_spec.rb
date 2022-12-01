@@ -94,4 +94,20 @@ abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij
       expect res
     end
   end
+
+  describe 'User copy a card' do
+    before(:all) do
+      Card.create(uid: 23, cid: 22, title: '000', source: '123', description: '321')
+    end
+
+    it 'fail to copy because this card does not exist' do
+      res = CardHelper.copy_card(100, 100)
+      expect !res
+    end
+
+    it 'successfully copy the card' do
+      res = CardHelper.copy_card(50, 22)
+      expect res
+    end
+  end
 end
