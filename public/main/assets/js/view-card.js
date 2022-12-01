@@ -310,21 +310,26 @@ function changeStarIcon() {
         "uid": $("#uid").val(),
         "cid": $("#delete-card-cid").val()
     }
-    // $.ajax ({
-    //     url:"card/addStar",
-    //     type:"POST",
-    //     data: data,
-    //     success: function(data) {
-    //         // @TODO change the star number
-    //         let star_icon = $(".star-icon");
-    //         star_icon.removeClass("mdi-star-outline");
-    //         star_icon.addClass("mdi-star");
-    //         $('#card-view-star').text("Star " + data);
-    //     },
-    //     error: function(){
-    //         alert("Fail to add star to the card");
-    //     }
-    // });
+    $.ajax ({
+        url:"card/addStar",
+        type:"POST",
+        data: data,
+        success: function(data) {
+            if (data["success"]) {
+                let star_icon = $(".star-icon");
+                star_icon.removeClass("mdi-star-outline");
+                star_icon.addClass("mdi-star");
+                setTimeout(function (){
+                    star_icon.removeClass("mdi-star");
+                    star_icon.addClass("mdi-star-outline");
+                },300);
+                $('#card-view-star').text("Star " + data["star_number"]);
+            }
+        },
+        error: function(){
+            alert("Fail to add star to the card");
+        }
+    });
 
 }
 

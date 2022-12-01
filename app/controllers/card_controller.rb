@@ -110,4 +110,15 @@ class CardController < ApplicationController
     }
     render json: {success: true, exist_list: exist_list}
   end
+
+  def addStar
+    cid = params[:cid]
+    uid = params[:uid]
+    star_number = CardHelper.star cid
+    if star_number == -1
+      render json: {success: false}
+    else
+      render json: {success: true, star_number: star_number}
+    end
+  end
 end

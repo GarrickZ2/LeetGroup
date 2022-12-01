@@ -68,17 +68,9 @@ module CardHelper
 
   def self.star(cid)
     this_card = Card.find_by(cid: cid)
-    return false if this_card.nil?
+    return -1 if this_card.nil?
     this_card.stars += 1
     this_card.save
-    true
-  end
-
-  def self.unstar(cid)
-    this_card = Card.find_by(cid: cid)
-    return false if this_card.nil?
-    this_card.stars -= 1
-    this_card.save
-    true
+    return this_card.stars
   end
 end

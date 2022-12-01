@@ -298,3 +298,31 @@ function processUsedTime(totalSeconds) {
     const result = `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
     return result;
 }
+
+function changeStarIcon() {
+    let data = {
+        "uid": $("#uid").val(),
+        "cid": $("#delete-card-cid").val()
+    }
+    $.ajax ({
+        url:"card/addStar",
+        type:"POST",
+        data: data,
+        success: function(data) {
+            if (data["success"]) {
+                let star_icon = $(".star-icon");
+                star_icon.removeClass("mdi-star-outline");
+                star_icon.addClass("mdi-star");
+                setTimeout(function (){
+                    star_icon.removeClass("mdi-star");
+                    star_icon.addClass("mdi-star-outline");
+                },300);
+                $('#card-view-star').text("Star " + data["star_number"]);
+            }
+        },
+        error: function(){
+            alert("Fail to add star to the card");
+        }
+    });
+
+}
