@@ -69,6 +69,21 @@ class CardController < ApplicationController
     render json: { success: true, msg: 'The card deleted successfully' }
   end
 
+  def copy
+    uid = params[:uid]
+    cid = params[:cid]
+    res = CardHelper.copy_card uid, cid
+    unless res
+      # flash[:main_notice] = 'Delete card failed'
+      # redirect_to '/main/all_cards.html'
+      render json: { success: false, msg: "The card doesn't exist" }
+      return
+    end
+    # flash[:main_notice] = 'Delete card successfully'
+    # redirect_to '/main/all_cards.html'
+    render json: { success: true, msg: 'The card copied successfully' }
+  end
+
   # post /card/:cid/share
   # params: list of :gid
   # return: json { success: bool, msg: string }
@@ -94,5 +109,27 @@ class CardController < ApplicationController
       end
     }
     render json: {success: true, exist_list: exist_list}
+  end
+
+  def addStar
+    cid = params[:cid]
+    uid = params[:uid]
+    star_number = CardHelper.star cid
+    if star_number == -1
+      render json: {success: false}
+    else
+      render json: {success: true, star_number: star_number}
+    end
+  end
+
+  def archive
+    cid = params[:cid]
+    uid = params[:uid]
+    res = CardHelper.change_status uid, cid, Card.card_status[:archived]
+    unless res
+      render json: { success: false, msg: "The card doesn't exist" }
+      return
+    end
+    render json: { success: true, msg: 'The card archived successfully' }
   end
 end
