@@ -164,4 +164,13 @@ class GroupController < ApplicationController
     end
     render json: { success: true, msg: 'The card deleted successfully' }
   end
+
+  def group_overview
+    total_users = GroupHelper.get_total_users_number params[:gid]
+    total_cards = GroupHelper.get_total_cards_number params[:gid]
+    owner_info = GroupHelper.get_group_owner_info params[:gid]
+    group_info = GroupHelper.get_group_info params[:gid]
+    create_time = group_info.create_time
+    render json: { total_users: total_users, total_cards: total_cards, owner_info: owner_info, create_time: create_time }
+  end
 end

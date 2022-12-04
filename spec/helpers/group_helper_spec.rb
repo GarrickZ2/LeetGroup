@@ -297,4 +297,44 @@ describe GroupHelper do
       expect !res
     end
   end
+
+  describe 'get total users number' do
+    before(:each) do
+      GroupToUser.create(gid: 1, uid: 1, role: GroupToUser.role_status[:owner])
+      GroupToUser.create(gid: 1, uid: 2, role: GroupToUser.role_status[:member])
+      GroupToUser.create(gid: 1, uid: 3, role: GroupToUser.role_status[:member])
+    end
+
+    it 'should return total users number in this group' do
+      res = GroupHelper.get_total_users_number(1)
+      expect(res).to eq 3
+    end
+  end
+
+  describe 'get total cards number' do
+    before(:each) do
+      GroupToCard.create(gid: 1, cid: 1)
+      GroupToCard.create(gid: 1, cid: 2)
+      GroupToCard.create(gid: 1, cid: 3)
+    end
+
+    it 'should return total cards number in this group' do
+      res = GroupHelper.get_total_cards_number(1)
+      expect(res).to eq 3
+    end
+  end
+
+  describe 'get group owner info' do
+    before(:each) do
+      GroupToUser.create(gid: 1, uid: 1, role: GroupToUser.role_status[:owner])
+      UserProfile.create(uid: 1, username: 'Maggie', avatar: '/avatar/1.jpg')
+    end
+
+    it 'should return total cards number in this group' do
+      res = GroupHelper.get_group_owner_info(1)
+      expect(res.uid).to eq 1
+      expect(res.username).to eq 'Maggie'
+      expect(res.avatar).to eq '/avatar/1.jpg'
+    end
+  end
 end
