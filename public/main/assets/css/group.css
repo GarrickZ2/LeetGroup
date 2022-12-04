@@ -18,6 +18,21 @@
     border-bottom: 1px solid orange;
 }
 
+/* Group Overview Style */
+.group-overview-info {
+    padding: 4px;
+}
+.group-overview-bold {
+    font-weight: bold;
+}
+
+.card-text-font {
+    font-size: 16px;
+}
+
+.group-status-badge {
+    padding: 0.2rem 0.6rem;
+}
 
 /* Group Cards Tab style */
 .card-details-btn:hover {

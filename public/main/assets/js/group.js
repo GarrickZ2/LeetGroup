@@ -41,9 +41,40 @@ $( document ).ready(function() {
         });
     });
 
-    // @TODO generate setting tab
-
+    $('#deleteGroupModal').on('show.bs.modal', function (event) {
+       // alert("test delete group");
+    });
 });
+
+function deleteGroup() {
+    $.ajax ({
+        url:"",
+        type:"GET",
+        success: function(data) {
+            if(data["success"]) {
+                // close the modal
+                $('#close-delete-card-btn').click();
+                $('#close-card-detail-btn').click();
+                show_notice_with_text("Successfully destroy the group");
+                // rerender all cards based on page
+            }else {
+                alert("Fail to destroy the group. Please try again.");
+            }
+
+        },
+        error: function(){
+            alert("Fail to delete the card");
+        }
+    });
+}
+
+function clickCardsBtn() {
+    $('#nav-group-cards-tab').click();
+}
+
+function clickMemberBtn() {
+    $('#nav-members-tab').click();
+}
 
 function putCardDetail(cardDetail, cid) {
     $('#card-view-title').val(cardDetail["title"]);
