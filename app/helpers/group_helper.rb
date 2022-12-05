@@ -14,6 +14,19 @@ module GroupHelper
     GroupInfo.find_by(gid: gid)
   end
 
+  def self.get_total_users_number(gid)
+    GroupToUser.where(gid: gid).count
+  end
+
+  def self.get_total_cards_number(gid)
+    GroupToCard.where(gid: gid).count
+  end
+
+  def self.get_group_owner_info(gid)
+    group_owner = GroupToUser.find_by(gid: gid, role: GroupToUser.role_status[:owner])
+    UserProfile.find_by(uid: group_owner.uid)
+  end
+
   def self.generate_private_invite_code(gid, username, expiration_date = nil)
     user = UserLogInfo.find_by(username: username)
     return nil if user.nil?

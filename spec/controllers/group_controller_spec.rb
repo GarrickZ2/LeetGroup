@@ -467,6 +467,37 @@ describe GroupController do
       expect(msg).to eq "The card doesn't exist"
     end
 
+    describe 'group overview' do
+      before(:each) do
+        GroupInfo.delete_all
+        UserProfile.delete_all
+        GroupToCard.delete_all
+        GroupToUser.delete_all
+        GroupInfo.create(gid: 1, create_time: '2022-10-31T04:26:02.000Z')
+        GroupToUser.create(gid: 1, uid: 1, role: GroupToUser.role_status[:owner])
+        GroupToUser.create(gid: 1, uid: 2, role: GroupToUser.role_status[:member])
+        GroupToUser.create(gid: 1, uid: 3, role: GroupToUser.role_status[:member])
+        UserProfile.create(uid: 1, username: 'Maggie', avatar: '/avatar/1.jpg')
+        GroupToCard.create(gid: 1, cid: 1)
+        GroupToCard.create(gid: 1, cid: 2)
+      end
+
+      it 'should get total users, total cards and owner info' do
+        get :group_overview, params: {
+          gid: 1
+        }
+        total_users = JSON.parse(response.body)['total_users']
+        total_cards = JSON.parse(response.body)['total_cards']
+        owner_info = JSON.parse(response.body)['owner_info']
+        create_time = JSON.parse(response.body)['create_time']
+        expect(total_users).to eq 3
+        expect(total_cards).to eq 2
+        expect(create_time).to eq '2022-10-31T04:26:02.000Z'
+        expect(owner_info['uid']).to eq 1
+        expect(owner_info['username']).to eq 'Maggie'
+        expect(owner_info['avatar']).to eq '/avatar/1.jpg'
+      end
+    end
 
   end
 end

@@ -353,7 +353,7 @@
                 <div class="col-md-12 action-container">
                   <p class="item-title">Actions</p>
                   <ul class="list-group action-list-group">
-                    <li class="list-group-item action-item">
+                    <li class="list-group-item action-item" data-toggle="modal" data-target="#copyGroupCardModal" id="copy-group-card-btn">
                       <i class="mdi mdi-content-copy action-icon"></i>
                       Copy to your card collection
                     </li>
@@ -404,6 +404,20 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" id="close-delete-card-btn" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-danger" id="delete-card-btn" onclick="deleteGroup()">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade bd-example-modal-sm" id="copyGroupCardModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          Are you sure you want to copy this card?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="close-copy-card-btn" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" id="copy-card-btn" onclick="copyCardFromGroup()">Yes</button>
         </div>
       </div>
     </div>

@@ -50,4 +50,27 @@ module CardHelper
     end
     true
   end
+
+  def self.copy_card(copyTo, cid)
+    this_card = Card.find_by(cid: cid)
+    return false if this_card.nil?
+    self.create_card(copyTo, this_card.title, this_card.source, this_card.description)
+    true
+  end
+
+  def self.change_status(uid, cid, status)
+    this_card = Card.find_by(uid: uid, cid: cid)
+    return false if this_card.nil?
+    this_card.status = status
+    this_card.save
+    true
+  end
+
+  def self.star(cid)
+    this_card = Card.find_by(cid: cid)
+    return -1 if this_card.nil?
+    this_card.stars += 1
+    this_card.save
+    return this_card.stars
+  end
 end

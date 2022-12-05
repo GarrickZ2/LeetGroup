@@ -31,9 +31,12 @@ Rails.application.routes.draw do
 
   # Card
   get 'card/delete' => 'card#delete'
+  get 'card/copy' => 'card#copy'
+  get 'card/archive' => 'card#archive'
   post 'card/:cid/edit' => 'card#edit'
   post 'main/card/:cid/share' => 'card#share'
   post 'main/card/:cid/check_exist' => 'card#check_card_exist'
+  post 'main/card/addStar' => 'card#addStar'
 
   # Group
   get 'group/:gid' => 'main#group', as: :group_info
@@ -46,5 +49,7 @@ Rails.application.routes.draw do
   get '/group/:gid/card_detail/:cid' => 'group#view_group_card_detail'
   get 'group/:gid/check_permission/:uid/:cid' => 'group#check_permission'
   get 'group/card/delete' => 'group#delete_card'
+  post 'group/card/addStar' => 'card#addStar'
+  get 'group/overview' => 'group#group_overview'
 
 end

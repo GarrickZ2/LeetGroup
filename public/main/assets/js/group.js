@@ -264,7 +264,6 @@ function deleteGroupCard(permission) {
 }
 
 function deleteCardFromGroup(){
-    console.log("Click Delete!");
     $.ajax ({
         url:"card/delete?gid=" + $("#gid").val() + "&cid=" + $("#delete-card-cid").val(),
         type:"GET",
@@ -279,6 +278,30 @@ function deleteCardFromGroup(){
                 setTimeout(generateCardsBasedOnPage($(".active-page").text()), 1500);
             }else {
                 alert("Fail to delete the card. Please try again.");
+            }
+
+        },
+        error: function(){
+            alert("Fail to delete the card");
+        }
+    });
+}
+
+function copyCardFromGroup() {
+    $.ajax ({
+        url:"/card/copy?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val(),
+        type:"GET",
+        success: function(data) {
+            // @TODO add successfully delete the card message and close the modal
+            if(data["success"]) {
+                // close the modal
+                $('#close-copy-card-btn').click();
+                $('#close-card-detail-btn').click();
+                show_notice_with_text("Successfully copy the card");
+                // rerender all cards based on page
+                setTimeout(generateCardsBasedOnPage($(".active-page").text()), 1500);
+            }else {
+                alert("Fail to copy the card. Please try again.");
             }
 
         },
@@ -305,4 +328,32 @@ function processUsedTime(totalSeconds) {
     // format as MM:SS
     const result = `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
     return result;
+}
+
+function changeStarIcon() {
+    let data = {
+        "uid": $("#uid").val(),
+        "cid": $("#delete-card-cid").val()
+    }
+    $.ajax ({
+        url:"card/addStar",
+        type:"POST",
+        data: data,
+        success: function(data) {
+            if (data["success"]) {
+                let star_icon = $(".star-icon");
+                star_icon.removeClass("mdi-star-outline");
+                star_icon.addClass("mdi-star");
+                setTimeout(function (){
+                    star_icon.removeClass("mdi-star");
+                    star_icon.addClass("mdi-star-outline");
+                },300);
+                $('#card-view-star').text("Star " + data["star_number"]);
+            }
+        },
+        error: function(){
+            alert("Fail to add star to the card");
+        }
+    });
+
 }

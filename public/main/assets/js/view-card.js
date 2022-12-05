@@ -1,6 +1,9 @@
 // initialize modal
 $( document ).ready(function() {
     // initialize bootpag and generate cards from data
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    thisStatus = urlParams.get('status');
     generateAllCardsBasedOnPage(1);
     $('.pagination-here').bootpag({
     }).on("page", function(event, num) {
@@ -66,7 +69,7 @@ function generateAllCardsBasedOnPage(offset) {
     let uid = $("#uid").val();
     let pagination_data = {
         "uid": uid,
-        "status": 3 ,
+        "status": thisStatus,
         "page_size": 6,
         "offset": offset - 1,
         "sort_by": "create_time",
@@ -250,6 +253,57 @@ function deleteCard() {
     });
 }
 
+//Card: copy
+function copyCard() {
+    $.ajax ({
+        url:"/card/copy?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val(),
+        type:"GET",
+        success: function(data) {
+            // @TODO add successfully delete the card message and close the modal
+            if(data["success"]) {
+                // close the modal
+                $('#close-copy-card-btn').click();
+                $('#close-card-detail-btn').click();
+                show_notice_with_text("Successfully copy the card");
+                // rerender all cards based on page
+                setTimeout(generateAllCardsBasedOnPage($(".active-page").text()), 1500);
+            }else {
+                alert("Fail to copy the card. Please try again.");
+            }
+
+        },
+        error: function(){
+            alert("Fail to delete the card");
+        }
+    });
+}
+
+//Card: archive
+function archiveCard() {
+    $.ajax ({
+        url:"/card/archive?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val(),
+        type:"GET",
+        success: function(data) {
+            // @TODO add successfully delete the card message and close the modal
+            if(data["success"]) {
+                // close the modal
+                $('#close-archive-card-btn').click();
+                $('#close-card-detail-btn').click();
+                show_notice_with_text("Successfully archive the card");
+                // rerender all cards based on page
+                setTimeout(generateAllCardsBasedOnPage($(".active-page").text()), 1500);
+            }else {
+                alert("Fail to archive the card. Please try again.");
+            }
+
+        },
+        error: function(){
+            alert("Fail to delete the card");
+        }
+    });
+}
+
+
 function shareCard() {
     var group_list = [];
     $("input[name=group_items]:checkbox:checked").each(function(){
@@ -285,21 +339,26 @@ function changeStarIcon() {
         "uid": $("#uid").val(),
         "cid": $("#delete-card-cid").val()
     }
-    // $.ajax ({
-    //     url:"card/addStar",
-    //     type:"POST",
-    //     data: data,
-    //     success: function(data) {
-    //         // @TODO change the star number
-    //         let star_icon = $(".star-icon");
-    //         star_icon.removeClass("mdi-star-outline");
-    //         star_icon.addClass("mdi-star");
-    //         $('#card-view-star').text("Star " + data);
-    //     },
-    //     error: function(){
-    //         alert("Fail to add star to the card");
-    //     }
-    // });
+    $.ajax ({
+        url:"card/addStar",
+        type:"POST",
+        data: data,
+        success: function(data) {
+            if (data["success"]) {
+                let star_icon = $(".star-icon");
+                star_icon.removeClass("mdi-star-outline");
+                star_icon.addClass("mdi-star");
+                setTimeout(function (){
+                    star_icon.removeClass("mdi-star");
+                    star_icon.addClass("mdi-star-outline");
+                },300);
+                $('#card-view-star').text("Star " + data["star_number"]);
+            }
+        },
+        error: function(){
+            alert("Fail to add star to the card");
+        }
+    });
 
 }
 
