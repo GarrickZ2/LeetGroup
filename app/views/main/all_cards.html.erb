@@ -44,22 +44,19 @@
                   <div class="row">
                     <!-- My comment -->
                     <div class="col-md-2 col-sm-2 card-comment-avatar-container">
-                      <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
+                      <img class="img-xs rounded-circle" src="<%=session[:profile]['avatar'] %>" alt="avatar" id="comment-img-path">
                     </div>
+
+                    <!-- Send Comments Out -->
                     <div class="col-md-10 col-sm-10 card-comment-container">
                       <textarea id="card-view-comment" placeholder="Write your comment..."></textarea>
-                      <button class="btn btn-inverse-secondary float-end" id="comment-save-btn">Save</button>
+                      <button class="btn btn-inverse-secondary float-end" id="comment-save-btn" onkeydown="sendComment()">Save</button>
                     </div>
+
                     <!-- Other comments -->
-                    <div class="col-12">
-                      <div class="row">
-                        <div class="col-md-2 col-sm-2 card-comment-avatar-container">
-                          <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
-                        </div>
-                        <div class="col-md-10 col-sm-10 card-comment-container">
-                          <span>Here is the comment</span>
-                        </div>
-                      </div>
+                    <div class="col-12" id="comment-area">
+                      <!-- Display the comment -->
+                      <!-- ================ -->
                     </div>
 
                   </div>

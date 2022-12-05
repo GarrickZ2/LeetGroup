@@ -16,18 +16,22 @@ Rails.application.routes.draw do
   get 'user/logout' => 'user#logout'
   post 'user/update' => 'user#update_profile'
   post 'user/avatar' => 'user#save_avatar'
-  post "user/change_password" => "user#update_password"
+  post 'user/change_password' => 'user#update_password'
   get 'main/user/:uid/group' => 'user#get_user_groups'
 
   # Main
   get 'main/dashboard' => 'main#dashboard', as: :dashboard
   get 'main/profile' => 'main#profile'
-  get "main/all_cards" => "main#all_cards"
-  post "card/new" => "card#create"
-  post "card/view" => "card#view"
+  get 'main/all_cards' => 'main#all_cards'
+  get 'card/detail' => 'card#view_card_detail'
+  get 'main/password' => 'main#password', as: :update_password
 
-  get "main/card/detail" => "card#view_card_detail"
-  get "main/password" => "main#password", as: :update_password
+  # Comment
+  post 'card/comment/new' => 'card_to_comment#add'
+  post 'card/comment/delete' => 'card_to_comment#delete'
+  get 'card/comment/show' => 'card_to_comment#show'
+  post 'card/new' => 'card#create'
+  post 'card/view' => 'card#view'
 
   # Card
   get 'card/delete' => 'card#delete'
