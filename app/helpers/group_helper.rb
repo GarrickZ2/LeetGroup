@@ -10,6 +10,19 @@ module GroupHelper
     group
   end
 
+  def self.delete_group(gid, uid)
+    user = GroupToUser.find_by(gid: gid, uid: uid)
+    return false if user.nil? || user.role != GroupToUser.role_status[:owner]
+
+    # delete all the members firstly
+    GroupToUser.delete_by(gid: gid)
+    # delete all the cards secondly
+    GroupToCard.delete_by(gid: gid)
+    # delete the group info
+    GroupInfo.delete_by(gid: gid)
+    true
+  end
+
   def self.get_group_info(gid)
     GroupInfo.find_by(gid: gid)
   end

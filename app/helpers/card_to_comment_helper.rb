@@ -18,7 +18,7 @@ module CardToCommentHelper
         username: username,
         avatar: avatar,
         content: content,
-        create_time: create_time
+        create_time: create_time.to_date
       }
       comments_info.append(comment_info.to_json)
     }

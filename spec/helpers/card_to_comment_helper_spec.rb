@@ -20,13 +20,13 @@ describe CardToCommentHelper do
         username: 'MaggieZ',
         avatar: '/avatar/1..jpg',
         content: 'This problem appears in Google OA',
-        create_time: '2022-10-31T04:26:02.000Z'
+        create_time: '2022-10-31'
       }
       expect_comment2 = {
         username: 'Zll211',
         avatar: '/avatar/2..jpg',
         content: 'should use binary search',
-        create_time: '2022-10-31T06:26:02.000Z'
+        create_time: '2022-10-31'
       }
       expect(comment1).to eq expect_comment1.to_json
       expect(comment2).to eq expect_comment2.to_json
@@ -41,7 +41,7 @@ describe CardToCommentHelper do
         username: 'user_not_existed',
         avatar: nil,
         content: 'should use binary search',
-        create_time: '2022-10-31T05:26:02.000Z'
+        create_time: '2022-10-31'
       }
       expect(comment).to eq expect_comment.to_json
     end

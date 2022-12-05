@@ -307,7 +307,6 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-md-8">
-              <form>
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Source</label>
                   <div class="form-control card-view-input2" id="card-view-source"> </div>
@@ -319,29 +318,26 @@
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Comment</label>
                   <div class="row">
+
                     <!-- My comment -->
                     <div class="col-md-2 col-sm-2 card-comment-avatar-container">
-                      <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
+                      <img class="img-xs rounded-circle" src="<%=session[:profile]['avatar'] %>" alt="avatar" id="comment-img-path">
                     </div>
+
+                    <!-- Send Comments Out -->
                     <div class="col-md-10 col-sm-10 card-comment-container">
-                      <textarea id="card-view-comment" placeholder="Write your comment..."></textarea>
-                      <button class="btn btn-inverse-secondary float-end" id="comment-save-btn">Save</button>
+                      <textarea id="card-view-comment" class="card-comment" placeholder="Write your comment..."></textarea>
+                      <button class="btn btn-inverse-secondary float-end" id="comment-save-btn" onclick="sendComment()">Save</button>
                     </div>
+
                     <!-- Other comments -->
-                    <div class="col-12">
-                      <div class="row">
-                        <div class="col-md-2 col-sm-2 card-comment-avatar-container">
-                          <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
-                        </div>
-                        <div class="col-md-10 col-sm-10 card-comment-container">
-                          <span>Here is the comment</span>
-                        </div>
-                      </div>
+                    <div class="col-12" id="comment-area" style="overflow-y:scroll; height: 200px;">
+                      <!-- Display the comment -->
+                      <!-- ================ -->
                     </div>
 
                   </div>
                 </div>
-              </form>
             </div>
             <div class="col-md-4">
               <div class="row">
@@ -427,6 +423,7 @@
 
 
 <script src="/main/assets/js/group.js"></script>
+<script src="assets/js/view-card.js"></script>
 <script>
   $(document).ready(function () {
       <%if flash[:tab] != nil? %>

@@ -78,7 +78,7 @@ function putCardDetail(cardDetail, cid) {
             const commentData = data["comments"];
             $.each(commentData, function (i, comment) {
                 comment = JSON.parse(comment);
-                appendComment(comment['avatar'], comment['content']);
+                appendComment(comment['avatar'], comment['content'], comment['username'], comment['create_time']);
             });
         }
     })
@@ -100,7 +100,7 @@ function appendComment(avatar, content, username, createTime) {
         content +
         '</div></div></div>' +
         '</div>');
-    $('#comment-area').append(layout);
+    $('#comment-area').prepend(layout);
 }
 
 function sendComment() {
@@ -114,14 +114,15 @@ function sendComment() {
         url: '/card/comment/new',
         data: form_data,
         success: function (msg) {
+            show_notice_with_text(msg['msg']);
             if (msg['success']) {
-                appendComment($("#comment-img-path").attr("src"), content);
-            } else {
-                show_notice_with_text(msg['msg']);
+                const currentDate = new Date();
+                const dateFormat = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate();
+                appendComment($("#comment-img-path").attr("src"), content, $("#username").text(), dateFormat);
             }
             $("card-view-comment").val("");
         }
-    })
+    });
 }
 
 
