@@ -132,4 +132,12 @@ class CardController < ApplicationController
     end
     render json: { success: true, msg: 'The card archived successfully' }
   end
+
+  def card_statistics
+    status = params[:status]
+    uid = params[:uid]
+    period = params[:period]
+    data = Card.get_card_statistics(uid, status, period)
+    render json: { cur_data: data[0], prev_data: data[1] }
+  end
 end

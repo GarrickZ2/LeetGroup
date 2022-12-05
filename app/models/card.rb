@@ -50,4 +50,37 @@ class Card < ActiveRecord::Base
       Card.find_by(uid: uid, cid: cid)
     end
   end
+
+  def self.get_card_statistics(uid, status, period)
+    case period
+    when 'month'
+      cur_date = Date.today - Date.today.mday + 1
+      prev_date = cur_date << 1
+    when 'week'
+      cur_date = Date.today - Date.today.wday + 1
+      prev_date = cur_date - 7
+    else
+      cur_date = Date.today
+      prev_date = cur_date - 1
+    end
+
+    if status == 'finished' # today, this week, this month finished cards
+      @cur_period_cards = Card.where(status: @@card_status[:finished], uid: uid).where('update_time >= ?', cur_date.to_time)
+      @prev_period_cards = Card.where(status: @@card_status[:finished], uid: uid).where('update_time >= ?', prev_date.to_time)
+                               .where('update_time < ?', cur_date.to_time)
+    else # today created cards
+      @cur_period_cards = Card.where(uid: uid).where('create_time >= ?', cur_date.to_time)
+      @prev_period_cards = Card.where(uid: uid).where('create_time >= ?', prev_date.to_time).where('update_time < ?', cur_date.to_time)
+    end
+    if @prev_period_cards.count.zero?
+      [@cur_period_cards.count, 'New', 'text-success', 'icon-box-success', 'mdi-arrow-top-right']
+    else
+      percent = "#{((@cur_period_cards.count - @prev_period_cards.count).to_d / @prev_period_cards.count).to_i * 100}%"
+      if @cur_period_cards.count >= @prev_period_cards.count
+        [@cur_period_cards.count, "+#{percent}", 'text-success', 'icon-box-success', 'mdi-arrow-top-right']
+      else
+        [@cur_period_cards.count, percent, 'text-danger', 'icon-box-danger', 'mdi-arrow-bottom-left']
+      end
+    end
+  end
 end
