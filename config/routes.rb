@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   get 'group/:gid/check_permission/:uid/:cid' => 'group#check_permission'
   get 'group/card/delete' => 'group#delete_card'
   post 'group/card/addStar' => 'card#addStar'
-  get 'group/overview' => 'group#group_overview'
+  get 'group/overview/:gid' => 'group#group_overview'
+  get '/group/:gid/destroy' => 'group#destroy_group'
 
 end

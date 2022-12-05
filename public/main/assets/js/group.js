@@ -1,4 +1,7 @@
 $( document ).ready(function() {
+    // generate group overview
+    generateGroupOverview();
+
     // generate group cards tab and pagination
     generateCardsBasedOnPage(1);
     $('.pagination-cards').bootpag({
@@ -46,6 +49,47 @@ $( document ).ready(function() {
     });
 });
 
+
+function generateGroupOverview() {
+    let gid = $("#gid").val();
+    $.ajax ({
+        url:"/group/overview/" + gid,
+        type:"GET",
+        success: function(data) {
+            console.log("group overview data", data["group_info"]);
+            let group_info = data["group_info"];
+            let owner_info = data["owner_info"];
+            $('#group-overview-name').text(group_info["name"]);
+            $('#group-overview-status').text(group_info["status"]);
+            $('#group-overview-description').text(group_info["description"]);
+            $('#group-overview-owner').text(owner_info["username"] );
+            let total_cards = data["total_cards"];
+            let total_users = data["total_users"];
+            let card_text = "";
+            let member_text = "";
+            if (total_cards <= 1) {
+                card_text = total_cards + " card";
+            }else {
+                card_text = total_cards + " cards";
+            }
+
+            if (total_users <= 1) {
+                member_text = total_users + " member";
+            }else {
+                member_text = total_users + " members";
+            }
+
+            $('#group-overview-cards').text(card_text);
+            $('#group-overview-members').text(member_text);
+            $('#nav-home').attr('hidden', false);
+            $('#group-overview-spinner').attr('hidden', true);
+        },
+        error: function(){
+            alert("Fail to delete the card");
+        }
+    });
+}
+
 function deleteGroup() {
     $.ajax ({
         url:"",
@@ -89,7 +133,6 @@ function putCardDetail(cardDetail, cid) {
 // function to generate all cards
 function generateCardsBasedOnPage(offset) {
     let gid = $("#gid").val();
-    console.log("gid is", gid);
     let pagination_data = {
         "status": 3 ,
         "page_size": 6,
@@ -108,7 +151,6 @@ function generateCardsBasedOnPage(offset) {
         success: function(data) {
             cardData = data["card_info"];
             pageData = data["page_info"];
-            console.log(cardData);
             generateAllCards(cardData);
             generatePagination(JSON.parse(pageData), offset);
         },

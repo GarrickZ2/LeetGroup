@@ -23,7 +23,8 @@
   </nav>
   <div class="tab-content" id="nav-tabContent">
     <!-- Home Tab -->
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div id='group-overview-spinner' class="spinner-border"></div>
+    <div hidden class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
       <div class="row">
         <div class="grid-margin stretch-card">
           <div class="card">
@@ -34,7 +35,7 @@
                     Group Overview
                   </h3>
                 </div>
-                <div class="col-md-8 col-sm-7 col-xl-9 text-right">
+                <div class="col-md-9 col-sm-7 col-xl-9 text-right">
                   <button <%='disabled' if @member.role != 0 %> type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteGroupModal">Destroy Group</button>
                 </div>
               </div>
@@ -42,15 +43,15 @@
             <div class="card-body">
               <div class="group-overview-info">
                 <span class="group-overview-bold">Name: </span>
-                <span>Hana <span class="group-status-badge badge rounded-pill bg-light text-dark"> Public </span></span>
+                <span id="group-overview-name"> <span id="group-overview-status" class="group-status-badge badge rounded-pill bg-light text-dark"> Public </span></span>
               </div>
               <div class="group-overview-info">
                 <span class="group-overview-bold">Owner: </span>
-                <span>rw2905</span>
+                <span id="group-overview-owner"></span>
               </div>
               <div class="group-overview-info">
                 <span class="group-overview-bold">Description: </span>
-                <span>Hahaha</span>
+                <span id="group-overview-description"></span>
               </div>
             </div>
           </div>
@@ -64,7 +65,7 @@
             <div class="card-body">
               <p class="card-text card-text-font"> <i class="fa-solid fa-file"></i></i>
                 Currently there are
-                <span>5 cards</span>
+                <span id="group-overview-cards"> </span>
               </p>
               <a class="btn btn-primary" onclick="clickCardsBtn()">See all cards</a>
             </div>
@@ -79,7 +80,7 @@
             <div class="card-body">
               <p class="card-text card-text-font"> <i class="fa-solid fa-users"></i>
                 Currently there are
-                <span>8 members</span>
+                <span id="group-overview-members"></span>
               </p>
               <a class="btn btn-primary" onclick="clickMemberBtn()">See all members</a>
             </div>
