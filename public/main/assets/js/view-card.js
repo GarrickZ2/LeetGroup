@@ -49,6 +49,18 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('#card-view-comment').focus(function(event) {
+        $('#card-view-comment').addClass('card-view-comment-focus');
+        $('#comment-save-btn').css('visibility', 'visible');
+    });
+
+    $('#card-view-comment').blur(function(event) {
+        if ($('#card-view-comment').val().length === 0) {
+            $('#card-view-comment').removeClass('card-view-comment-focus');
+            $('#comment-save-btn').css('visibility', 'hidden');
+        }
+    });
 });
 
 
@@ -72,14 +84,21 @@ function putCardDetail(cardDetail, cid) {
     })
 }
 
-function appendComment(avatar, content) {
-    const layout = $('<div class="row">' +
+function appendComment(avatar, content, username, createTime) {
+    const layout = $('<div class="row card-single-comment-container">' +
         '<div class="col-md-2 col-sm-2 card-comment-avatar-container">' +
         '<img class="img-xs rounded-circle" src="' + avatar + '" alt="avatar">' +
         '</div>' +
-        '<div class="col-md-10 col-sm-10 card-comment-container"><span>' +
+        '<div class="col-md-10 col-sm-10 card-comment-container">' +
+        '<div class="row"><div class="col-md-8 col-sm-8 col-lg-8 comment-left">' +
+        username +
+        '</div>' +
+        '<div class="col-md-4 col-sm-4 col-lg-4 comment-right">' +
+        createTime +
+        '</div></div>' +
+        '<div class="row"><div class="col-md-12 col-sm-12 col-lg-12 comment-content">' +
         content +
-        '</span></div>' +
+        '</div></div></div>' +
         '</div>');
     $('#comment-area').append(layout);
 }
