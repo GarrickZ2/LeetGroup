@@ -34,6 +34,7 @@ class GroupController < ApplicationController
                           else
                             'Delete Failed, the user does not have the permission'
                           end
+    session[:groups] = GroupHelper.get_user_groups uid
     redirect_to main_dashboard_path
   end
 
