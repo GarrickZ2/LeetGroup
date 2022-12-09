@@ -64,7 +64,7 @@ class Card < ActiveRecord::Base
       prev_date = cur_date - 1
     end
 
-    if status == 'finished' # today, this week, this month finished cards
+    if status == 2 # today, this week, this month finished cards
       @cur_period_cards = Card.where(status: @@card_status[:finished], uid: uid).where('update_time >= ?', cur_date.to_time)
       @prev_period_cards = Card.where(status: @@card_status[:finished], uid: uid).where('update_time >= ?', prev_date.to_time)
                                .where('update_time < ?', cur_date.to_time)

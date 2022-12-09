@@ -492,10 +492,10 @@ describe GroupController do
         group_info = JSON.parse(response.body)['group_info']
         expect(total_users).to eq 3
         expect(total_cards).to eq 2
-        expect(group_info[name]).to eq 'Group1'
-        expect(group_info[description]).to eq 'test'
-        expect(group_info[status]).to eq 0
-        expect(group_info[create_time]).to eq '2022-10-31T04:26:02.000Z'
+        expect(group_info['name']).to eq 'Group1'
+        expect(group_info['description']).to eq 'test'
+        expect(group_info['status']).to eq 0
+        expect(group_info['create_time']).to eq '2022-10-31T04:26:02.000Z'
         expect(owner_info['uid']).to eq 1
         expect(owner_info['username']).to eq 'Maggie'
         expect(owner_info['avatar']).to eq '/avatar/1.jpg'
