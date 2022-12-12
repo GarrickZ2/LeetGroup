@@ -100,16 +100,16 @@
         <div class="collapse" id="ui-basic">
           <ul class="nav flex-column sub-menu">
             <li class="nav-item"> <a class="nav-link" href="/main/all_cards.html?status=0" id="nav-sub-all-cards">All Cards</a></li>
-            <li class="nav-item"> <a class="nav-link" href="/main/all_cards.html?status=1" id="nav-sub-all-cards">Archived Cards</a></li>
+            <li class="nav-item"> <a class="nav-link" href="/main/all_cards.html?status=1" id="nav-sub-archive-cards">Archived Cards</a></li>
           </ul>
         </div>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" data-bs-toggle="collapse" href="#ui-group" aria-expanded="false" aria-controls="ui-group">
+        <a class="nav-link" data-bs-toggle="collapse" href="#ui-group" aria-expanded="false" aria-controls="ui-group" id="nav-group">
               <span class="menu-icon">
                 <i class="mdi mdi-note"></i>
               </span>
-          <span class="menu-title" id="nav-group">Group</span>
+          <span class="menu-title">Group</span>
           <i class="menu-arrow"></i>
         </a>
         <div class="collapse" id="ui-group">
@@ -353,7 +353,7 @@
                       <label for="validationCustom02" class="form-label">Status</label>
                       <div>
                         <label class="radio-inline">
-                          <input type="radio" name="inlineRadioOptions" id="groupStatus0" value=0> Private
+                          <input type="radio" name="inlineRadioOptions" id="groupStatus0" value=0 checked> Private
                           <input type="radio" name="inlineRadioOptions" id="groupStatus1" value=1> Public
                         </label>
                       </div>
