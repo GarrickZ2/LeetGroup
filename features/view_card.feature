@@ -12,8 +12,8 @@ Feature: user views cards
     Given the following cards exist:
       | cid | uid | title           | source   | description | status | used_time | stars | create_time              | update_time              | schedule_time |
       | 1   | 1   | Two Sum         | LeetCode | easy        | 0      | 0         | 0     | 2022-10-31T04:26:02.000Z | 2022-10-31T04:26:02.000Z | nil           |
-      | 2   | 1   | Reverse Integer | LeetCode | medium      | 1      | 30        | 5     | 2022-10-31T04:36:02.000Z | 2022-10-31T06:36:02.000Z | nil           |
-      | 3   | 1   | Tree Traversal  | LeetCode | hard        | 2      | 40        | 10    | 2022-10-31T03:26:02.000Z | 2022-10-31T04:16:02.000Z | nil           |
+      | 2   | 1   | Reverse Integer | LeetCode | medium      | 0      | 30        | 5     | 2022-10-31T04:36:02.000Z | 2022-10-31T06:36:02.000Z | nil           |
+      | 3   | 1   | Tree Traversal  | LeetCode | hard        | 0      | 40        | 10    | 2022-10-31T03:26:02.000Z | 2022-10-31T04:16:02.000Z | nil           |
 
   @javascript
   Scenario: view all cards
