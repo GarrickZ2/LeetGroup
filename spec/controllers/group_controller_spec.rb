@@ -150,6 +150,30 @@ describe GroupController do
     end
   end
 
+  describe 'destroy group' do
+    before(:each) do
+      GroupInfo.create(gid: 1, name: 'Group1', description: 'test', status: 0, create_time: '2022-10-31T04:26:02.000Z')
+      GroupToUser.create(gid: 1, uid: 1, role: GroupToUser.role_status[:owner])
+      GroupToUser.create(gid: 1, uid: 2, role: GroupToUser.role_status[:member])
+    end
+
+    it 'should successfully destroy the group if user is the owner' do
+      post :destroy_group, params: {
+        uid: 1,
+        gid: 1
+      }
+      expect(response).to redirect_to('/main/dashboard')
+    end
+
+    it 'should fail to destroy the group if user is not the owner' do
+      post :destroy_group, params: {
+        uid: 2,
+        gid: 1
+      }
+      expect(response).to redirect_to('/main/dashboard')
+    end
+  end
+
   describe 'generate invite code' do
     before(:all) do
       UserLogInfo.create(username: 'abcd123456E', email: 'zzzz@bbb.com', password: 'asdvoJF1982!@')
