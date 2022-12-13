@@ -280,3 +280,7 @@ input[type="file"] {
     margin-top: 6%;
 }
 
+.normal-link {
+    text-decoration: none !important;
+    color: whitesmoke !important;
+}

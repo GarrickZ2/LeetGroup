@@ -22,6 +22,11 @@ class MainController < ApplicationController
 
     # create status
     @day_created = Card.get_card_statistics(uid, Card.card_status[:active], 'day')
+    groups = GroupHelper.get_user_groups uid
+    @group_info = []
+    groups.each do |each|
+      @group_info.append GroupHelper.get_group_detail each
+    end
   end
   def profile; end
   def password; end

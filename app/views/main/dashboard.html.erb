@@ -27,13 +27,13 @@
           <div class="row">
             <div class="col-9">
               <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0"><%=@day_finished[0] %></h3>
-                <p class="<%=@day_finished[2] %> ms-2 mb-0 font-weight-medium"><%=@day_finished[1] %></p>
+                <h3 class="mb-0"><%= @day_finished[0] %></h3>
+                <p class="<%= @day_finished[2] %> ms-2 mb-0 font-weight-medium"><%= @day_finished[1] %></p>
               </div>
             </div>
             <div class="col-3">
-              <div class="icon <%=@day_finished[3] %>">
-                <span class="mdi <%=@day_finished[4] %> icon-item"></span>
+              <div class="icon <%= @day_finished[3] %>">
+                <span class="mdi <%= @day_finished[4] %> icon-item"></span>
               </div>
             </div>
           </div>
@@ -47,13 +47,13 @@
           <div class="row">
             <div class="col-9">
               <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0"><%=@week_finished[0] %></h3>
-                <p class="<%=@week_finished[2] %> ms-2 mb-0 font-weight-medium"><%=@week_finished[1] %></p>
+                <h3 class="mb-0"><%= @week_finished[0] %></h3>
+                <p class="<%= @week_finished[2] %> ms-2 mb-0 font-weight-medium"><%= @week_finished[1] %></p>
               </div>
             </div>
             <div class="col-3">
-              <div class="icon <%=@week_finished[3] %>">
-                <span class="mdi <%=@week_finished[4] %> icon-item"></span>
+              <div class="icon <%= @week_finished[3] %>">
+                <span class="mdi <%= @week_finished[4] %> icon-item"></span>
               </div>
             </div>
           </div>
@@ -67,13 +67,13 @@
           <div class="row">
             <div class="col-9">
               <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0"><%=@month_finished[0] %></h3>
-                <p class="<%=@month_finished[2] %> ms-2 mb-0 font-weight-medium"><%=@month_finished[1] %></p>
+                <h3 class="mb-0"><%= @month_finished[0] %></h3>
+                <p class="<%= @month_finished[2] %> ms-2 mb-0 font-weight-medium"><%= @month_finished[1] %></p>
               </div>
             </div>
             <div class="col-3">
-              <div class="icon <%=@month_finished[3] %>">
-                <span class="mdi <%=@month_finished[4] %> icon-item"></span>
+              <div class="icon <%= @month_finished[3] %>">
+                <span class="mdi <%= @month_finished[4] %> icon-item"></span>
               </div>
             </div>
           </div>
@@ -87,13 +87,13 @@
           <div class="row">
             <div class="col-9">
               <div class="d-flex align-items-center align-self-start">
-                <h3 class="mb-0"><%=@day_created[0] %></h3>
-                <p class="<%=@day_created[2] %> ms-2 mb-0 font-weight-medium"><%=@day_created[1] %></p>
+                <h3 class="mb-0"><%= @day_created[0] %></h3>
+                <p class="<%= @day_created[2] %> ms-2 mb-0 font-weight-medium"><%= @day_created[1] %></p>
               </div>
             </div>
             <div class="col-3">
-              <div class="icon <%=@day_created[3] %> ">
-                <span class="mdi <%=@day_created[4] %> icon-item"></span>
+              <div class="icon <%= @day_created[3] %> ">
+                <span class="mdi <%= @day_created[4] %> icon-item"></span>
               </div>
             </div>
           </div>
@@ -114,8 +114,8 @@
         </div>
         <!-- Team Details-->
         <div class="single_advisor_details_info">
-          <h6><%=session[:profile]['username']%></h6>
-          <p class="designation"><%=session[:profile]['role'] %></p>
+          <h6><%= session[:profile]['username'] %></h6>
+          <p class="designation"><%= session[:profile]['role'] %></p>
         </div>
       </div>
     </div>
@@ -123,8 +123,8 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex flex-row justify-content-between">
-            <h4 class="card-title mb-1">Open Projects</h4>
-            <p class="text-muted mb-1">Your data status</p>
+            <h4 class="card-title mb-1">Operations</h4>
+            <p class="text-muted mb-1"></p>
           </div>
           <div class="row">
             <div class="col-12">
@@ -135,16 +135,12 @@
                       <i class="mdi mdi-file-document"></i>
                     </div>
                   </div>
-                  <div class="preview-item-content d-sm-flex flex-grow">
-                    <div class="flex-grow">
-                      <h6 class="preview-subject">Admin dashboard design</h6>
-                      <p class="text-muted mb-0">Broadcast web app mockup</p>
+                    <div class="preview-item-content d-sm-flex flex-grow">
+                      <div class="flex-grow">
+                        <h6 class="preview-subject"><a style="text-decoration: none; color: whitesmoke" href="/main/profile">View Profile</a></h6>
+                        <p class="text-muted mb-0">View and modify your info and avatar image</p>
+                      </div>
                     </div>
-                    <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                      <p class="text-muted">15 minutes ago</p>
-                      <p class="text-muted mb-0">30 tasks, 5 issues </p>
-                    </div>
-                  </div>
                 </div>
                 <div class="preview-item border-bottom">
                   <div class="preview-thumbnail">
@@ -154,16 +150,12 @@
                   </div>
                   <div class="preview-item-content d-sm-flex flex-grow">
                     <div class="flex-grow">
-                      <h6 class="preview-subject">Wordpress Development</h6>
-                      <p class="text-muted mb-0">Upload new design</p>
-                    </div>
-                    <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                      <p class="text-muted">1 hour ago</p>
-                      <p class="text-muted mb-0">23 tasks, 5 issues </p>
+                      <h6 class="preview-subject"><a style="text-decoration: none; color: whitesmoke" href="/main/password">Change Password</a></h6>
+                      <p class="text-muted mb-0">Change your password</p>
                     </div>
                   </div>
                 </div>
-                <div class="preview-item border-bottom">
+                <div class="preview-item border-bottom" data-toggle="modal" data-target="#cardModal">
                   <div class="preview-thumbnail">
                     <div class="preview-icon bg-info">
                       <i class="mdi mdi-clock"></i>
@@ -171,12 +163,8 @@
                   </div>
                   <div class="preview-item-content d-sm-flex flex-grow">
                     <div class="flex-grow">
-                      <h6 class="preview-subject">Project meeting</h6>
-                      <p class="text-muted mb-0">New project discussion</p>
-                    </div>
-                    <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                      <p class="text-muted">35 minutes ago</p>
-                      <p class="text-muted mb-0">15 tasks, 2 issues</p>
+                      <h6 class="preview-subject">Create New Cards</h6>
+                      <p class="text-muted mb-0">Create a new card add to your collection</p>
                     </div>
                   </div>
                 </div>
@@ -188,12 +176,8 @@
                   </div>
                   <div class="preview-item-content d-sm-flex flex-grow">
                     <div class="flex-grow">
-                      <h6 class="preview-subject">Broadcast Mail</h6>
-                      <p class="text-muted mb-0">Sent release details to team</p>
-                    </div>
-                    <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                      <p class="text-muted">55 minutes ago</p>
-                      <p class="text-muted mb-0">35 tasks, 7 issues </p>
+                      <h6 class="preview-subject"><a style="text-decoration: none; color: whitesmoke" href="/main/all_cards.html?status=0">View All Cards</a></h6>
+                      <p class="text-muted mb-0">Display play all your cards</p>
                     </div>
                   </div>
                 </div>
@@ -203,14 +187,10 @@
                       <i class="mdi mdi-chart-pie"></i>
                     </div>
                   </div>
-                  <div class="preview-item-content d-sm-flex flex-grow">
+                  <div class="preview-item-content d-sm-flex flex-grow" data-toggle="modal" data-target="#joinGroupModal">
                     <div class="flex-grow">
-                      <h6 class="preview-subject">UI Design</h6>
-                      <p class="text-muted mb-0">New application planning</p>
-                    </div>
-                    <div class="me-auto text-sm-right pt-2 pt-sm-0">
-                      <p class="text-muted">50 minutes ago</p>
-                      <p class="text-muted mb-0">27 tasks, 4 issues </p>
+                      <h6 class="preview-subject">Join Group</h6>
+                      <p class="text-muted mb-0">Join your friend group with a invite code</p>
                     </div>
                   </div>
                 </div>
@@ -284,7 +264,7 @@
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">Project Status</h4>
+          <h4 class="card-title">Group Status</h4>
           <div class="table-responsive">
             <table class="table">
               <thead>
@@ -296,16 +276,17 @@
                     </label>
                   </div>
                 </th>
-                <th> Manager Name</th>
-                <th> Proj No</th>
-                <th> Product Numbers</th>
-                <th> Project Name</th>
-                <th> Project Mode</th>
-                <th> Start Date</th>
-                <th> Project Status</th>
+                <th> Group Owner</th>
+                <th> Group No</th>
+                <th> Group Numbers</th>
+                <th> Group Name</th>
+                <th> Group Mode</th>
+                <th> Create Date</th>
+                <th> View Group </th>
               </tr>
               </thead>
               <tbody>
+              <% @group_info.each do |group| %>
               <tr>
                 <td>
                   <div class="form-check form-check-muted m-0">
@@ -315,102 +296,20 @@
                   </div>
                 </td>
                 <td>
-                  <img src="assets/images/faces/face1.jpg" alt="image"/>
-                  <span class="ps-2"><%=session[:profile]['username']%></span>
+                  <img src="<%=group.user.avatar %>" alt="image"/>
+                  <span class="ps-2"><%=group.user.username %></span>
                 </td>
-                <td> 02312</td>
-                <td> 500</td>
-                <td> Dashboard</td>
-                <td> Personal </td>
-                <td> 04 Dec 2019</td>
+                <td><%=group.group.gid %></td>
+                <td><%=group.count %></td>
+                <td><%=group.group.name %></td>
+                <td><%= if group.group.status == 0 then 'Private' else 'Public' end %></td>
+                <td><%=group.group.create_time %></td>
                 <td>
-                  <div class="badge badge-outline-success">Finished</div>
+                  <div class="badge badge-outline-success"><a href="/group/<%=group.group.gid %>" style="text-decoration: none; color: forestgreen">View</a></div>
                 </td>
               </tr>
-              <tr>
-                <td>
-                  <div class="form-check form-check-muted m-0">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input">
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src="assets/images/faces/face2.jpg" alt="image"/>
-                  <span class="ps-2">Estella Bryan</span>
-                </td>
-                <td> 02312</td>
-                <td> 300</td>
-                <td> Website</td>
-                <td> Personal </td>
-                <td> 04 Dec 2019</td>
-                <td>
-                  <div class="badge badge-outline-warning">Ongoing</div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="form-check form-check-muted m-0">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input">
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src="assets/images/faces/face5.jpg" alt="image"/>
-                  <span class="ps-2">Lucy Abbott</span>
-                </td>
-                <td> 02312</td>
-                <td> 20</td>
-                <td> App design</td>
-                <td> Groupwork </td>
-                <td> 04 Dec 2019</td>
-                <td>
-                  <div class="badge badge-outline-danger">Forfeited</div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="form-check form-check-muted m-0">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input">
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src="assets/images/faces/face3.jpg" alt="image"/>
-                  <span class="ps-2">Peter Gill</span>
-                </td>
-                <td> 02312</td>
-                <td> 100</td>
-                <td> Development</td>
-                <td> Groupwork </td>
-                <td> 04 Dec 2019</td>
-                <td>
-                  <div class="badge badge-outline-success">Finished</div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="form-check form-check-muted m-0">
-                    <label class="form-check-label">
-                      <input type="checkbox" class="form-check-input">
-                    </label>
-                  </div>
-                </td>
-                <td>
-                  <img src="assets/images/faces/face4.jpg" alt="image"/>
-                  <span class="ps-2">Sallie Reyes</span>
-                </td>
-                <td> 02312</td>
-                <td> 60</td>
-                <td> Website</td>
-                <td> Personal </td>
-                <td> 04 Dec 2019</td>
-                <td>
-                  <div class="badge badge-outline-success">Finished</div>
-                </td>
-              </tr>
+              <%end %>
+
               </tbody>
             </table>
           </div>

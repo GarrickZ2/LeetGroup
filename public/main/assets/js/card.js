@@ -41,9 +41,11 @@ function createCard() {
         data: form_data,
         success: function(msg) {
             if (msg['success']) {
-                $("#create-card-notice").text('Successfully create card')
-                setTimeout("$('#new-card-btn').click()", 2000)
-                setTimeout("$(':input','#cardForm').val('')", 2000)
+                show_notice_with_text('Successfully create card');
+                $('#new-card-btn').click();
+                $(':input','#cardForm').val('');
+                // setTimeout("$('#new-card-btn').click()", 2000)
+                // setTimeout("$(':input','#cardForm').val('')", 2000)
             }else {
                 $("#create-card-notice").text(msg['msg']);
             }

@@ -24,7 +24,18 @@ module GroupHelper
   end
 
   def self.get_group_info(gid)
-    GroupInfo.find_by(gid: gid)
+    GroupInfo.where(gid: gid).first
+  end
+
+  def self.get_group_detail(group)
+    info = GroupView.new
+    info.group = group
+    info.count = GroupHelper.get_total_users_number group.gid
+    role = GroupToUser.where(gid: group.gid, role: GroupToUser.role_status[:owner]).first
+    return info if role.nil?
+
+    info.user = UserProfile.where(uid: role.uid).first
+    info
   end
 
   def self.get_total_users_number(gid)
@@ -190,21 +201,15 @@ module GroupHelper
     @cards = Card.where(cid: cid_list)
     @cards = @cards.where(status: status) unless status == 3
 
-    if !sort_by.nil? && sort_type == 'asc'
-      @cards = @cards.order(sort_by => :asc)
-    end
-    if !sort_by.nil? && sort_type == 'desc'
-      @cards = @cards.order(sort_by => :desc)
-    end
+    @cards = @cards.order(sort_by => :asc) if !sort_by.nil? && sort_type == 'asc'
+    @cards = @cards.order(sort_by => :desc) if !sort_by.nil? && sort_type == 'desc'
 
     total_size = @cards.count
 
     @cards = @cards.limit(page_size).offset(offset * page_size)
 
     total_page = total_size / page_size
-    if total_size % page_size != 0
-      total_page += 1
-    end
+    total_page += 1 if total_size % page_size != 0
     current_size = if total_size.zero?
                      0
                    elsif offset == total_page - 1
@@ -226,9 +231,7 @@ module GroupHelper
     card_owner = Card.find_by(cid: cid)
 
     # have no permission
-    if permission_role.role != GroupToUser.role_status[:owner] && card_owner.uid != uid.to_i
-      return -1
-    end
+    return -1 if permission_role.role != GroupToUser.role_status[:owner] && card_owner.uid != uid.to_i
 
     return 1
   end

@@ -122,10 +122,11 @@ class CardController < ApplicationController
     end
   end
 
-  def archive
+  def update_status
     cid = params[:cid]
     uid = params[:uid]
-    res = CardHelper.change_status uid, cid, Card.card_status[:archived]
+    status = params[:status]
+    res = CardHelper.change_status uid, cid, status
     unless res
       render json: { success: false, msg: "The card doesn't exist" }
       return

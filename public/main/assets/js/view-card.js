@@ -76,6 +76,7 @@ function putCardDetail(cardDetail, cid) {
         url: '/card/comment/show?cid=' + cid,
         success: function (data) {
             const commentData = data["comments"];
+            $("#comment-area").html("");
             $.each(commentData, function (i, comment) {
                 comment = JSON.parse(comment);
                 appendComment(comment['avatar'], comment['content'], comment['username'], comment['create_time']);
@@ -119,6 +120,9 @@ function sendComment() {
                 const currentDate = new Date();
                 const dateFormat = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate();
                 appendComment($("#comment-img-path").attr("src"), content, $("#username").text(), dateFormat);
+                $("#card-view-comment").val("");
+                $('#card-view-comment').removeClass('card-view-comment-focus');
+                $('#comment-save-btn').css('visibility', 'hidden');
             }
             $("card-view-comment").val("");
         }
@@ -288,6 +292,29 @@ function editCard() {
     });
 }
 
+function finishCard() {
+    $.ajax ({
+        url:"/card/status/update?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val() + "&status=2",
+        type:"GET",
+        success: function(data) {
+            // @TODO add successfully delete the card message and close the modal
+            if(data["success"]) {
+                // close the modal
+                $('#close-archive-card-btn').click();
+                $('#close-card-detail-btn').click();
+                show_notice_with_text("Marked the card as finished");
+                // rerender all cards based on page
+                setTimeout(generateAllCardsBasedOnPage($(".active-page").text()), 1500);
+            }else {
+                alert("Fail to archive the card. Please try again.");
+            }
+        },
+        error: function(){
+            alert("Fail to delete the card");
+        }
+    });
+}
+
 
 // Card: Delete
 function deleteCard() {
@@ -342,7 +369,7 @@ function copyCard() {
 //Card: archive
 function archiveCard() {
     $.ajax ({
-        url:"/card/archive?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val(),
+        url:"/card/status/update?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val() + "&status=1",
         type:"GET",
         success: function(data) {
             // @TODO add successfully delete the card message and close the modal
