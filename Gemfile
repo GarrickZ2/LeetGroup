@@ -52,6 +52,7 @@ group :test do
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
+  gem 'database_cleaner-active_record'
 end
 
 group :development do
