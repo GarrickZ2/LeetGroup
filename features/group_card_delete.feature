@@ -48,3 +48,16 @@ Feature: Delete Card From Group
     Then I should see "LeetCode"
     When I click the element with id "delete-group-card-btn"
     Then I should see "Sorry, you don't have the permission to delete this card"
+
+
+  @javascript
+  Scenario: Destroy the whole group
+    Given I log in with "Zzx135246" and "!Zzx135246"
+    Then I go to the group page with id 1
+    And I press "Destroy Group"
+    And I follow "Yes"
+    Then I should be on the dashboard page
+    And I wait for 3 seconds
+    When I click the element with id "nav-group"
+    Then I should not see "LeetGroup"
+
