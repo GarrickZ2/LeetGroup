@@ -25,6 +25,8 @@ module NavigationHelpers
       update_password_path
     when /^the group page with id (.*)$/ then
       group_info_path($1)
+    when /^the all cards page$/ then
+      main_all_cards_path
     else
       begin
         page_name =~ /^the (.*) page$/

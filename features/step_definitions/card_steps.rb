@@ -10,4 +10,7 @@ Then(/^I fill in card form with "([^"]*)", "([^"]*)", and"([^"]*)"$/) do |title,
   step "I fill in \"cardInputDescription\" with \"#{description}\""
 end
 
+When(/^I click the element with class "([^"]*)"$/) do |cls|
+  find(cls).click
+end
 
