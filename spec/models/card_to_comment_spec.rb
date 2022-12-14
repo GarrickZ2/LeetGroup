@@ -22,35 +22,6 @@ describe CardToComment do
     end
   end
 
-  describe 'test delete comment' do
-    before(:each) do
-      CardToComment.delete_all
-      CardToComment.create(cid: 1, uid: 1, comment_id: 1, content: 'This problem appears in Google OA', create_time: Time.now)
-    end
-
-    it 'should delete successfully if the uid is correct' do
-      cnt_prev = CardToComment.count
-      if_delete = CardToComment.delete_comment(1, 1)
-      cnt_new = CardToComment.count
-      expect(if_delete).to eq 2
-      expect(cnt_prev).to eq cnt_new + 1
-    end
-    it 'cannot delete if the cid is not exist' do
-      cnt_prev = CardToComment.count
-      if_delete = CardToComment.delete_comment(1, 2)
-      cnt_new = CardToComment.count
-      expect(if_delete).to eq 0
-      expect(cnt_prev).to eq cnt_new
-    end
-    it 'cannot delete if the uid is not correct' do
-      cnt_prev = CardToComment.count
-      if_delete = CardToComment.delete_comment(2, 1)
-      cnt_new = CardToComment.count
-      expect(if_delete).to eq 1
-      expect(cnt_prev).to eq cnt_new
-    end
-  end
-
   describe 'test show comment' do
     before(:each) do
       CardToComment.delete_all

@@ -6,18 +6,6 @@ class CardToComment < ActiveRecord::Base
     true
   end
 
-  def self.delete_comment(uid, comment_id)
-    comment = find_by(comment_id: comment_id)
-    return 0 if comment.nil?
-
-    if uid.to_i == comment.uid
-      delete(comment)
-      return 2
-    else
-      return 1
-    end
-  end
-
   def self.show_comment(cid)
     CardToComment.where(cid: cid).order('create_time' => :asc)
   end

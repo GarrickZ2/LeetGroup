@@ -31,45 +31,6 @@ describe CardToCommentController do
     end
   end
 
-  describe 'user delete a comment' do
-    before(:each) do
-      CardToComment.delete_all
-      CardToComment.create(cid: 1, uid: 1, comment_id: 1, content: 'This problem appears in Google OA', create_time: Time.now)
-      CardToComment.create(cid: 2, uid: 2, comment_id: 2, content: 'should use binary search', create_time: Time.now)
-      CardToComment.create(cid: 1, uid: 2, comment_id: 3, content: 'should use binary search', create_time: Time.now)
-    end
-    it 'should fail to delete if cid does not exist' do
-      post :delete, params: {
-        uid: 1,
-        comment_id: 5
-      }
-      success = JSON.parse(response.body)['success']
-      msg = JSON.parse(response.body)['msg']
-      expect(success).to eq false
-      expect(msg).to eq 'the comment does not exist'
-    end
-    it 'should fail to delete if uid is not correct' do
-      post :delete, params: {
-        uid: 2,
-        comment_id: 1
-      }
-      success = JSON.parse(response.body)['success']
-      msg = JSON.parse(response.body)['msg']
-      expect(success).to eq false
-      expect(msg).to eq 'fail to delete as the user is not the card owner'
-    end
-    it 'should successfully delete with valid info' do
-      post :delete, params: {
-        uid: 1,
-        comment_id: 1
-      }
-      success = JSON.parse(response.body)['success']
-      msg = JSON.parse(response.body)['msg']
-      expect(success).to eq true
-      expect(msg).to eq 'successfully delete the comment'
-    end
-  end
-
   describe 'user view comments' do
     before(:each) do
       UserProfile.delete_all

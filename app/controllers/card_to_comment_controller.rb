@@ -8,18 +8,6 @@ class CardToCommentController < ApplicationController
     end
   end
 
-  def delete
-    if_delete = CardToComment.delete_comment params[:uid], params[:comment_id]
-    case if_delete
-    when 0
-      render json: { success: false, msg: 'the comment does not exist' }
-    when 1
-      render json: { success: false, msg: 'fail to delete as the user is not the card owner' }
-    else
-      render json: { success: true, msg: 'successfully delete the comment' }
-    end
-  end
-
   def show
     comments = CardToCommentHelper.show_comment params[:cid]
     render json: { comments: comments }
