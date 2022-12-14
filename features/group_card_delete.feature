@@ -17,6 +17,7 @@ Feature: Delete Card From Group
       | 1   | 1   | 0    |
       | 1   | 2   | 2    |
       | 2   | 1   | 2    |
+      | 2   | 2   | 0    |
     Given the following cards exist:
       | cid | uid | title           | source   | description | status | used_time | stars | create_time              | update_time              | schedule_time |
       | 1   | 1   | Two Sum         | LeetCode | easy        | 0      | 0         | 0     | 2022-10-31T04:26:02.000Z | 2022-10-31T04:26:02.000Z | nil           |

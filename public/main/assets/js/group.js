@@ -162,6 +162,9 @@ function sendComment() {
 // function to generate all cards
 function generateCardsBasedOnPage(offset) {
     let gid = $("#gid").val();
+    if (offset < 1) {
+        offset = 1;
+    }
     let pagination_data = {
         "status": 3,
         "page_size": 6,
