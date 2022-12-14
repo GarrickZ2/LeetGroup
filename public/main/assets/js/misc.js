@@ -22,7 +22,7 @@
         }
       } else {
         //for other url
-        if (element.attr('href').indexOf(current) !== -1) {
+        if (element.attr('href') === current) {
           element.parents('.nav-item').last().addClass('active');
           if (element.parents('.sub-menu').length) {
             element.closest('.collapse').addClass('show');
@@ -35,7 +35,7 @@
       }
     }
 
-    var current = location.pathname.split("/").slice(-1)[0].replace(/^\/|\/$/g, '');
+    var current = location.pathname + location.search;
     $('.nav li a', sidebar).each(function() {
       var $this = $(this);
       addActiveClass($this);

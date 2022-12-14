@@ -22,6 +22,22 @@ class GroupController < ApplicationController
     render json: { success: !group.nil?, msg: message }
   end
 
+  # get /group/:gid/destroy
+  # Input: uid
+  def destroy_group
+    uid = params[:uid]
+    gid = params[:gid]
+
+    res = GroupHelper.delete_group gid, uid
+    flash[:main_notice] = if res
+                            'Delete Group Successfully'
+                          else
+                            'Delete Failed, the user does not have the permission'
+                          end
+    session[:groups] = GroupHelper.get_user_groups uid
+    redirect_to main_dashboard_path
+  end
+
   # get /group/:gid/invite
   # input: uid, date
   def generate_invite_code
@@ -163,5 +179,13 @@ class GroupController < ApplicationController
       return
     end
     render json: { success: true, msg: 'The card deleted successfully' }
+  end
+
+  def group_overview
+    total_users = GroupHelper.get_total_users_number params[:gid]
+    total_cards = GroupHelper.get_total_cards_number params[:gid]
+    owner_info = GroupHelper.get_group_owner_info params[:gid]
+    group_info = GroupHelper.get_group_info params[:gid]
+    render json: { total_users: total_users, total_cards: total_cards, owner_info: owner_info, group_info: group_info }
   end
 end

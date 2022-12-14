@@ -24,5 +24,6 @@ Scenario: archive a card
   And I click the element with id "archive-card-btn"
   Then I go to the all cards page
   Then I should not see "Two Sum"
+  When I click the element with id "nav-card"
   And I click the element with id "nav-sub-archive-cards"
   Then I should see "Two Sum"

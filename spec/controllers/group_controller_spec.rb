@@ -128,7 +128,6 @@ describe GroupController do
         uid: 1,
         name: 'test-group-1',
         description: 'the first test group',
-        status: 0
       }
       success = JSON.parse(response.body)['success']
       msg = JSON.parse(response.body)['msg']
@@ -147,6 +146,30 @@ describe GroupController do
       msg = JSON.parse(response.body)['msg']
       expect(success).to eq false
       expect(msg).to eq "Create Group Failed, Please try again later"
+    end
+  end
+
+  describe 'destroy group' do
+    before(:each) do
+      GroupInfo.create(gid: 1, name: 'Group1', description: 'test', status: 0, create_time: '2022-10-31T04:26:02.000Z')
+      GroupToUser.create(gid: 1, uid: 1, role: GroupToUser.role_status[:owner])
+      GroupToUser.create(gid: 1, uid: 2, role: GroupToUser.role_status[:member])
+    end
+
+    it 'should successfully destroy the group if user is the owner' do
+      post :destroy_group, params: {
+        uid: 1,
+        gid: 1
+      }
+      expect(response).to redirect_to('/main/dashboard')
+    end
+
+    it 'should fail to destroy the group if user is not the owner' do
+      post :destroy_group, params: {
+        uid: 2,
+        gid: 1
+      }
+      expect(response).to redirect_to('/main/dashboard')
     end
   end
 
@@ -467,6 +490,40 @@ describe GroupController do
       expect(msg).to eq "The card doesn't exist"
     end
 
+    describe 'group overview' do
+      before(:each) do
+        GroupInfo.delete_all
+        UserProfile.delete_all
+        GroupToCard.delete_all
+        GroupToUser.delete_all
+        GroupInfo.create(gid: 1, name: 'Group1', description: 'test', status: 0, create_time: '2022-10-31T04:26:02.000Z')
+        GroupToUser.create(gid: 1, uid: 1, role: GroupToUser.role_status[:owner])
+        GroupToUser.create(gid: 1, uid: 2, role: GroupToUser.role_status[:member])
+        GroupToUser.create(gid: 1, uid: 3, role: GroupToUser.role_status[:member])
+        UserProfile.create(uid: 1, username: 'Maggie', avatar: '/avatar/1.jpg')
+        GroupToCard.create(gid: 1, cid: 1)
+        GroupToCard.create(gid: 1, cid: 2)
+      end
+
+      it 'should get total users, total cards and owner info' do
+        get :group_overview, params: {
+          gid: 1
+        }
+        total_users = JSON.parse(response.body)['total_users']
+        total_cards = JSON.parse(response.body)['total_cards']
+        owner_info = JSON.parse(response.body)['owner_info']
+        group_info = JSON.parse(response.body)['group_info']
+        expect(total_users).to eq 3
+        expect(total_cards).to eq 2
+        expect(group_info['name']).to eq 'Group1'
+        expect(group_info['description']).to eq 'test'
+        expect(group_info['status']).to eq 0
+        expect(group_info['create_time']).to eq '2022-10-31T04:26:02.000Z'
+        expect(owner_info['uid']).to eq 1
+        expect(owner_info['username']).to eq 'Maggie'
+        expect(owner_info['avatar']).to eq '/avatar/1.jpg'
+      end
+    end
 
   end
 end

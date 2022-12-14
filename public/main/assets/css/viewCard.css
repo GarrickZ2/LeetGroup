@@ -63,7 +63,17 @@
 }
 
 
-#card-view-comment {
+/*#card-view-comment {*/
+/*    width: 100%;*/
+/*    margin:0;*/
+/*    font-size: 14px;*/
+/*    transition: 0.27s;*/
+/*    height: 28px;*/
+/*    border-radius: 2px;*/
+/*    margin-top: 5px;*/
+/*}*/
+
+.card-comment {
     width: 100%;
     margin:0;
     font-size: 14px;
@@ -83,11 +93,8 @@
     color: black;
 }
 
-#card-view-comment:focus + button {
+.card-view-comment-focus {
     visibility: visible;
-}
-
-#card-view-comment:focus {
     height: 90px;
 }
 
@@ -99,6 +106,10 @@
     padding-left: 0;
 }
 
+.card-single-comment-container {
+    margin-top: 13px;
+}
+
 .col-form-label {
     font-weight: bold;
 
@@ -108,6 +119,40 @@
     color: whitesmoke;
 }
 
+.comment-right {
+    padding: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
+    text-align: right;
+}
+
+.comment-left {
+    padding: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
+}
+
+.comment-content {
+    padding: 0;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #3b3b3b;
+    -webkit-box-shadow: inset 0 0 0 rgb(255, 255, 255);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: rgba(245, 245, 245, 0.55);
+    -webkit-box-shadow: inset 0 0 0 rgba(168, 167, 167, 0.49);
+}
 
 /* card view action list group style */
 .use-time-container {

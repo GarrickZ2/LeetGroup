@@ -19,45 +19,39 @@
         Cards
       </button>
       <button class="nav-link nav-group" id="nav-members-tab" data-bs-toggle="tab" data-bs-target="#nav-members" type="button" role="tab" aria-controls="nav-members" aria-selected="false">Members</button>
-      <button class="nav-link nav-group" id="nav-setting-tab" data-bs-toggle="tab" data-bs-target="#nav-setting" type="button" role="tab" aria-controls="nav-setting" aria-selected="false">Settings</button>
     </div>
   </nav>
   <div class="tab-content" id="nav-tabContent">
     <!-- Home Tab -->
-    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+    <div id='group-overview-spinner' class="spinner-border"></div>
+    <div hidden class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
       <div class="row">
         <div class="grid-margin stretch-card">
           <div class="card">
-            <div class="card-body">
-              <div class="d-flex flex-row justify-content-between">
-                <h3 class="card-title mb-1">Group Overview</h3>
-                <div>
-                  Description of the group.
-                </div>
-              </div>
+            <div class="card-header">
               <div class="row">
-                <div class="col-12">
+                <div class="col-md-3 col-sm-5 col-xl-3">
+                  <h3>
+                    Group Overview
+                  </h3>
+                </div>
+                <div class="col-md-9 col-sm-7 col-xl-9 text-right">
+                  <button <%='disabled' if @member.role != 0 %> type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteGroupModal">Destroy Group</button>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="grid-margin stretch-card">
-          <div class="card">
             <div class="card-body">
-              <div class="d-flex flex-row justify-content-between">
-                <h3 class="card-title mb-1">Member Overview</h3>
-                <div>
-
-                </div>
+              <div class="group-overview-info">
+                <span class="group-overview-bold">Name: </span>
+                <span id="group-overview-name"> <span id="group-overview-status" class="group-status-badge badge rounded-pill bg-light text-dark"> Public </span></span>
               </div>
-              <div class="row">
-                <div class="col-12">
-                </div>
+              <div class="group-overview-info">
+                <span class="group-overview-bold">Owner: </span>
+                <span id="group-overview-owner"></span>
+              </div>
+              <div class="group-overview-info">
+                <span class="group-overview-bold">Description: </span>
+                <span id="group-overview-description"></span>
               </div>
             </div>
           </div>
@@ -67,21 +61,34 @@
       <div class="row">
         <div class="grid-margin stretch-card">
           <div class="card">
+            <h3 class="card-header">Card Overview</h3>
             <div class="card-body">
-              <div class="d-flex flex-row justify-content-between">
-                <h3 class="card-title mb-1">Card Overview</h3>
-              </div>
-              <div class="row">
-                <div class="col-12">
-                </div>
-              </div>
+              <p class="card-text card-text-font"> <i class="fa-solid fa-file"></i></i>
+                Currently there are
+                <span id="group-overview-cards"> </span>
+              </p>
+              <a class="btn btn-primary" onclick="clickCardsBtn()">See all cards</a>
             </div>
           </div>
         </div>
       </div>
 
-
+      <div class="row">
+        <div class="grid-margin stretch-card">
+          <div class="card">
+            <h3 class="card-header">Member Overview</h3>
+            <div class="card-body">
+              <p class="card-text card-text-font"> <i class="fa-solid fa-users"></i>
+                Currently there are
+                <span id="group-overview-members"></span>
+              </p>
+              <a class="btn btn-primary" onclick="clickMemberBtn()">See all members</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
     <!-- Group Cards Tab -->
     <div class="tab-pane fade" id="nav-group-cards" role="tabpanel" aria-labelledby="nav-group-cards-tab">
       <!-- Group Cards Tab / Cards Container -->
@@ -285,12 +292,6 @@
       </div>
       <input id="uid" name="uid" type="hidden" value="<%= session[:uid] %>">
     </div>
-
-    <!-- Setting Tab -->
-    <div class="tab-pane fade" id="nav-setting" role="tabpanel" aria-labelledby="nav-setting-tab">
-      settings
-
-    </div>
   </div>
 
   <div class="modal fade" id="cardViewModal" tabindex="-1" role="dialog" aria-labelledby="cardViewModalLabel" aria-hidden="true" data-toggle="modal" data-target="delete-card-modal">
@@ -306,7 +307,6 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-md-8">
-              <form>
                 <div class="form-group">
                   <label for="recipient-name" class="col-form-label">Source</label>
                   <div class="form-control card-view-input2" id="card-view-source"> </div>
@@ -318,29 +318,26 @@
                 <div class="form-group">
                   <label for="message-text" class="col-form-label">Comment</label>
                   <div class="row">
+
                     <!-- My comment -->
                     <div class="col-md-2 col-sm-2 card-comment-avatar-container">
-                      <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
+                      <img class="img-xs rounded-circle" src="<%=session[:profile]['avatar'] %>" alt="avatar" id="comment-img-path">
                     </div>
+
+                    <!-- Send Comments Out -->
                     <div class="col-md-10 col-sm-10 card-comment-container">
-                      <textarea id="card-view-comment" placeholder="Write your comment..."></textarea>
-                      <button class="btn btn-inverse-secondary float-end" id="comment-save-btn">Save</button>
+                      <textarea id="card-view-comment" class="card-comment" placeholder="Write your comment..."></textarea>
+                      <button class="btn btn-inverse-secondary float-end" id="comment-save-btn" onclick="sendComment()">Save</button>
                     </div>
+
                     <!-- Other comments -->
-                    <div class="col-12">
-                      <div class="row">
-                        <div class="col-md-2 col-sm-2 card-comment-avatar-container">
-                          <img class="img-xs rounded-circle " src="<%=session[:profile]['avatar'] %>" alt="avatar">
-                        </div>
-                        <div class="col-md-10 col-sm-10 card-comment-container">
-                          <span>Here is the comment</span>
-                        </div>
-                      </div>
+                    <div class="col-12" id="comment-area" style="overflow-y:scroll; height: 200px;">
+                      <!-- Display the comment -->
+                      <!-- ================ -->
                     </div>
 
                   </div>
                 </div>
-              </form>
             </div>
             <div class="col-md-4">
               <div class="row">
@@ -382,13 +379,28 @@
     </div>
   </div>
 
-  <!-- Delete Confirmation Modal -->
+  <!-- Delete Card Confirmation Modal -->
   <div class="modal fade bd-example-modal-sm" id="deleteGroupCardModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-body" id="delete-body">
         </div>
         <div class="modal-footer" id="delete-buttons-container">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Group Confirmation Modal -->
+  <div class="modal fade bd-example-modal-sm" id="deleteGroupModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-body">
+          Are you sure you want to delete this group?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="close-delete-group-btn" data-dismiss="modal">Close</button>
+          <a type="button" class="btn btn-danger" id="delete-group-btn" >Yes</a>
         </div>
       </div>
     </div>
@@ -411,6 +423,7 @@
 
 
 <script src="/main/assets/js/group.js"></script>
+<script src="/main/assets/js/view-card.js"></script>
 <script>
   $(document).ready(function () {
       <%if flash[:tab] != nil? %>

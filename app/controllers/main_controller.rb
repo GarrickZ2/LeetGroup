@@ -13,7 +13,21 @@ class MainController < ApplicationController
     end
   end
 
-  def dashboard; end
+  def dashboard
+    uid = session[:uid]
+    # finish status
+    @day_finished = Card.get_card_statistics(uid, Card.card_status[:finished], 'day')
+    @week_finished = Card.get_card_statistics(uid, Card.card_status[:finished], 'week')
+    @month_finished = Card.get_card_statistics(uid, Card.card_status[:finished], 'month')
+
+    # create status
+    @day_created = Card.get_card_statistics(uid, Card.card_status[:active], 'day')
+    groups = GroupHelper.get_user_groups uid
+    @group_info = []
+    groups.each do |each|
+      @group_info.append GroupHelper.get_group_detail each
+    end
+  end
   def profile; end
   def password; end
 

@@ -2,6 +2,11 @@ require 'rails_helper'
 
 describe MainController do
   describe 'User want to goto the main page' do
+    before(:each) do
+      @group = GroupInfo.create(gid: 1)
+      GroupToUser.create(gid: 1, uid: 2, role: 0)
+      UserProfile.create(uid: 2, username: 'Maggie', avatar: '/avatar/1.jpg')
+    end
     it 'user goto the register page if not login' do
       # get :user_index_path, :type => 'register'
       get :dashboard

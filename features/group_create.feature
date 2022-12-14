@@ -23,4 +23,3 @@ Feature: user create groups
     When I follow "LeetGroup"
     Then I should see "Group Overview"
 
-

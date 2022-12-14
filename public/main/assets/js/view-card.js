@@ -1,12 +1,11 @@
 // initialize modal
-$( document ).ready(function() {
+$(document).ready(function () {
     // initialize bootpag and generate cards from data
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     thisStatus = urlParams.get('status');
     generateAllCardsBasedOnPage(1);
-    $('.pagination-here').bootpag({
-    }).on("page", function(event, num) {
+    $('.pagination-here').bootpag({}).on("page", function (event, num) {
         generateAllCardsBasedOnPage(num);
     });
 
@@ -20,15 +19,15 @@ $( document ).ready(function() {
             "uid": $("#uid").val(),
             "cid": cid
         };
-        $.ajax ({
-            url:"card/detail",
-            type:"GET",
+        $.ajax({
+            url: "/card/detail",
+            type: "GET",
             data: detailData,
-            success: function(data) {
+            success: function (data) {
                 cardDetail = Object.values(data)[0];
-                putCardDetail(cardDetail,cid);
+                putCardDetail(cardDetail, cid);
             },
-            error: function(){
+            error: function () {
                 alert("Fail to get card details");
             }
         });
@@ -38,17 +37,29 @@ $( document ).ready(function() {
         let uid = $("#uid").val();
         // // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         var groupDetails = [];
-        $.ajax ({
-            url:"user/" + uid + "/group",
-            type:"GET",
-            success: function(data) {
+        $.ajax({
+            url: "user/" + uid + "/group",
+            type: "GET",
+            success: function (data) {
                 groupData = data["groups"];
                 generateGroupDetail(groupData);
             },
-            error: function(){
+            error: function () {
                 alert("Fail to get group details");
             }
         });
+    });
+
+    $('#card-view-comment').focus(function(event) {
+        $('#card-view-comment').addClass('card-view-comment-focus');
+        $('#comment-save-btn').css('visibility', 'visible');
+    });
+
+    $('#card-view-comment').blur(function(event) {
+        if ($('#card-view-comment').val().length === 0) {
+            $('#card-view-comment').removeClass('card-view-comment-focus');
+            $('#comment-save-btn').css('visibility', 'hidden');
+        }
     });
 });
 
@@ -61,6 +72,61 @@ function putCardDetail(cardDetail, cid) {
     $('#card-view-star').text("Star " + cardDetail["stars"]);
     $('#card-view-used-time').text(processUsedTime(cardDetail["used_time"]));
     $('#delete-card-cid').val(cid);
+    $.get({
+        url: '/card/comment/show?cid=' + cid,
+        success: function (data) {
+            const commentData = data["comments"];
+            $("#comment-area").html("");
+            $.each(commentData, function (i, comment) {
+                comment = JSON.parse(comment);
+                appendComment(comment['avatar'], comment['content'], comment['username'], comment['create_time']);
+            });
+        }
+    })
+}
+
+function appendComment(avatar, content, username, createTime) {
+    const layout = $('<div class="row card-single-comment-container">' +
+        '<div class="col-md-2 col-sm-2 card-comment-avatar-container">' +
+        '<img class="img-xs rounded-circle" src="' + avatar + '" alt="avatar">' +
+        '</div>' +
+        '<div class="col-md-10 col-sm-10 card-comment-container">' +
+        '<div class="row"><div class="col-md-8 col-sm-8 col-lg-8 comment-left">' +
+        username +
+        '</div>' +
+        '<div class="col-md-4 col-sm-4 col-lg-4 comment-right">' +
+        createTime +
+        '</div></div>' +
+        '<div class="row"><div class="col-md-12 col-sm-12 col-lg-12 comment-content">' +
+        content +
+        '</div></div></div>' +
+        '</div>');
+    $('#comment-area').prepend(layout);
+}
+
+function sendComment() {
+    const content = $("#card-view-comment").val();
+    let form_data = {
+        "uid": $("#uid").val(),
+        "cid": $("#delete-card-cid").val(),
+        "content": content
+    };
+    $.post({
+        url: '/card/comment/new',
+        data: form_data,
+        success: function (msg) {
+            show_notice_with_text(msg['msg']);
+            if (msg['success']) {
+                const currentDate = new Date();
+                const dateFormat = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate();
+                appendComment($("#comment-img-path").attr("src"), content, $("#username").text(), dateFormat);
+                $("#card-view-comment").val("");
+                $('#card-view-comment').removeClass('card-view-comment-focus');
+                $('#comment-save-btn').css('visibility', 'hidden');
+            }
+            $("card-view-comment").val("");
+        }
+    });
 }
 
 
@@ -78,17 +144,17 @@ function generateAllCardsBasedOnPage(offset) {
     // get card info and page info data
     var cardData = [];
     var pageData = [];
-    $.ajax ({
-        url:"/card/view",
-        type:"POST",
+    $.ajax({
+        url: "/card/view",
+        type: "POST",
         data: pagination_data,
-        success: function(data) {
+        success: function (data) {
             cardData = data["card_info"];
             pageData = data["page_info"];
             generateCardDetail(cardData);
             generatePagination(JSON.parse(pageData), offset);
         },
-        error: function(){
+        error: function () {
             alert("Fail to get card data");
         }
     });
@@ -119,8 +185,8 @@ function generateCardDetail(cardData) {
         let card_empty_text = $("<h5 class=\"card-title\"></h5>");
         card_empty_text.text("No card. Go create your card.");
         card_container.append(card_empty_text);
-    } else{
-        $.each(cardData, function(i, data) {
+    } else {
+        $.each(cardData, function (i, data) {
             let datum = JSON.parse(data);
             let card_col = $("<div class=\"col\">")
             let card_div = $("<div class=\"card\">")
@@ -128,12 +194,12 @@ function generateCardDetail(cardData) {
             card_col.append(card_div)
             let card_body = $("<div class=\"card-body\">")
             let card_title = $("<h5 class=\"card-title\"></h5>")
-            card_title.attr("id", "card-title-"+datum["cid"]);
+            card_title.attr("id", "card-title-" + datum["cid"]);
             let card_text = $("<p class=\"card-text\">");
-            card_text.attr("id", "card-text-"+datum["cid"]);
+            card_text.attr("id", "card-text-" + datum["cid"]);
             let card_link = $("<a class=\"btn btn-inverse-secondary card-details-btn\"  data-toggle=\"modal\" data-target=\"#cardViewModal\" >See detail</a>")
             card_link.attr("data-cid", datum["cid"]);
-            card_link.attr("id", "card-detail-btn-"+datum["cid"]);
+            card_link.attr("id", "card-detail-btn-" + datum["cid"]);
 
             // card body
             card_title.text(datum["title"])
@@ -159,14 +225,14 @@ function generateGroupDetail(groupData) {
         group_empty_text.text("No group. Go create/join your group.");
         group_body.append(group_empty_text);
         $("#share_button").remove();
-    } else{
+    } else {
 
-        $.each(JSON.parse(groupData), function(i, data) {
+        $.each(JSON.parse(groupData), function (i, data) {
             console.log(data);
             gid_list.push(data["gid"]);
             let groupOption = "<label>"
                 + "<input name='group_items' type='checkbox' value="
-                + data["gid"] + " id=group_" + data["gid"] +">"
+                + data["gid"] + " id=group_" + data["gid"] + ">"
                 + data["name"] + "</label> <br>";
             group_body.append(groupOption);
         });
@@ -177,19 +243,19 @@ function generateGroupDetail(groupData) {
         }
 
         // checked those groups that have included this card
-        $.ajax ({
-            url:"card/" + $("#delete-card-cid").val() + "/check_exist",
-            type:"POST",
+        $.ajax({
+            url: "card/" + $("#delete-card-cid").val() + "/check_exist",
+            type: "POST",
             data: gidList,
-            success: function(data) {
+            success: function (data) {
                 console.log("Check result:");
                 console.log(data);
-                $.each(data["exist_list"], function(i, singledata){
+                $.each(data["exist_list"], function (i, singledata) {
                     $("#group_" + singledata).attr("checked", true);
                     $("#group_" + singledata).attr("disabled", true);
                 });
             },
-            error: function(){
+            error: function () {
                 alert("Fail to check card existence in groups");
             }
         });
@@ -202,52 +268,74 @@ function editCard() {
     let edit_data = {
         "uid": $("#uid").val(),
         "title": $("#card-view-title").val(),
-        "source": $("#card-view-source").val() ,
+        "source": $("#card-view-source").val(),
         "description": $("#card-view-description").val()
     };
     console.log("debug edit ", edit_data)
-    $.ajax ({
-        url:"/card/" + $("#delete-card-cid").val() + "/edit",
-        type:"POST",
+    $.ajax({
+        url: "/card/" + $("#delete-card-cid").val() + "/edit",
+        type: "POST",
         data: edit_data,
-        success: function(data) {
-           if(data["success"]) {
-               let cid = $("#delete-card-cid").val()
-               $('#card-title-'+ cid).text($("#card-view-title").val());
-               $('#card-text-'+ cid).text($("#card-view-source").val());
-               show_notice_with_text("Successfully saved the changes");
-           }else {
-               alert(data["msg"]);
-           }
+        success: function (data) {
+            if (data["success"]) {
+                let cid = $("#delete-card-cid").val()
+                $('#card-title-' + cid).text($("#card-view-title").val());
+                $('#card-text-' + cid).text($("#card-view-source").val());
+                show_notice_with_text("Successfully saved the changes");
+            } else {
+                alert(data["msg"]);
+            }
         },
-        error: function(){
+        error: function () {
             alert("Fail to edit the card");
         }
     });
 }
 
-
-
-// Card: Delete
-function deleteCard() {
+function finishCard() {
     $.ajax ({
-        url:"/card/delete?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val(),
+        url:"/card/status/update?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val() + "&status=2",
         type:"GET",
         success: function(data) {
             // @TODO add successfully delete the card message and close the modal
             if(data["success"]) {
+                // close the modal
+                $('#close-archive-card-btn').click();
+                $('#close-card-detail-btn').click();
+                show_notice_with_text("Marked the card as finished");
+                // rerender all cards based on page
+                setTimeout(generateAllCardsBasedOnPage($(".active-page").text()), 1500);
+            }else {
+                alert("Fail to archive the card. Please try again.");
+            }
+        },
+        error: function(){
+            alert("Fail to delete the card");
+        }
+    });
+}
+
+
+// Card: Delete
+function deleteCard() {
+    $.ajax({
+        url: "/card/delete?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val(),
+        type: "GET",
+        success: function (data) {
+            // @TODO add successfully delete the card message and close the modal
+            if (data["success"]) {
                 // close the modal
                 $('#close-delete-card-btn').click();
                 $('#close-card-detail-btn').click();
                 show_notice_with_text("Successfully delete the card");
                 // rerender all cards based on page
                 setTimeout(generateAllCardsBasedOnPage($(".active-page").text()), 1500);
-            }else {
+            } else {
                 alert("Fail to delete the card. Please try again.");
             }
 
         },
-        error: function(){
+        error: function () {
             alert("Fail to delete the card");
         }
     });
@@ -281,7 +369,7 @@ function copyCard() {
 //Card: archive
 function archiveCard() {
     $.ajax ({
-        url:"/card/archive?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val(),
+        url:"/card/status/update?uid=" + $("#uid").val() + "&cid=" + $("#delete-card-cid").val() + "&status=1",
         type:"GET",
         success: function(data) {
             // @TODO add successfully delete the card message and close the modal
@@ -306,28 +394,27 @@ function archiveCard() {
 
 function shareCard() {
     var group_list = [];
-    $("input[name=group_items]:checkbox:checked").each(function(){
+    $("input[name=group_items]:checkbox:checked").each(function () {
         group_list.push($(this).val());
     });
     console.log(group_list);
     let share_data = {
         "gid_list": group_list
     }
-    $.ajax ({
+    $.ajax({
         url: "card/" + $("#delete-card-cid").val() + "/share",
-        type:"POST",
+        type: "POST",
         data: share_data,
-        success: function(data) {
-            if(data["success"]) {
+        success: function (data) {
+            if (data["success"]) {
                 console.log('success!');
                 $("#share-card-notice").text('The card is shared successfully!');
                 setTimeout("window.location.href = '/main/all_cards'", 500);
-            }
-            else {
+            } else {
                 alert("Fail to share the card. Please try again.");
             }
         },
-        error: function(){
+        error: function () {
             alert("Fail to share the card");
         }
     });

@@ -4,6 +4,12 @@ Given /the following cards exist/ do |cards_table|
   end
 end
 
+Given /the following comments exist/ do |comments|
+  comments.hashes.each do |comment|
+    CardToComment.create comment
+  end
+end
+
 Then(/^I fill in card form with "([^"]*)", "([^"]*)", and"([^"]*)"$/) do |title, source, description|
   step "I fill in \"cardInputTitle\" with \"#{title}\""
   step "I fill in \"cardInputSource\" with \"#{source}\""

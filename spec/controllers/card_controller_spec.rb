@@ -497,18 +497,20 @@ ghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdef
     end
 
     it 'cannot archive because the card does not exist' do
-      post :archive, params: {
+      post :update_status, params: {
         uid: 1,
-        cid: 10
+        cid: 10,
+        status: 1
       }
       success = JSON.parse(response.body)['success']
       expect(success).to eq false
     end
 
     it 'successfully archive the card' do
-      post :archive, params: {
+      post :update_status, params: {
         uid: 1,
-        cid: 1
+        cid: 1,
+        status: 1
       }
       success = JSON.parse(response.body)['success']
       msg = JSON.parse(response.body)['msg']
