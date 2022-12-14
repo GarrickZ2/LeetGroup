@@ -150,6 +150,30 @@ describe GroupController do
     end
   end
 
+  describe 'destroy group' do
+    before(:each) do
+      GroupInfo.create(gid: 1, name: 'Group1', description: 'test', status: 0, create_time: '2022-10-31T04:26:02.000Z')
+      GroupToUser.create(gid: 1, uid: 1, role: GroupToUser.role_status[:owner])
+      GroupToUser.create(gid: 1, uid: 2, role: GroupToUser.role_status[:member])
+    end
+
+    it 'should successfully destroy the group if user is the owner' do
+      post :destroy_group, params: {
+        uid: 1,
+        gid: 1
+      }
+      expect(response).to redirect_to('/main/dashboard')
+    end
+
+    it 'should fail to destroy the group if user is not the owner' do
+      post :destroy_group, params: {
+        uid: 2,
+        gid: 1
+      }
+      expect(response).to redirect_to('/main/dashboard')
+    end
+  end
+
   describe 'generate invite code' do
     before(:all) do
       UserLogInfo.create(username: 'abcd123456E', email: 'zzzz@bbb.com', password: 'asdvoJF1982!@')
@@ -492,10 +516,10 @@ describe GroupController do
         group_info = JSON.parse(response.body)['group_info']
         expect(total_users).to eq 3
         expect(total_cards).to eq 2
-        expect(group_info[name]).to eq 'Group1'
-        expect(group_info[description]).to eq 'test'
-        expect(group_info[status]).to eq 0
-        expect(group_info[create_time]).to eq '2022-10-31T04:26:02.000Z'
+        expect(group_info['name']).to eq 'Group1'
+        expect(group_info['description']).to eq 'test'
+        expect(group_info['status']).to eq 0
+        expect(group_info['create_time']).to eq '2022-10-31T04:26:02.000Z'
         expect(owner_info['uid']).to eq 1
         expect(owner_info['username']).to eq 'Maggie'
         expect(owner_info['avatar']).to eq '/avatar/1.jpg'

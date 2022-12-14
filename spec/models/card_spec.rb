@@ -138,37 +138,61 @@ describe Card do
     it 'should get statistics of cards finished today' do
       Card.create(cid: 4, uid: 1, title: 'C', source: 'LC', description: 'easy', schedule_time: nil, status: 2,
                   stars: 0, used_time: 0, create_time: time1, update_time: Time.now - 24 * 60 * 60)
-
-      res = Card.get_card_statistics(1, 'finished', 'day')
+      Card.create(cid: 5, uid: 1, title: 'B', source: 'LC', description: 'easy', schedule_time: nil, status: 0,
+                  stars: 0, used_time: 0, create_time: Time.now, update_time: Time.now)
+      res = Card.get_card_statistics(1, 2, 'day')
       expect(res[0]).to eq 2
-      expect(res[1]).to eq 1
+      expect(res[1]).to eq '+100%'
+      Card.delete_all
     end
 
     it 'should get statistics of cards finished this week' do
       Card.create(cid: 4, uid: 1, title: 'D', source: 'LC', description: 'easy', schedule_time: nil, status: 2,
                   stars: 0, used_time: 0, create_time: time1, update_time: Time.now - 7 * 24 * 60 * 60)
-
-      res = Card.get_card_statistics(1, 'finished', 'week')
+      Card.create(cid: 5, uid: 1, title: 'B', source: 'LC', description: 'easy', schedule_time: nil, status: 0,
+                  stars: 0, used_time: 0, create_time: Time.now, update_time: Time.now)
+      res = Card.get_card_statistics(1, 2, 'week')
       expect(res[0]).to eq 2
-      expect(res[1]).to eq 1
+      expect(res[1]).to eq '+100%'
+      Card.delete_all
     end
 
     it 'should get statistics of cards finished this month' do
       Card.create(cid: 4, uid: 1, title: 'F', source: 'LC', description: 'easy', schedule_time: nil, status: 2,
                   stars: 0, used_time: 0, create_time: time1, update_time: Time.now - 31 * 24 * 60 * 60)
-
-      res = Card.get_card_statistics(1, 'finished', 'month')
+      Card.create(cid: 5, uid: 1, title: 'B', source: 'LC', description: 'easy', schedule_time: nil, status: 0,
+                  stars: 0, used_time: 0, create_time: Time.now, update_time: Time.now)
+      res = Card.get_card_statistics(1, 2, 'month')
       expect(res[0]).to eq 2
-      expect(res[1]).to eq 1
+      expect(res[1]).to eq '+100%'
     end
 
     it 'should get statistics of cards created today' do
       Card.create(cid: 4, uid: 1, title: 'C', source: 'LC', description: 'easy', schedule_time: nil, status: 0,
                   stars: 0, used_time: 0, create_time: Time.now - 24 * 60 * 60, update_time: Time.now - 24 * 60 * 60)
-
-      res = Card.get_card_statistics(1, 'created', 'day')
+      Card.create(cid: 5, uid: 1, title: 'B', source: 'LC', description: 'easy', schedule_time: nil, status: 0,
+                  stars: 0, used_time: 0, create_time: Time.now - 24 * 60 * 60, update_time: Time.now - 24 * 60 * 60)
+      res = Card.get_card_statistics(1, 0, 'day')
       expect(res[0]).to eq 2
-      expect(res[1]).to eq 1
+      expect(res[1]).to eq '+0%'
+    end
+  end
+
+  describe 'test card statistics' do
+    before(:each) do
+      Card.delete_all
+      Card.create(cid: 1, uid: 1, title: 'C', source: 'LC', description: 'easy', schedule_time: nil, status: 0,
+                  stars: 0, used_time: 0, create_time: Time.now, update_time: Time.now)
+      Card.create(cid: 2, uid: 1, title: 'D', source: 'LC', description: 'easy', schedule_time: nil, status: 0,
+                  stars: 0, used_time: 0, create_time: Time.now - 24 * 60 * 60, update_time: Time.now - 24 * 60 * 60)
+      Card.create(cid: 3, uid: 1, title: 'E', source: 'LC', description: 'easy', schedule_time: nil, status: 0,
+                  stars: 0, used_time: 0, create_time: Time.now - 24 * 60 * 60, update_time: Time.now - 24 * 60 * 60)
+    end
+
+    it 'should get statistics of cards created today' do
+      res = Card.get_card_statistics(1, 0, 'day')
+      expect(res[0]).to eq 1
+      expect(res[1]).to eq '-50%'
     end
   end
 end
