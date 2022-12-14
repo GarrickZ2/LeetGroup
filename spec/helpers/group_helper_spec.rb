@@ -337,4 +337,18 @@ describe GroupHelper do
       expect(res.avatar).to eq '/avatar/1.jpg'
     end
   end
+
+  describe 'Get Group Detail Information' do
+    before(:each) do
+      @group = GroupInfo.create(gid: 1)
+      GroupToUser.create(gid: 1, uid: 1, role: GroupToUser.role_status[:owner])
+      UserProfile.create(uid: 1, username: 'Maggie', avatar: '/avatar/1.jpg')
+    end
+    it 'should find the owner and member information' do
+      result = GroupHelper.get_group_detail @group
+      expect(result.user.uid).to eql 1
+      expect(result.user.username).to eql 'Maggie'
+      expect(result.count).to eql 1
+    end
+  end
 end

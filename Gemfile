@@ -35,9 +35,9 @@ gem 'composite_primary_keys'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # Use mysql as the database for Active Record
-  gem 'mysql2', '>= 0.3.13', '< 0.6.0'
   gem 'byebug'
   gem 'database_cleaner', '1.4.1'
+  gem 'mysql2', '>= 0.3.13', '< 0.6.0'
   gem 'rspec-rails'
   gem 'rubocop'
   # gem "capybara-webkit"
@@ -45,14 +45,18 @@ group :development, :test do
 end
 
 group :test do
+  gem "net-http"
+  gem "net-smtp"
+  gem "net-imap"
+  gem "uri", "0.10.0"
   gem 'cucumber-rails', require: false
   gem 'cucumber-rails-training-wheels'
+  gem 'database_cleaner-active_record'
   gem 'guard-rspec' # automates re-running tests
   gem 'puma', '~>5.6.4'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
   gem 'simplecov', require: false
-  gem 'database_cleaner-active_record'
 end
 
 group :development do

@@ -9,7 +9,7 @@ describe CardToComment do
       (1..51).each do |i|
         content += str
       end
-      puts(content.size)
+      # puts(content.size)
       if_add = CardToComment.add_comment(1, 1, content)
       expect(if_add).to eq false
       expect(CardToComment.count).to eq 0

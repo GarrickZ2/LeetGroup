@@ -128,7 +128,6 @@ describe GroupController do
         uid: 1,
         name: 'test-group-1',
         description: 'the first test group',
-        status: 0
       }
       success = JSON.parse(response.body)['success']
       msg = JSON.parse(response.body)['msg']
