@@ -10,7 +10,7 @@ https://warm-meadow-85532.herokuapp.com/
 # GitHub repository link
 https://github.com/GarrickZ2/LeetGroup
 
-**IMPORTANT:** Our iteration 2 code is in `proj-iter2` branch.
+**IMPORTANT:** Our final version code is in `proj-launch` branch.
 
 # Detailed Feature Instruction
 
@@ -23,6 +23,16 @@ https://github.com/GarrickZ2/LeetGroup
 | Group Member Related Feature | [Here](feature_readme/group_member_feature.md) |
 | Group Card Related Feature   | [Here](feature_readme/group_card_feature.md)   |
 
+# Features of Project Launch
+- On group's home page, there is a red button called `Destroy Group`, click it and a small window will pop up asking you
+  to confirm. By clicking the yes, this group will be destroyed.
+- On the dashboard page, short-cuts for commonly used functionalities are added for quicker access. We have the
+  shortcuts for viewing profile, changing password, creating new cards, viewing all cards, and joining group. We also 
+  add the group overview information on dashboard.
+- After you go to `Card-All Cards` page, you will see all the cards you've created. Click any card, you will see `Finish!`
+  button at the right side. Click it and this card will be transferred to `Finished Cards` tab.
+- Under the `Card` tab of navigation bar, we add a sub-tab called `Finished Cards`, which stores all the cards that
+  user marks as finished. Finished cards will not show in `Card-All Cards` page. 
 # Features of iteration 2
 - After a user login, on the **top right** corner, there is a green button called `+ create`, click it
   and you can click `create group` to create a group.

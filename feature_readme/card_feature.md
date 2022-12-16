@@ -60,5 +60,12 @@ After you share this card, you can not share the same card to the same group aga
 
 ![image-20221116183759871](card_feature.assets/image-20221116183759871.png)
 
+## Copy Card Feature 
+When you click the Copy button, this card will be copied and a new card with exactly same information will be created in All Cards page.
 
+## Archive Card Feature 
+When you click the Archive button, this card will be transferred to Archived Cards tab under navigation.
+
+## Finish Card Feature 
+When you click the Finish! button, this card will be transferred to Finished Cards tab under navigation.
 
