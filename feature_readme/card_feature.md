@@ -60,5 +60,23 @@ After you share this card, you can not share the same card to the same group aga
 
 ![image-20221116183759871](card_feature.assets/image-20221116183759871.png)
 
+## Copy Card Feature 
+When you click the Copy button, this card will be copied and a new card with exactly same information will be created in All Cards page.
 
+![image-20221216012859887](card_feature.assets/image-20221216012859887.png)
 
+![image-20221216012915078](card_feature.assets/image-20221216012915078.png)
+
+After you click the copy button and confirmed with 'Yes',  you can copy a card into your collection.
+
+![image-20221216012922476](card_feature.assets/image-20221216012922476.png)
+
+## Archive Card Feature 
+When you click the Archive button, this card will be transferred to Archived Cards tab under navigation.
+
+![image-20221216012957131](card_feature.assets/image-20221216012957131.png)
+
+## Finish Card Feature 
+When you click the Finish! button, this card will be transferred to Finished Cards tab under navigation.
+
+![image-20221216013007117](card_feature.assets/image-20221216013007117.png)
