@@ -47,3 +47,13 @@ If the code is private, expired or doesn't exist, we also will show you the noti
 When you click the group name, we will forward you to the group info page. We haven't finish the overview information feature. But you can view and manage group cards, and group members.
 
 ![image-20221116185042940](group_feature.assets/image-20221116185042940.png)
+
+## Destroy Group
+
+As a group member, you can click 'Destroy Group' to disassemble this group. After your confirmation, this group won't appeared in your group list, as well your group members'.
+
+![image-20221216013053252](group_feature.assets/image-20221216013053252.png)
+
+However, if you are not the owner, the button is in 'grep red' color which means it's disabled.
+
+![image-20221216013145478](group_feature.assets/image-20221216013145478.png)
