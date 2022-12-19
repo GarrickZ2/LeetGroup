@@ -54,10 +54,10 @@ class Card < ActiveRecord::Base
   def self.get_card_statistics(uid, status, period)
     case period
     when 'month'
-      cur_date = Date.today - Date.today.mday + 1
+      cur_date = Date.today - Date.today.mday
       prev_date = cur_date << 1
     when 'week'
-      cur_date = Date.today - Date.today.wday + 1
+      cur_date = Date.today - Date.today.wday
       prev_date = cur_date - 7
     else
       cur_date = Date.today
